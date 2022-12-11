@@ -23,7 +23,6 @@
         "@inertiajs/inertia": "^0.11.1",
         "@inertiajs/inertia-react": "^0.8.1",
         "@inertiajs/progress": "^0.2.7",
-        "@react-google-maps/api": "^2.16.0",
         "@tabler/core": "^1.0.0-beta15",
         "@tabler/icons": "^1.110.0",
         "@tailwindui/react": "^0.1.1",
