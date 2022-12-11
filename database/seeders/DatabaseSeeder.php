@@ -6,7 +6,7 @@ namespace Database\Seeders;
 use App\Models\form;
 use App\Models\User;
 use Illuminate\Database\Seeder;
-
+use Database\Factories\FormFactory;
 class DatabaseSeeder extends Seeder
 {
     /**
