@@ -6,7 +6,7 @@ use App\Models\form;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Carbon;
 
-class FormFactory extends Factory
+class formFactory extends Factory
 {
     protected $model = form::class;
 
