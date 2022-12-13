@@ -2,7 +2,7 @@ import React, {useRef} from 'react';
 import {Editor} from '@tinymce/tinymce-react';
 import {useToast} from "react-toastify";
 
-export default function Tinymce({html, onChange}) {
+export default function Tinymce({html, onChange,}) {
     const editorRef = useRef(null);
     const tnymce_image_upload_handler = (blobInfo, progress) => new Promise((resolve, reject) => {
         const xhr = new XMLHttpRequest();

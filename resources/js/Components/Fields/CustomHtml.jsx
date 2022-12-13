@@ -1,16 +1,30 @@
 import React, {useMemo, useRef, useState} from 'react';
 import ControlField from "../ControlField";
 import Tinymce from "../Tinymce";
+import {FormGroup} from "reactstrap";
 
-function CustomHtml({fieldList, field, index, active, setActive, handleUp, handleDown, isPublic, updateField,deleteFieldList}) {
+function CustomHtml({
+                        fieldList,
+                        field,
+                        index,
+                        active,
+                        setActive,
+                        handleUp,
+                        handleDown,
+                        isPublic,
+                        updateField,
+                        deleteFieldList
+                    }) {
     function createMarkup() {
         return {__html: field.settings.html_codes};
     }
+
     function handleChange(html) {
         const newFieldList = [...fieldList];
         newFieldList[index].settings.html_codes = html;
         updateField(index, newFieldList[index]);
     }
+
     if (isPublic) {
         return (<div className="flex-auto px-8 py-1">
             <div className="mb-4 pr-6 ">
@@ -43,14 +57,17 @@ function CustomHtml({fieldList, field, index, active, setActive, handleUp, handl
                         </div>
                     </div>
                     <div>
-                        <Tinymce html={field.settings.html_codes} onChange={handleChange}/>
+                        <FormGroup>
+                            <Tinymce html={field.settings.html_codes} onChange={handleChange}/>
+                        </FormGroup>
                         <div>
 
                         </div>
                         <br/>
                     </div>
 
-                     <ControlField  key={index} fieldList={fieldList} field={field} index={index} handleUp={handleUp} handleDown={handleDown} deleteFieldList={deleteFieldList}/>
+                    <ControlField key={index} fieldList={fieldList} field={field} index={index} handleUp={handleUp}
+                                  handleDown={handleDown} deleteFieldList={deleteFieldList}/>
 
                 </div>
             </div>
