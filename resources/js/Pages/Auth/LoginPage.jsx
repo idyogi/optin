@@ -2,7 +2,7 @@ import React, {useCallback, useState} from 'react';
 import {useForm, usePage} from "@inertiajs/inertia-react";
 import {FormGroup, Label, Spinner, Input, FormFeedback, Button} from "reactstrap";
 
-export default function LoginPage() {
+export default function LoginPage({config}) {
     const {data, setData, post, processing, transform, errors} = useForm({});
     const handleChange = (key, value) => {
 
@@ -12,7 +12,7 @@ export default function LoginPage() {
     const handleSubmit = (e) => {
         e.preventDefault()
         console.log(data);
-        post('/login');
+        post(config.app.url+'/login');
     }
 
     return (
