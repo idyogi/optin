@@ -1,12 +1,12 @@
 import React, {useState} from 'react';
 import RightMenu from "../../../Components/RightMenu";
-import PanelLayout from "../../../Layouts/PanelLayout";
 import Fields from "../../../Components/Fields";
 import {useForm, usePage} from "@inertiajs/inertia-react";
 import {Inertia} from "@inertiajs/inertia";
 
 import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import PanelLayout from "../../../Layouts/PloiTheme/PanelLayout";
 
 function EditForm({form, fields, formatFields, submitButton, config}) {
     const {flash} = usePage().props

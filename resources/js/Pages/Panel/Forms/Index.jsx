@@ -1,6 +1,6 @@
 import React from 'react';
 import RightMenu from "../../../Components/RightMenu";
-import PanelLayout from "../../../Layouts/PanelLayout";
+import PanelLayout from "../../../Layouts/PloiTheme/PanelLayout";
 
 function IndexForm({forms, config}) {
 
