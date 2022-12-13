@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import ControlField from "../ControlField";
 import {useForm} from "@inertiajs/inertia-react";
-import Quill from "../Quill";
 
 function WhatsappRotator({fieldList, field, index, active, setActive, handleUp, handleDown, isPublic, updateField,deleteFieldList, form, publicSubmit}) {
     const {data, setData} = useForm({

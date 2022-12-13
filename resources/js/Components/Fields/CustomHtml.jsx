@@ -1,6 +1,6 @@
 import React, {useMemo, useRef, useState} from 'react';
-import Quill from "../Quill";
 import ControlField from "../ControlField";
+import Tinymce from "../Tinymce";
 
 function CustomHtml({fieldList, field, index, active, setActive, handleUp, handleDown, isPublic, updateField,deleteFieldList}) {
     function createMarkup() {
@@ -43,7 +43,7 @@ function CustomHtml({fieldList, field, index, active, setActive, handleUp, handl
                         </div>
                     </div>
                     <div>
-                        <Quill html={field.settings.html_codes} onChange={handleChange}/>
+                        <Tinymce html={field.settings.html_codes} onChange={handleChange}/>
                         <div>
 
                         </div>

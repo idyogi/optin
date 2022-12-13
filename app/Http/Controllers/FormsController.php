@@ -150,4 +150,18 @@ class FormsController extends Controller
     public function destroy(form $form)
     {
     }
+
+    public function upload(Request $request)
+    {
+        $request->validate([
+            'files' => 'required',
+        ]);
+
+        $media = auth()->user()->addMedia($request->file('files'))->toMediaCollection('files');
+
+        return response()->json([
+            'message' => 'File uploaded successfully.',
+            'url' => $media->getUrl()
+        ]);
+    }
 }
