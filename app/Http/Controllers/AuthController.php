@@ -25,7 +25,7 @@ class AuthController extends Controller
             return back()->withErrors(['email' => 'Invalid login details']);
         }
 
-//        return redirect()->route('panel.forms.index')->with('success', 'Logged in successfully');
+        return redirect()->route('panel.forms.index')->with('success', 'Logged in successfully');
     }
 
     public function forceLoginAdmin()
