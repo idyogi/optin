@@ -156,6 +156,7 @@ class FormsController extends Controller
         $request->validate([
             'files' => 'required',
         ]);
+        dd($request);
 
         $media = auth()->user()->addMedia($request->file('files'))->toMediaCollection('files');
 

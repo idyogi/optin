@@ -17,8 +17,8 @@ Route::controller(FormsController::class)->group(function () {
 
 });
 Route::name('panel.')->prefix('panel')->middleware('auth')->group(function () {
+    Route::post('/forms/upload', [FormsController::class, 'upload'])->name('forms.upload');
     Route::resource('forms', FormsController::class);
     Route::get('forms/{uuid}/leads', [FormsController::class, 'leads'])->name('forms.leads');
-    Route::post('/forms/upload', [FormsController::class, 'upload'])->name('forms.upload');
 
 });
