@@ -76,7 +76,6 @@ function WhatsappRotator({fieldList, field, index, active, setActive, handleUp, 
         return (
             <div className="flex-auto px-6 py-1">
                 <div className="my-3">
-                    tes
                     <div>
                         <button
                             type="submit" onClick={publicSubmit}
@@ -187,7 +186,7 @@ function WhatsappRotator({fieldList, field, index, active, setActive, handleUp, 
                             </div>
                             <textarea
                                 onChange={(e) => {
-                                    handleChangeNumbers('text', e.target.value, index)
+                                    handleChangeNumbers('text', e.target.value, i)
                                 }}
                                 value={data.numbers[i].text}
 
