@@ -5,18 +5,13 @@ import PanelLayout from "../../../Layouts/PloiTheme/PanelLayout";
 function IndexForm({forms, config}) {
 
     return (
-        <PanelLayout title={'Forms'} subTitle={''}>
+        <PanelLayout title={'List Form'} subTitle={''} trailing={(<a disabled="false"
+                                                                 className="inline-flex items-center justify-center text-sm font-medium transition-all ease-in-out duration-100 focus:outline-none focus:ring border rounded-md border-primary-500 bg-primary-500 text-white shadow hover:bg-primary-400 hover:border-primary-400 focus:border-primary-700 focus:bg-primary-600 px-3 py-2 text-sm"
+                                                                 target="_self"
+                                                                 href="/panel/forms/create"> Create
+            Tambah Form </a>)}>
 
             <div className="min-h-screen">
-                <div
-                    className="my-6 lg:my-12 container px-6 mx-auto flex flex-col lg:flex-row items-start lg:items-center justify-between pb-4 border-b border-gray-300">
-                    <div><h4 className="text-2xl font-bold leading-tight text-gray-800">Daftar Form</h4>
-                        <ul className="flex flex-col md:flex-row items-start md:items-center text-gray-600 text-sm mt-3"></ul>
-                    </div>
-                    <div className="mt-6 lg:mt-0"><a
-                        className="transition duration-150 ease-in-out hover:bg-purple-700 focus:outline-none border bg-purple-600 rounded text-white px-8 py-2 text-sm"
-                        href="/panel/forms/create">Tambah Form</a></div>
-                </div>
                 <div className="container mx-auto px-6">
                     <div>
                         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">

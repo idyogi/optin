@@ -31,35 +31,23 @@ function EditForm({form, fields, formatFields, submitButton, config}) {
     }
 
     return (
-        <PanelLayout title={'Edit Form'} subTitle={''}>
+        <PanelLayout title={'Edit Form'} subTitle={(<a target="_blank" className="hover:underline flex"
+                                                       href={config.app.url + /form/ + form.slug}>
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20"
+                 fill="currentColor">
+                <path
+                    d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z"></path>
+                <path
+                    d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z"></path>
+            </svg>
+            <div className="ml-2">{config.app.url}/form/{form.slug}</div>
+        </a>)} trailing={(<button onClick={handlePublish}
+                                  className="inline-flex items-center justify-center text-sm font-medium transition-all ease-in-out duration-100 focus:outline-none focus:ring border rounded-md border-primary-500 bg-primary-500 text-white shadow hover:bg-primary-400 hover:border-primary-400 focus:border-primary-700 focus:bg-primary-600 px-3 py-2 text-sm"
+        >Simpan
+            Form
+        </button>)}>
             <div className="min-h-screen">
 
-                <div
-                    className="my-6 lg:my-12 container px-6 mx-auto flex flex-col lg:flex-row items-start lg:items-center justify-between pb-4 border-b border-gray-300">
-                    <div><h4 className="text-2xl font-bold leading-tight text-gray-800">Form Optin</h4>
-                        <div className="text-gray-500 mt-2 text-sm flex">
-                            <a target="_blank" className="hover:underline flex"
-                               href={config.app.url + /form/ + form.slug}>
-                                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20"
-                                     fill="currentColor">
-                                    <path
-                                        d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z"></path>
-                                    <path
-                                        d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z"></path>
-                                </svg>
-                                <div className="ml-2">{config.app.url}/form/{form.slug}</div>
-                            </a>
-                        </div>
-                    </div>
-                    <div className="mt-6 lg:mt-0"><a
-                        className="mx-2 my-2 bg-white transition duration-150 ease-in-out focus:outline-none hover:bg-gray-100 rounded text-indigo-700 px-6 py-2 text-sm"
-                        href="/forms">Back</a>
-                        <button onClick={handlePublish}
-                                className="transition duration-150 ease-in-out hover:bg-purple-700 focus:outline-none border bg-purple-600 rounded text-white px-8 py-2 text-sm">Simpan
-                            Form
-                        </button>
-                    </div>
-                </div>
                 <div className="container mx-auto px-6">
                     <div className="mx-auto sm:px-6 lg:px-8">
                         <div className="">
@@ -135,7 +123,8 @@ function EditForm({form, fields, formatFields, submitButton, config}) {
                                     </aside>
                                     <div className="space-y-6 sm:px-6 lg:px-0 lg:col-span-9 xl:col-span-6">
                                         <div className="bg-white shadow-xl sm:rounded-lg pt-1">
-                                            <Fields fields={data} formatFields={formatFields} submitField={submitField} form={form}
+                                            <Fields fields={data} formatFields={formatFields} submitField={submitField}
+                                                    form={form}
                                                     transform={handleChanges}
                                                     handleSubmitChanges={handleSubmitChanges}/>
 

@@ -45,6 +45,15 @@ function PanelLayout({children, footer, title = null, subTitle = null, trailing 
                         </header>
                     </div>
                     <div>
+                        <div
+                            class="flex items-center justify-between border-b border-gray-200 bg-white px-8 py-4 dark:border-gray-600 dark:bg-gray-700 dark:text-white">
+                            <div><h1 className="text-xl font-medium">{title}</h1><p
+                                className="text-sm text-gray-500 dark:text-gray-400">{subTitle}</p></div>
+                            <div className="flex h-full items-center space-x-2">
+                                {trailing}
+
+                            </div>
+                        </div>
                         <div className="py-6">
                             <div className="mx-auto w-full">
                                 {children}
