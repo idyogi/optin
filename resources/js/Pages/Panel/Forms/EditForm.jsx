@@ -14,9 +14,13 @@ function EditForm({form, fields, responseFields, formatFields, submitButton, con
     const [activeTab, setActiveTab] = useState('form');
     const {flash} = usePage().props
     const {data, setData} = useForm(fields);
+    const responseData = useForm(responseFields);
     const [submitField, setSubmitField] = useState(submitButton);
     const handleChanges = (fieldList) => {
         setData(fieldList);
+    }
+    const handleResponseChanges = (fieldList) => {
+       responseData.setData(fieldList);
     }
 
     const handleSubmitChanges = (value) => {
@@ -25,8 +29,7 @@ function EditForm({form, fields, responseFields, formatFields, submitButton, con
 
 
     function handlePublish() {
-        console.log(data);
-        Inertia.put('/panel/forms/' + form.uuid, {fields: data, submitButton: submitField}, {
+        Inertia.put('/panel/forms/' + form.uuid, {fields: data, submitButton: submitField, response: responseData.data}, {
             preserveScroll: true,
             onSuccess: () => toast('Form updated successfully'),
             onError: () => toast.error('Failed to update form')
@@ -70,7 +73,7 @@ function EditForm({form, fields, responseFields, formatFields, submitButton, con
                                                         handleSubmitChanges={handleSubmitChanges}/>
                                             </div>)}
                                         {activeTab === 'response' && (
-                                            <ResponseTab responseFields={responseFields} />)}
+                                            <ResponseTab responseFields={responseFields} transform={handleResponseChanges} formatFields={formatFields} />)}
 
                                     </div>
                                 </div>

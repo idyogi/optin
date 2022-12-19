@@ -134,6 +134,7 @@ class FormsController extends Controller
         $validated = $request->validate([
             'fields' => 'required|array',
             'submitButton' => 'required|array',
+            'response' => 'required|array',
         ]);
         $rotator = collect($validated['fields'])->filter(function ($field, $key) {
             return $field['element'] === 'whatsapp_rotator';
@@ -145,6 +146,7 @@ class FormsController extends Controller
             'fields' => $validated['fields'],
             'submitButton' => $validated['submitButton'],
         ]);
+        $form->response_fields = json_encode($validated['response']);
         $form->save();
         return redirect()->route('panel.forms.edit', $form->uuid)->with('success', 'Form Updated Successfully');
     }

@@ -39,7 +39,7 @@ function CustomHtml({fieldList, index, active, updateField, handleDown, handleUp
                     </div>
                     <div>
                         <FormGroup>
-                            <Tinymce html={field.settings.html_codes} onChange={handleChange}/>
+                            <Tinymce html={field.settings.html_codes} onChange={handleChange} height={250}/>
                         </FormGroup>
                         <div>
 
