@@ -25,7 +25,7 @@ function PanelLayout({children, footer, title = null, subTitle = null, trailing 
                 <aside
                     className="fixed inset-y-0 left-0 z-30 mt-16 w-full bg-gray-800 text-white transition duration-200 ease-in-out lg:visible lg:sticky lg:top-0 lg:left-auto lg:mt-0 lg:h-screen lg:w-64 lg:translate-x-0 invisible -translate-x-full transform">
                     <header className="flex h-16 items-center bg-gray-900 px-4"><p className="text-lg"><span
-                        className="font-bold">Digi</span>suite </p></header>
+                        className="font-bold">Funnel</span>.ink </p></header>
 
                     <ul className="my-4 space-y-2 px-2">
                         <li><a target="_self"
@@ -46,7 +46,7 @@ function PanelLayout({children, footer, title = null, subTitle = null, trailing 
                     </div>
                     <div>
                         <div
-                            class="flex items-center justify-between border-b border-gray-200 bg-white px-8 py-4 dark:border-gray-600 dark:bg-gray-700 dark:text-white">
+                            className="flex items-center justify-between border-b border-gray-200 bg-white px-8 py-4 dark:border-gray-600 dark:bg-gray-700 dark:text-white">
                             <div><h1 className="text-xl font-medium">{title}</h1><p
                                 className="text-sm text-gray-500 dark:text-gray-400">{subTitle}</p></div>
                             <div className="flex h-full items-center space-x-2">

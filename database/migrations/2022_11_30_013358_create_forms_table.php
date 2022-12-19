@@ -16,6 +16,7 @@ return new class extends Migration {
             $table->string('status')->default('draft');
             $table->text('appearance_settings')->nullable();
             $table->longText('form_fields')->nullable();
+            $table->longText('response_fields')->nullable();
             $table->tinyInteger('has_payment')->default(0);
             $table->string('type')->nullable();
             $table->text('conditions')->nullable();

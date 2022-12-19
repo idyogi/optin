@@ -20,8 +20,6 @@ function Fields({
     const [active, setActive] = useState(0);
     const [fieldList, setFieldList] = useState(fields);
     const hasSubmitButton = fieldList.filter(field => field.type === 'submit_button').length > 0;
-    console.log('hasSubmitButton', hasSubmitButton);
-
     function addFieldList(type) {
         const field = formatFields[type];
         setFieldList([...fieldList, field]);

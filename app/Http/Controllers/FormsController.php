@@ -119,9 +119,11 @@ class FormsController extends Controller
     public function edit(form $form)
     {
         $fields = $form->fields();
+        $responseFields = $form->response_fields();
         return inertia('Panel/Forms/EditForm', [
             'form' => $form,
             'fields' => $fields['fields'],
+            'responseFields' => $responseFields,
             'submitButton' => $fields['submitButton'],
             'formatFields' => $form->getFormatFields(),
         ]);

@@ -197,6 +197,46 @@ class form extends Model implements HasMedia
             ];
     }
 
+    public static function getFormatResponseFields()
+    {
+        return
+            [
+                [
+                    "index" => 0,
+                    "element" => "custom_html",
+                    "attributes" => [
+                    ],
+                    "settings" => [
+                        "html_codes" => '<h3>Thank you for your submission.</h3>',
+                        "validation_rules" => [
+                            "required" => [
+                                "value" => false,
+                                "message" => "This field is required"
+                            ]
+                        ],
+                        "conditional_logics" => [
+                            "type" => "any",
+                            "status" => false,
+                            "conditions" => [
+                                [
+                                    "field" => "",
+                                    "value" => "",
+                                    "operator" => ""
+                                ]
+                            ]
+                        ],
+                        "container_class" => ""
+                    ],
+                    "editor_options" => [
+                        "title" => "Custom HTML",
+                        "icon_class" => "ff-edit-html",
+                        "template" => "customHTML"
+                    ],
+                    "uniqElKey" => Str::uuid()
+                ],
+            ];
+    }
+
     public
     function settings(): array
     {
@@ -293,6 +333,11 @@ class form extends Model implements HasMedia
     function fields()
     {
         return json_decode($this->form_fields, true);
+    }
+
+    public function response_fields()
+    {
+        return json_decode($this->response_fields, true);
     }
 
     public

@@ -23,7 +23,7 @@ export default function LoginPage({config}) {
                     <div className="h-1/2 w-full mx-auto bg-primary-600 absolute inset-x-0 top-0"></div>
                     <div className="max-w-xl mx-auto px-8 relative space-y-6"><h1
                         className="text-center text-3xl text-white font-medium"><a href="/"><span
-                        className="font-bold">Digi</span>Suite</a></h1>
+                        className="font-bold">Funnel</span>.ink</a></h1>
                         <div className="rounded-lg shadow bg-white overflow-hidden divide-y divide-gray-200">
 
                             <form onSubmit={handleSubmit} className="px-8 py-12 space-y-4">
