@@ -2,8 +2,9 @@ import React, {useState} from 'react';
 import CustomHtml from "./CustomHtml";
 import ButtonInput from "../../../../Components/ButtonInput";
 import Share from "./Share";
+import ResponseWhatsappRotator from "./ResponseWhatsappRotator";
 
-function ResponseFields({responseFields, transform, formatFields,submissionId, isPublic = false}) {
+function ResponseFields({form, responseFields, transform, formatFields,submissionId, isPublic = false}) {
     const [active, setActive] = useState(0);
     const [fieldList, setFieldList] = useState(responseFields);
 
@@ -11,7 +12,6 @@ function ResponseFields({responseFields, transform, formatFields,submissionId, i
         const field = formatFields[type];
         setFieldList([...fieldList, field]);
         setActive(fieldList.length);
-        console.log(fieldList.length);
 
         transform([...fieldList, field]);
     }
@@ -52,6 +52,12 @@ function ResponseFields({responseFields, transform, formatFields,submissionId, i
                                         setActive={setActive} updateField={updateField}
                                         deleteFieldList={deleteFieldList} isPublic={isPublic}/>)
                 }
+                if (responseField.element === 'whatsapp_rotator') {
+                    return (<ResponseWhatsappRotator key={index} submissionId={submissionId} fieldList={fieldList} fields={responseField} index={index}
+                                        handleUp={handleUp} handleDown={handleDown} active={active}
+                                        setActive={setActive} updateField={updateField}
+                                        deleteFieldList={deleteFieldList} isPublic={isPublic}/>)
+                }
                 if (responseField.element === 'share') {
                     return (<Share key={index} fieldList={fieldList} fields={responseField} index={index}
                                    handleUp={handleUp} handleDown={handleDown} active={active}
@@ -65,6 +71,7 @@ function ResponseFields({responseFields, transform, formatFields,submissionId, i
                 <ButtonInput name={"text"} type={'custom_html'} callback={addFieldList}/>
                 <div className="mt-2">Viral Response</div>
                 <ButtonInput name={"share"} type={'share'} callback={addFieldList}/>
+                <ButtonInput name={"whatsapp rotator"} type={'whatsapp_rotator'} callback={addFieldList}/>
             </div>)}
         </div>)
 }

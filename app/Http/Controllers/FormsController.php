@@ -178,6 +178,7 @@ class FormsController extends Controller
         }
         return back()->withErrors(['error' => 'Slug already exists']);
     }
+
     public function destroy(form $form)
     {
     }

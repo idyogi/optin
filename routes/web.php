@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\FormsController;
+use App\Http\Controllers\SubmissionsController;
 use Illuminate\Support\Facades\Route;
 
 Route::controller(AuthController::class)->group(function () {
@@ -14,6 +15,9 @@ Route::controller(FormsController::class)->group(function () {
     Route::get('/', 'index');
     Route::get('/form/{slug}', [FormsController::class, 'show'])->name('form.show');
     Route::post('/form/{slug}/lead', [FormsController::class, 'lead'])->name('form.lead');
+});
+Route::controller(SubmissionsController::class)->group(function () {
+    Route::post('/submission/{id}/whatsapp-rotator', [SubmissionsController::class, 'whatsappRotator'])->name('submissions.whatsapp-rotator');
 });
 Route::name('panel.')->prefix('panel')->middleware('auth')->group(function () {
     Route::post('forms/upload', [FormsController::class, 'upload'])->name('forms.upload');

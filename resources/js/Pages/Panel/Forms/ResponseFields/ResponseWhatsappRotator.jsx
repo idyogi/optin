@@ -1,15 +1,36 @@
 import React, {useState} from 'react';
-import ControlField from "../ControlField";
 import {useForm} from "@inertiajs/inertia-react";
+import ControlField from "../../../../Components/ControlField";
 
-function WhatsappRotator({fieldList, field, index, active, setActive, handleUp, handleDown, isPublic, updateField,deleteFieldList, form, publicSubmit}) {
+function ResponseWhatsappRotator({
+                                     fieldList,
+    submissionId,
+                                     index,
+                                     active,
+                                     setActive,
+                                     handleUp,
+                                     handleDown,
+                                     isPublic,
+                                     updateField,
+                                     deleteFieldList,
+                                     publicSubmit
+                                 }) {
+    const [field, setField] = useState(fieldList[index]);
     const {data, setData} = useForm({
         label: field.settings.button_ui.text,
         placeholder: field.attributes.placeholder,
         required: field.settings.validation_rules.required.value,
         numbers: field.settings.numbers,
     });
+    const form = useForm([]);
 
+    function goTo() {
+        form.post(window.location.origin+'/submission/'+submissionId+'/whatsapp-rotator', {
+            onSuccess: (res) => {
+                // window.location.href
+            }
+        });
+    }
     function addNumber() {
         setData('numbers', [...data.numbers, field.settings.numbers[0]]);
         updateField(index, {
@@ -78,10 +99,10 @@ function WhatsappRotator({fieldList, field, index, active, setActive, handleUp, 
                 <div className="my-3">
                     <div>
                         <button
-                            type="submit" onClick={publicSubmit}
+                            type="submit" onClick={() => goTo()}
                             disabled={form.processing}
 
-                                className="bg-indigo-600 w-full text-lg mt-1 inline-flex items-center justify-center px-6 py-3 border border-transparent rounded-md shadow-sm text-base font-semibold text-white">
+                            className="bg-indigo-600 w-full text-lg mt-1 inline-flex items-center justify-center px-6 py-3 border border-transparent rounded-md shadow-sm text-base font-semibold text-white">
                             <div className="mr-1">
                                 <div>
                                     <svg xmlns="http://www.w3.org/2000/svg"
@@ -95,7 +116,7 @@ function WhatsappRotator({fieldList, field, index, active, setActive, handleUp, 
                                 </div>
 
                             </div>
-                           {form.processing ? 'Loading...' : data.label}
+                            {form.processing ? 'Loading...' : data.label}
 
                         </button>
                     </div>
@@ -228,4 +249,4 @@ function WhatsappRotator({fieldList, field, index, active, setActive, handleUp, 
     }
 }
 
-export default WhatsappRotator;
+export default ResponseWhatsappRotator;

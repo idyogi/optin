@@ -54,7 +54,7 @@ function ViewForm({form, fields, responseFields,reference, submitButton, setting
             <div className="font-sans max-w-3xl mx-auto sm:px-6 lg:py-6 lg:px-8">
                 <div className="bg-white  shadow-xl rounded-lg pb-8 pt-6">
                     {showResponse && (<div className="flex-auto px-6 md:px-8 ">
-                        <ResponseFields isPublic={true} responseFields={responseFields} submissionId={submissionId}/>
+                        <ResponseFields form={form} isPublic={true} responseFields={responseFields} submissionId={submissionId}/>
                     </div>)}
                     {!showResponse && (
                         <Fields isPublic={true} fields={fields} submitField={submitButton} form={form}
