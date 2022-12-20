@@ -2,7 +2,20 @@ import React, {useState} from 'react';
 import ControlField from "../ControlField";
 import {useForm} from "@inertiajs/inertia-react";
 
-function WhatsappRotator({fieldList, field, index, active, setActive, handleUp, handleDown, isPublic, updateField,deleteFieldList, form, publicSubmit}) {
+function WhatsappRotator({
+                             fieldList,
+                             field,
+                             index,
+                             active,
+                             setActive,
+                             handleUp,
+                             handleDown,
+                             isPublic,
+                             updateField,
+                             deleteFieldList,
+                             form,
+                             publicSubmit
+                         }) {
     const {data, setData} = useForm({
         label: field.settings.button_ui.text,
         placeholder: field.attributes.placeholder,
@@ -81,7 +94,7 @@ function WhatsappRotator({fieldList, field, index, active, setActive, handleUp, 
                             type="submit" onClick={publicSubmit}
                             disabled={form.processing}
 
-                                className="bg-indigo-600 w-full text-lg mt-1 inline-flex items-center justify-center px-6 py-3 border border-transparent rounded-md shadow-sm text-base font-semibold text-white">
+                            className="bg-indigo-600 w-full text-lg mt-1 inline-flex items-center justify-center px-6 py-3 border border-transparent rounded-md shadow-sm text-base font-semibold text-white">
                             <div className="mr-1">
                                 <div>
                                     <svg xmlns="http://www.w3.org/2000/svg"
@@ -95,7 +108,7 @@ function WhatsappRotator({fieldList, field, index, active, setActive, handleUp, 
                                 </div>
 
                             </div>
-                           {form.processing ? 'Loading...' : data.label}
+                            {form.processing ? 'Loading...' : data.label}
 
                         </button>
                     </div>
@@ -146,7 +159,7 @@ function WhatsappRotator({fieldList, field, index, active, setActive, handleUp, 
                         className="fas fa-plus mr-1"></i> tambah pilihan</span></div>
                     {data.numbers.map((number, i) => (
                         <div key={i} className="mb-3">
-                            <div className="relative flex items-stretch w-full mb-3">
+                            <div className="relative items-stretch w-full mb-3">
                                 <input type="text"
                                        onChange={(e) => {
                                            handleChangeNumbers('number', e.target.value, i)
@@ -154,35 +167,38 @@ function WhatsappRotator({fieldList, field, index, active, setActive, handleUp, 
                                        value={data.numbers[i].number}
                                        className="focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-transparent block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded"
                                        placeholder="6282xxx"/>
-                                <input type="text"
-                                       onChange={(e) => {
-                                           handleChangeNumbers('name', e.target.value, i)
-                                       }}
-                                       value={data.numbers[i].name}
-                                       className="focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-transparent block appearance-none w-32 py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded"
-                                       placeholder="CS Name"/>
-                                <input
-                                    onChange={(e) => {
-                                        handleChangeNumbers('portion', e.target.value, i)
-                                    }}
-                                    type="text"
-                                    value={data.numbers[i].portion}
+                                <div className="flex">
+                                    <input type="text"
+                                           onChange={(e) => {
+                                               handleChangeNumbers('name', e.target.value, i)
+                                           }}
+                                           value={data.numbers[i].name}
+                                           className="focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-transparent block appearance-none w-32 py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded"
+                                           placeholder="CS Name"/>
+                                    <input
+                                        onChange={(e) => {
+                                            handleChangeNumbers('portion', e.target.value, i)
+                                        }}
+                                        type="text"
+                                        value={data.numbers[i].portion}
 
-                                    className="focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-transparent block appearance-none w-32 ml-1 py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded"
-                                    placeholder="1"/>
+                                        className="focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-transparent block appearance-none w-32 ml-1 py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded"
+                                        placeholder="1"/>
 
-                                <div className="input-group-append">
-                                    <button
-                                        onClick={() => removeNumber(i)}
-                                        className="inline-block ml-1 align-middle text-center select-none border font-normal whitespace-no-wrap rounded py-1 px-3 leading-normal no-underline text-red-600 border-red-600 hover:bg-red-600 hover:text-white bg-white hover:bg-red-700"
-                                        type="button">
-                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none"
-                                             viewBox="0 0 24 24" stroke="currentColor">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
-                                                  d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
-                                        </svg>
-                                    </button>
+                                    <div className="input-group-append">
+                                        <button
+                                            onClick={() => removeNumber(i)}
+                                            className="inline-block ml-1 align-middle text-center select-none border font-normal whitespace-no-wrap rounded py-1 px-3 leading-normal no-underline text-red-600 border-red-600 hover:bg-red-600 hover:text-white bg-white hover:bg-red-700"
+                                            type="button">
+                                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none"
+                                                 viewBox="0 0 24 24" stroke="currentColor">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
+                                                      d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                                            </svg>
+                                        </button>
+                                    </div>
                                 </div>
+
                             </div>
                             <textarea
                                 onChange={(e) => {
