@@ -68,8 +68,8 @@ class FormsController extends Controller
             return back()->withErrors(['fields' => 'Invalid fields']);
         }
         $data['response'] = json_encode($validated['fields']);
-        if(array_key_exists('reference',$validated)){
-            $data['ref'] = (int) $validated['reference'];
+        if (array_key_exists('reference', $validated)) {
+            $data['ref'] = (int)$validated['reference'];
         }
         $submisson = $form->leads()->create($data);
         $submisson_metas = [];
@@ -145,6 +145,7 @@ class FormsController extends Controller
             'fields' => 'required|array',
             'submitButton' => 'required|array',
             'response' => 'required|array',
+            'settings' => 'required|array',
         ]);
         $rotator = collect($validated['fields'])->filter(function ($field, $key) {
             return $field['element'] === 'whatsapp_rotator';
@@ -157,10 +158,26 @@ class FormsController extends Controller
             'submitButton' => $validated['submitButton'],
         ]);
         $form->response_fields = json_encode($validated['response']);
-        $form->save();
-        return redirect()->route('panel.forms.edit', $form->uuid)->with('success', 'Form Updated Successfully');
+        $form->title = $validated['settings']['title'];
+        $form->slug = $validated['settings']['slug'];
+        if ($form->save()) {
+            return redirect()->route('panel.forms.edit', $form->uuid)->with('success', 'Form Updated Successfully');
+        }
+        return back()->withErrors(['error' => 'Something went wrong']);
     }
 
+    public function changeSlug(Request $request, form $form)
+    {
+        $validated = request()->validate([
+            'slug' => 'required|string',
+        ]);
+        $form->slug = $validated['slug'];
+        //check slug is unique, if not return error message
+        if ($form->save()) {
+            return back()->with('success', 'Slug Updated Successfully');
+        }
+        return back()->withErrors(['error' => 'Slug already exists']);
+    }
     public function destroy(form $form)
     {
     }

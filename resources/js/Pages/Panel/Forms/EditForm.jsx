@@ -9,18 +9,27 @@ import 'react-toastify/dist/ReactToastify.css';
 import PanelLayout from "../../../Layouts/PloiTheme/PanelLayout";
 import EditMenu from "./Widget/EditMenu";
 import ResponseTab from "./Widget/ResponseTab";
+import SettingTab from "./Widget/SettingTab";
 
 function EditForm({form, fields, responseFields, formatFields, submitButton, config}) {
     const [activeTab, setActiveTab] = useState('form');
     const {flash} = usePage().props
     const {data, setData} = useForm(fields);
     const responseData = useForm(responseFields);
+    const settingData = useForm({
+        title: form.title,
+        slug: form.slug,
+    });
     const [submitField, setSubmitField] = useState(submitButton);
     const handleChanges = (fieldList) => {
         setData(fieldList);
     }
     const handleResponseChanges = (fieldList) => {
-       responseData.setData(fieldList);
+        responseData.setData(fieldList);
+    }
+    const handleSettingChanges = (data) => {
+        console.log(data);
+        settingData.setData(data);
     }
 
     const handleSubmitChanges = (value) => {
@@ -29,9 +38,18 @@ function EditForm({form, fields, responseFields, formatFields, submitButton, con
 
 
     function handlePublish() {
-        Inertia.put('/panel/forms/' + form.uuid, {fields: data, submitButton: submitField, response: responseData.data}, {
+        Inertia.put('/panel/forms/' + form.uuid, {
+            fields: data,
+            submitButton: submitField,
+            response: responseData.data,
+            settings: settingData.data,
+        }, {
             preserveScroll: true,
-            onSuccess: () => toast('Form updated successfully'),
+            onSuccess: () => {
+                //reload page
+                Inertia.reload();
+                toast.success('Form has been updated');
+            },
             onError: () => toast.error('Failed to update form')
         });
     }
@@ -73,7 +91,11 @@ function EditForm({form, fields, responseFields, formatFields, submitButton, con
                                                         handleSubmitChanges={handleSubmitChanges}/>
                                             </div>)}
                                         {activeTab === 'response' && (
-                                            <ResponseTab responseFields={responseFields} transform={handleResponseChanges} formatFields={formatFields} />)}
+                                            <ResponseTab responseFields={responseFields}
+                                                         transform={handleResponseChanges}
+                                                         formatFields={formatFields}/>)}
+                                        {activeTab === 'settings' && (
+                                            <SettingTab setting={settingData.data} transform={handleSettingChanges}/>)}
 
                                     </div>
                                 </div>

@@ -7,7 +7,9 @@ function EditMenu({setActiveTab}) {
             <nav
                 className="space-y-1">
                 <div
-                    onClick={() => { setActiveTab('form') }}
+                    onClick={() => {
+                        setActiveTab('form')
+                    }}
                     className="cursor-pointer hover:text-indigo-700 group rounded-md px-3 py-2 flex items-center text-sm font-medium text-purple-600"
                     aria-current="page">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -19,7 +21,9 @@ function EditMenu({setActiveTab}) {
                     <span
                         className="capitalize">form</span></div>
                 <div
-                    onClick={() => { setActiveTab('response') }}
+                    onClick={() => {
+                        setActiveTab('response')
+                    }}
                     className="cursor-pointer hover:text-indigo-700 group rounded-md px-3 py-2 flex items-center text-sm font-medium text-gray-500"
                     aria-current="page">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -31,6 +35,10 @@ function EditMenu({setActiveTab}) {
                     <span
                         className="capitalize">response</span></div>
                 <div
+                    onClick={() => {
+                        setActiveTab('settings')
+                    }}
+
                     className="cursor-pointer hover:text-indigo-700 group rounded-md px-3 py-2 flex items-center text-sm font-medium text-gray-500"
                     aria-current="page">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -41,36 +49,6 @@ function EditMenu({setActiveTab}) {
                     </svg>
                     <span className="capitalize">setting</span>
                 </div>
-                <div
-                    className="cursor-pointer hover:text-indigo-700 group rounded-md px-3 py-2 flex items-center text-sm font-medium text-gray-500"
-                    aria-current="page">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                         stroke="currentColor" className="flex-shrink-0 -ml-1 mr-3 h-6 w-6">
-                        <path strokeLinecap="round" strokeLinejoin="round"
-                              strokeWidth="2"
-                              d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"></path>
-                    </svg>
-                    <span className="capitalize">automation</span></div>
-                <div
-                    className="cursor-pointer hover:text-indigo-700 group rounded-md px-3 py-2 flex items-center text-sm font-medium text-gray-500"
-                    aria-current="page">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                         stroke="currentColor" className="flex-shrink-0 -ml-1 mr-3 h-6 w-6">
-                        <path strokeLinecap="round" strokeLinejoin="round"
-                              strokeWidth="2"
-                              d="M8 14v3m4-3v3m4-3v3M3 21h18M3 10h18M3 7l9-4 9 4M4 10h16v11H4V10z"></path>
-                    </svg>
-                    <span className="capitalize">integration</span></div>
-                <div
-                    className="cursor-pointer hover:text-indigo-700 group rounded-md px-3 py-2 flex items-center text-sm font-medium text-gray-500"
-                    aria-current="page">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                         stroke="currentColor" className="flex-shrink-0 -ml-1 mr-3 h-6 w-6">
-                        <path strokeLinecap="round" strokeLinejoin="round"
-                              strokeWidth="2"
-                              d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
-                    </svg>
-                    <span className="capitalize">embed</span></div>
             </nav>
         </aside>
 
