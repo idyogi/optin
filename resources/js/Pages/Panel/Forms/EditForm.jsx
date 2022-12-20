@@ -80,7 +80,7 @@ function EditForm({form, fields, responseFields, formatFields, submitButton, con
                         <div className="">
                             <div className="">
                                 <div className="lg:grid lg:grid-cols-12 lg:gap-x-5">
-                                    <EditMenu setActiveTab={updateActiveTab}/>
+                                    <EditMenu activeTab={activeTab} setActiveTab={updateActiveTab}/>
                                     <div className="space-y-6 sm:px-6 lg:px-0 lg:col-span-9 xl:col-span-6">
                                         {activeTab === 'form' && (
                                             <div className="bg-white shadow-xl sm:rounded-lg pt-1">

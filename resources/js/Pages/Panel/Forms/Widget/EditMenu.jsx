@@ -1,7 +1,7 @@
 import React, {Component, useState} from 'react';
 import Fields from "../../../../Components/Fields";
 
-function EditMenu({setActiveTab}) {
+function EditMenu({activeTab, setActiveTab}) {
     return (
         <aside className="py-6 px-2 sm:px-6 lg:py-0 lg:px-0 lg:col-span-3">
             <nav
@@ -10,7 +10,7 @@ function EditMenu({setActiveTab}) {
                     onClick={() => {
                         setActiveTab('form')
                     }}
-                    className="cursor-pointer hover:text-indigo-700 group rounded-md px-3 py-2 flex items-center text-sm font-medium text-purple-600"
+                    className={"cursor-pointer hover:text-indigo-700 group rounded-md px-3 py-2 flex items-center text-sm font-medium " + (activeTab === 'form' ? 'text-purple-500' : ' text-gray-500')}
                     aria-current="page">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                          stroke="currentColor" className="flex-shrink-0 -ml-1 mr-3 h-6 w-6">
@@ -24,7 +24,7 @@ function EditMenu({setActiveTab}) {
                     onClick={() => {
                         setActiveTab('response')
                     }}
-                    className="cursor-pointer hover:text-indigo-700 group rounded-md px-3 py-2 flex items-center text-sm font-medium text-gray-500"
+                    className={"cursor-pointer hover:text-indigo-700 group rounded-md px-3 py-2 flex items-center text-sm font-medium " + (activeTab === 'response' ? 'text-purple-500' : ' text-gray-500')}
                     aria-current="page">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                          stroke="currentColor" className="flex-shrink-0 -ml-1 mr-3 h-6 w-6">
@@ -38,8 +38,8 @@ function EditMenu({setActiveTab}) {
                     onClick={() => {
                         setActiveTab('settings')
                     }}
+                    className={"cursor-pointer hover:text-indigo-700 group rounded-md px-3 py-2 flex items-center text-sm font-medium " + (activeTab === 'settings' ? 'text-purple-500' : ' text-gray-500')}
 
-                    className="cursor-pointer hover:text-indigo-700 group rounded-md px-3 py-2 flex items-center text-sm font-medium text-gray-500"
                     aria-current="page">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                          stroke="currentColor" className="flex-shrink-0 -ml-1 mr-3 h-6 w-6">
