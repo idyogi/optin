@@ -59,6 +59,7 @@ class FormsController extends Controller
 
         $validated = $request->validate([
             'fields' => 'required|array',
+            'reference' => 'nullable|string',
         ]);
 
         $form = form::where('slug', $slug)->first();
@@ -66,9 +67,11 @@ class FormsController extends Controller
         if (count($fields) != count($validated['fields'])) {
             return back()->withErrors(['fields' => 'Invalid fields']);
         }
-        $submisson = $form->leads()->create([
-            'response' => json_encode($validated['fields']),
-        ]);
+        $data['response'] = json_encode($validated['fields']);
+        if(array_key_exists('reference',$validated)){
+            $data['ref'] = (int) $validated['reference'];
+        }
+        $submisson = $form->leads()->create($data);
         $submisson_metas = [];
         $redirectTo = false;
         foreach ($validated['fields'] as $field) {
@@ -98,21 +101,28 @@ class FormsController extends Controller
         if ($redirectTo) {
             return Inertia::location($redirectTo);
         }
-        return back()->with('success', 'Form submitted successfully');
+        return back()->with('success', ['submission_id' => $submisson->id]);
     }
 
-    public function show($slug)
+    public function show(Request $request, $slug)
     {
         $form = form::where('slug', $slug)->firstOrFail();
+        if ($request->has('ref')) {
+            $reference = ($request->ref);
+        }
         $fields = $form->fields();
+        $responseFields = $form->response_fields();
+
         $metas = $form->metas();
         $settings = $metas->where('meta_key', 'formSettings')->first();
         $form->setFormMeta('total_views', 1, 'increment');
         return inertia('Web/Forms/ViewForm', [
             'form' => $form,
             'fields' => $fields['fields'],
+            'responseFields' => $responseFields,
             'submitButton' => $fields['submitButton'],
             'settings' => json_decode($settings->value, true),
+            'reference' => $reference ?? null,
         ]);
     }
 

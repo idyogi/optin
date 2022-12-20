@@ -3,7 +3,7 @@ import {FormGroup} from "reactstrap";
 import Tinymce from "../../../../Components/Tinymce";
 import ControlField from "../../../../Components/ControlField";
 
-function CustomHtml({fieldList, index, active, updateField, handleDown, handleUp, deleteFieldList}) {
+function CustomHtml({fieldList, index, active, updateField, handleDown, handleUp, deleteFieldList, setActive, isPublic}) {
     const [field, setField] = useState(fieldList[index]);
 
     function createMarkup() {
@@ -14,6 +14,13 @@ function CustomHtml({fieldList, index, active, updateField, handleDown, handleUp
         const newFieldList = [...fieldList];
         newFieldList[index].settings.html_codes = html;
         updateField(index, newFieldList[index]);
+    }
+    if (isPublic) {
+        return (<div className="flex-auto px-8 py-1">
+            <div className="mb-4 pr-6 ">
+                <div dangerouslySetInnerHTML={createMarkup()}/>
+            </div>
+        </div>)
     }
 
     if (index === active) {

@@ -14,6 +14,7 @@ return new class extends Migration {
             $table->longText('response')->nullable();
             $table->string('source_url')->nullable();
             $table->foreignIdFor(\App\Models\User::class)->nullable();
+            $table->foreignIdFor(\App\Models\submission::class, 'ref')->nullable();
             $table->string('status')->default('unread');
             $table->tinyInteger('is_favourite')->default(0);
             $table->string('browser')->nullable();

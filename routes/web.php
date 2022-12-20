@@ -14,7 +14,6 @@ Route::controller(FormsController::class)->group(function () {
     Route::get('/', 'index');
     Route::get('/form/{slug}', [FormsController::class, 'show'])->name('form.show');
     Route::post('/form/{slug}/lead', [FormsController::class, 'lead'])->name('form.lead');
-
 });
 Route::name('panel.')->prefix('panel')->middleware('auth')->group(function () {
     Route::post('forms/upload', [FormsController::class, 'upload'])->name('forms.upload');

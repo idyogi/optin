@@ -6,24 +6,32 @@ import {useForm, usePage} from "@inertiajs/inertia-react";
 import {Inertia} from "@inertiajs/inertia";
 import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import ResponseFields from "../../Panel/Forms/ResponseFields/ResponseFields";
 
-function ViewForm({form, fields, submitButton,settings, config}) {
+function ViewForm({form, fields, responseFields,reference, submitButton, settings, config}) {
     const formData = form;
     const [showResponse, setShowResponse] = useState(false);
+    const [submissionId, setSubmissionId] = useState(false);
     form = useForm([]);
     const handleChanges = (fieldList) => {
         const newData = fieldList.map(field => {
             return {name: field.element, value: field.attributes.value}
         });
-        form.setData({fields: newData});
+        const data = {};
+        data.fields = newData;
+        if(reference){
+            data.reference = reference;
+        }
+        form.setData(data);
 
     }
     const publicSubmit = (e) => {
         e.preventDefault()
-        console.log(form.data);
-        form.post('/form/' + formData.slug + '/lead', {
+        const res = form.post('/form/' + formData.slug + '/lead', {
             onError: () => toast.error('Gagal mengirim data, silakan coba lagi'),
-            onSuccess: () => {
+            onSuccess: (res) => {
+                console.log(res.props.flash.success.submission_id);
+                setSubmissionId(res.props.flash.success.submission_id);
                 toast.success('Data berhasil dikirim');
                 setShowResponse(true);
             }
@@ -32,6 +40,7 @@ function ViewForm({form, fields, submitButton,settings, config}) {
         // Inertia.reload();
 
     }
+
     function createMarkup() {
         return {__html: settings.confirmation.message};
     }
@@ -44,10 +53,13 @@ function ViewForm({form, fields, submitButton,settings, config}) {
             <ToastContainer/>
             <div className="font-sans max-w-3xl mx-auto sm:px-6 lg:py-6 lg:px-8">
                 <div className="bg-white  shadow-xl rounded-lg pb-8 pt-6">
-
-                    {showResponse ? (<div className="flex-auto px-6 md:px-8 "><div className="ql-editor"><div dangerouslySetInnerHTML={createMarkup()}/></div></div>) : (<Fields isPublic={true} fields={fields} submitField={submitButton} form={form}
-                            transform={handleChanges}
-                            publicSubmit={publicSubmit}/>)}
+                    {showResponse && (<div className="flex-auto px-6 md:px-8 ">
+                        <ResponseFields isPublic={true} responseFields={responseFields} submissionId={submissionId}/>
+                    </div>)}
+                    {!showResponse && (
+                        <Fields isPublic={true} fields={fields} submitField={submitButton} form={form}
+                                transform={handleChanges}
+                                publicSubmit={publicSubmit}/>)}
                 </div>
             </div>
         </div>

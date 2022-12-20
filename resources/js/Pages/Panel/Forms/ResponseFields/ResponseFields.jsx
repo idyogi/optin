@@ -1,8 +1,9 @@
 import React, {useState} from 'react';
 import CustomHtml from "./CustomHtml";
 import ButtonInput from "../../../../Components/ButtonInput";
+import Share from "./Share";
 
-function ResponseFields({responseFields, transform, formatFields}) {
+function ResponseFields({responseFields, transform, formatFields,submissionId, isPublic = false}) {
     const [active, setActive] = useState(0);
     const [fieldList, setFieldList] = useState(responseFields);
 
@@ -49,9 +50,16 @@ function ResponseFields({responseFields, transform, formatFields}) {
                     return (<CustomHtml key={index} fieldList={fieldList} fields={responseField} index={index}
                                         handleUp={handleUp} handleDown={handleDown} active={active}
                                         setActive={setActive} updateField={updateField}
-                                        deleteFieldList={deleteFieldList}/>)
+                                        deleteFieldList={deleteFieldList} isPublic={isPublic}/>)
+                }
+                if (responseField.element === 'share') {
+                    return (<Share key={index} fieldList={fieldList} fields={responseField} index={index}
+                                   handleUp={handleUp} handleDown={handleDown} active={active}
+                                   setActive={setActive} updateField={updateField}
+                                   deleteFieldList={deleteFieldList} submissionId={submissionId}  isPublic={isPublic}/>)
                 }
             })}
+            {!isPublic && (
             <div className="py-3 px-6 bg-gray-200 border-t-1 border-gray-300">
                 <div className="mt-2">Standar Response</div>
                 <ButtonInput name={"text"} type={'custom_html'} callback={addFieldList}/>
@@ -68,9 +76,8 @@ function ResponseFields({responseFields, transform, formatFields}) {
                     by status
                 </button>
                 <div className="mt-2">Viral Response</div>
-                <button
-                    className="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap rounded py-1 px-3 leading-normal no-underline mt-1 mr-1 bg-gray-600 text-white hover:bg-gray-700">share
-                </button>
+                <ButtonInput name={"share"} type={'share'} callback={addFieldList}/>
+
                 <button
                     className="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap rounded py-1 px-3 leading-normal no-underline mt-1 mr-1 bg-gray-600 text-white hover:bg-gray-700">click
                 </button>
@@ -84,7 +91,7 @@ function ResponseFields({responseFields, transform, formatFields}) {
                 <button
                     className="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap rounded py-1 px-3 leading-normal no-underline mt-1 mr-1 bg-gray-600 text-white hover:bg-gray-700">leaderboard
                 </button>
-            </div>
+            </div>)}
         </div>)
 }
 
