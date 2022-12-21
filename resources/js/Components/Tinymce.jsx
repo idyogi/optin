@@ -3,6 +3,7 @@ import {Editor} from '@tinymce/tinymce-react';
 import {useToast} from "react-toastify";
 
 export default function Tinymce({html, onChange, height = 300}) {
+    const [content, setContent] = React.useState(html);
     const editorRef = useRef(null);
     const tnymce_image_upload_handler = (blobInfo, progress) => new Promise((resolve, reject) => {
         const xhr = new XMLHttpRequest();
@@ -48,7 +49,7 @@ export default function Tinymce({html, onChange, height = 300}) {
             <Editor
                 tinymceScriptSrc={'/tinymce/tinymce.min.js'}
                 onInit={(evt, editor) => editorRef.current = editor}
-                initialValue={html}
+                initialValue={content}
                 onEditorChange={onChange}
                 init={{
                     height: height,
