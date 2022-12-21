@@ -70,7 +70,7 @@ function EditForm({form, settings, fields, responseFields, formatFields, submitB
             <div className="ml-2">{config.app.url}/form/{form.slug}</div>
         </a>)} trailing={(<button onClick={handlePublish}
                                   className="inline-flex items-center justify-center text-sm font-medium transition-all ease-in-out duration-100 focus:outline-none focus:ring border rounded-md border-primary-500 bg-primary-500 text-white shadow hover:bg-primary-400 hover:border-primary-400 focus:border-primary-700 focus:bg-primary-600 px-3 py-2 text-sm"
-        >Simpan
+        >Save
             Form
         </button>)}>
             <div className="min-h-screen">

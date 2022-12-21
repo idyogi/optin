@@ -157,6 +157,42 @@ class form extends Model implements HasMedia
                     ],
                     "uniqElKey" => Str::uuid()
                 ],
+                'countdown' => [
+                    "element" => "countdown",
+                    "countdown_type" => 'evergreen',
+                    "evergreen_time" => 120,
+                    "fixed_time" => now()->format('Y-m-d H:i:s'),
+                    "settings" => [
+                        "container_class" => "",
+                        "placeholder" => "",
+                        "auto_select_country" => "no",
+                        "label" => "Phone/Mobile",
+                        "label_placement" => "",
+                        "help_message" => "",
+                        "admin_field_label" => "",
+                        "phone_country_list" => [
+                            "active_list" => "all",
+                            "visible_list" => [
+                            ],
+                            "hidden_list" => [
+                            ]
+                        ],
+                        "default_country" => "",
+                        "validation_rules" => [
+                            "required" => [
+                                "value" => false,
+                                "message" => "This field is required"
+                            ],
+                            "valid_phone_number" => [
+                                "value" => false,
+                                "message" => "Phone number is not valid"
+                            ]
+                        ],
+                        "conditional_logics" => [
+                        ]
+                    ],
+                    "uniqElKey" => Str::uuid()
+                ],
                 'custom_html' => [
                     "index" => 0,
                     "element" => "custom_html",
