@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import RightMenu from "../../../Components/RightMenu";
-import PanelLayout from "../../../Layouts/PanelLayout";
 import TableData from "../../../Components/TableData";
 import {
     createColumnHelper,
@@ -9,6 +8,7 @@ import {
     useReactTable,
 } from '@tanstack/react-table'
 import moment from 'moment'
+import PanelLayout from "../../../Layouts/PloiTheme/PanelLayout";
 
 
 function IndexForm({form, leads, filteredColumns}) {
@@ -60,15 +60,6 @@ function IndexForm({form, leads, filteredColumns}) {
         <PanelLayout title={'Leads'} subTitle={''}>
 
             <div className="min-h-screen">
-                <div
-                    className="my-6 lg:my-12 container px-6 mx-auto flex flex-col lg:flex-row items-start lg:items-center justify-between pb-4 border-b border-gray-300">
-                    <div><h4 className="text-2xl font-bold leading-tight text-gray-800">Leads</h4>
-                        <ul className="flex flex-col md:flex-row items-start md:items-center text-gray-600 text-sm mt-3"></ul>
-                    </div>
-                    <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-
-                    </div>
-                </div>
                 <div className="container mx-auto px-6 py-3">
                     <div className="grid grid-cols-1 md:grid-cols-4 gap-4 lg:gap-8">
                         <div
