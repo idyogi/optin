@@ -3,10 +3,12 @@ import Fields from "../../../../Components/Fields";
 
 function EditMenu({activeTab, setActiveTab}) {
     return (
+
         <aside className="py-6 px-2 sm:px-6 lg:py-0 lg:px-0 lg:col-span-3">
-            <nav
-                className="space-y-1">
-                <div
+            <ul className="nav nav-tabs flex flex-row md:flex-col flex-wrap list-none border-b-0 pl-0 mb-4"
+                id="tabs-tab"
+                role="tablist">
+                <li
                     onClick={() => {
                         setActiveTab('form')
                     }}
@@ -19,8 +21,8 @@ function EditMenu({activeTab, setActiveTab}) {
                               d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
                     </svg>
                     <span
-                        className="capitalize">form</span></div>
-                <div
+                        className="capitalize">form</span></li>
+                <li
                     onClick={() => {
                         setActiveTab('response')
                     }}
@@ -33,8 +35,8 @@ function EditMenu({activeTab, setActiveTab}) {
                               d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
                     </svg>
                     <span
-                        className="capitalize">response</span></div>
-                <div
+                        className="capitalize">response</span></li>
+                <li
                     onClick={() => {
                         setActiveTab('settings')
                     }}
@@ -48,8 +50,8 @@ function EditMenu({activeTab, setActiveTab}) {
                               d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path>
                     </svg>
                     <span className="capitalize">setting</span>
-                </div>
-            </nav>
+                </li>
+            </ul>
         </aside>
 
     );

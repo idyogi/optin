@@ -77,7 +77,8 @@ function EditForm({form, fields, responseFields, formatFields, submitButton, con
 
                 <div className="container mx-auto px-6">
                     <div className="mx-auto sm:px-6 lg:px-8">
-                        <div className="">
+
+                       <div className="">
                             <div className="">
                                 <div className="lg:grid lg:grid-cols-12 lg:gap-x-5">
                                     <EditMenu activeTab={activeTab} setActiveTab={updateActiveTab}/>
