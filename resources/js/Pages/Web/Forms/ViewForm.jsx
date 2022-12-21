@@ -30,10 +30,14 @@ function ViewForm({form, fields, responseFields,reference, submitButton, setting
         const res = form.post('/form/' + formData.slug + '/lead', {
             onError: () => toast.error('Gagal mengirim data, silakan coba lagi'),
             onSuccess: (res) => {
-                console.log(res.props.flash.success.submission_id);
                 setSubmissionId(res.props.flash.success.submission_id);
                 toast.success('Data berhasil dikirim');
                 setShowResponse(true);
+                console.log(res.props.flash.success);
+                //open link new tab
+                if (res.props.flash.success.redirectTo) {
+                    window.open(res.props.flash.success.redirectTo, '_blank');
+                }
             }
         });
         // setSubmitted(true);

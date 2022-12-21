@@ -73,7 +73,7 @@ class FormsController extends Controller
             $data['ref'] = (int)$validated['reference'];
         }
         $submisson = $form->leads()->create($data);
-        Cookie::queue('form_submitted', $submisson->id, 360*24*60);
+        Cookie::queue('form_submitted', $submisson->id, 3600);
         $submisson_metas = [];
         $redirectTo = false;
         foreach ($validated['fields'] as $field) {
@@ -101,7 +101,8 @@ class FormsController extends Controller
         $submisson->meta()->createMany($submisson_metas);
 
         if ($redirectTo) {
-            return Inertia::location($redirectTo);
+            return back()->with('success', ['submission_id' => $submisson->id, 'redirectTo' => $redirectTo]);
+
         }
         return back()->with('success', ['submission_id' => $submisson->id]);
     }
@@ -121,7 +122,7 @@ class FormsController extends Controller
             $settings['enableCookies'] = true;
         }
         $form->setFormMeta('total_views', 1, 'increment');
-
+//dd(Cookie::has('form_submitted'), $settings['enableCookies']);
         //check if has cookie
         if (Cookie::has('form_submitted') && $settings['enableCookies']) {
             $submission_id = Cookie::get('form_submitted');
