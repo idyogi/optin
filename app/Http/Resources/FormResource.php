@@ -25,7 +25,7 @@ class FormResource extends JsonResource
             'has_payment' => $this->has_payment,
             'type' => $this->type,
             'conditions' => $this->conditions,
-            'total_leads' => $this->getFormMeta('total_leads') ?? 0,
+            'total_leads' => $this->leads()->count(),
             'total_views' => $this->getFormMeta('total_views') ?? 0,
             'created_by' => $this->created_by,
             'created_at' => $this->created_at,
