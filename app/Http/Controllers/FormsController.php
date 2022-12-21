@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Resources\FormCollection;
 use App\Http\Resources\FormResource;
 use App\Models\form;
+use App\Models\submission;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cookie;
 use Inertia\Inertia;
 
 class FormsController extends Controller
@@ -61,7 +63,6 @@ class FormsController extends Controller
             'fields' => 'required|array',
             'reference' => 'nullable|string',
         ]);
-
         $form = form::where('slug', $slug)->first();
         $fields = $form->fields()['fields'];
         if (count($fields) != count($validated['fields'])) {
@@ -72,6 +73,7 @@ class FormsController extends Controller
             $data['ref'] = (int)$validated['reference'];
         }
         $submisson = $form->leads()->create($data);
+        Cookie::queue('form_submitted', $submisson->id, 360*24*60);
         $submisson_metas = [];
         $redirectTo = false;
         foreach ($validated['fields'] as $field) {
@@ -114,15 +116,28 @@ class FormsController extends Controller
         $responseFields = $form->response_fields();
 
         $metas = $form->metas();
-        $settings = $metas->where('meta_key', 'formSettings')->first();
+        $settings = json_decode(($metas->where('meta_key', 'formSettings')->first())->value, true);
+        if (!array_key_exists('enableCookies', $settings)) {
+            $settings['enableCookies'] = true;
+        }
         $form->setFormMeta('total_views', 1, 'increment');
+
+        //check if has cookie
+        if (Cookie::has('form_submitted') && $settings['enableCookies']) {
+            $submission_id = Cookie::get('form_submitted');
+            $submission = submission::where('id', $submission_id)->first();
+            if ($form->id != $submission->form_id) {
+                $submission = false;
+            }
+        }
         return inertia('Web/Forms/ViewForm', [
             'form' => $form,
             'fields' => $fields['fields'],
             'responseFields' => $responseFields,
             'submitButton' => $fields['submitButton'],
-            'settings' => json_decode($settings->value, true),
+            'settings' => $settings,
             'reference' => $reference ?? null,
+            'submission' => $submission ?? false,
         ]);
     }
 
@@ -130,9 +145,15 @@ class FormsController extends Controller
     {
         $fields = $form->fields();
         $responseFields = $form->response_fields();
+        $metas = $form->metas();
+        $settings = json_decode(($metas->where('meta_key', 'formSettings')->first())->value, true);
+        if (!array_key_exists('enableCookies', $settings)) {
+            $settings['enableCookies'] = true;
+        }
         return inertia('Panel/Forms/EditForm', [
             'form' => $form,
             'fields' => $fields['fields'],
+            'settings' => $settings,
             'responseFields' => $responseFields,
             'submitButton' => $fields['submitButton'],
             'formatFields' => $form->getFormatFields(),
@@ -160,6 +181,7 @@ class FormsController extends Controller
         $form->response_fields = json_encode($validated['response']);
         $form->title = $validated['settings']['title'];
         $form->slug = $validated['settings']['slug'];
+        $form->setFormMeta('formSettings', json_encode($validated['settings']['settings']));
         if ($form->save()) {
             return redirect()->route('panel.forms.edit', $form->uuid)->with('success', 'Form Updated Successfully');
         }
@@ -190,10 +212,11 @@ class FormsController extends Controller
         }
         return redirect()->route('panel.forms.index')->withErrors(['error' => 'Something went wrong']);
     }
+
     public function delete($uuid)
     {
         $form = form::where('uuid', $uuid)->firstOrFail();
-        if($form->user_id != auth()->id()){
+        if ($form->user_id != auth()->id()) {
             die('Unauthorized');
         }
         if ($form->delete()) {

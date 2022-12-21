@@ -11,7 +11,7 @@ import EditMenu from "./Widget/EditMenu";
 import ResponseTab from "./Widget/ResponseTab";
 import SettingTab from "./Widget/SettingTab";
 
-function EditForm({form, fields, responseFields, formatFields, submitButton, config}) {
+function EditForm({form, settings, fields, responseFields, formatFields, submitButton, config}) {
     const [activeTab, setActiveTab] = useState('form');
     const {flash} = usePage().props
     const {data, setData} = useForm(fields);
@@ -19,6 +19,7 @@ function EditForm({form, fields, responseFields, formatFields, submitButton, con
     const settingData = useForm({
         title: form.title,
         slug: form.slug,
+        settings: settings,
     });
     const [submitField, setSubmitField] = useState(submitButton);
     const handleChanges = (fieldList) => {
@@ -28,7 +29,6 @@ function EditForm({form, fields, responseFields, formatFields, submitButton, con
         responseData.setData(fieldList);
     }
     const handleSettingChanges = (data) => {
-        console.log(data);
         settingData.setData(data);
     }
 
@@ -78,7 +78,7 @@ function EditForm({form, fields, responseFields, formatFields, submitButton, con
                 <div className="container mx-auto px-6">
                     <div className="mx-auto sm:px-6 lg:px-8">
 
-                       <div className="">
+                        <div className="">
                             <div className="">
                                 <div className="lg:grid lg:grid-cols-12 lg:gap-x-5">
                                     <EditMenu activeTab={activeTab} setActiveTab={updateActiveTab}/>
@@ -96,7 +96,8 @@ function EditForm({form, fields, responseFields, formatFields, submitButton, con
                                                          transform={handleResponseChanges}
                                                          formatFields={formatFields}/>)}
                                         {activeTab === 'settings' && (
-                                            <SettingTab form={form} setting={settingData.data} transform={handleSettingChanges}/>)}
+                                            <SettingTab form={form} setting={settingData.data}
+                                                        transform={handleSettingChanges}/>)}
 
                                     </div>
                                 </div>

@@ -284,7 +284,8 @@ class form extends Model implements HasMedia
                 'confirmation' => [
                     'redirectTo' => 'same-page',
                     'message' => 'Thank you for your submission.',
-                ]
+                ],
+                'enableCookies' => true,
             ],
             'double_optin_settings' => [
                 'enabled' => false,

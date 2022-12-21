@@ -1,39 +1,34 @@
 import React from 'react';
 import {useForm} from "@inertiajs/inertia-react";
 import {toast} from "react-toastify";
+import SwitchButton from "../../../../Components/SwitchButton";
 
 function SettingTab({form, setting, transform}) {
     const {data, setData} = useForm({
         title: setting.title,
         slug: setting.slug,
+        settings: setting.settings,
     });
     const formulir = useForm({});
 
     function handleChange(key, value) {
         setData(key, value);
         if (key === 'title') {
-            tranform({title: value, slug: data.slug});
+            tranform({title: value, slug: data.slug, settings: data.settings});
         }
         if (key === 'slug') {
-            transform({title: data.title, slug: value});
+            transform({title: data.title, slug: value, settings: data.settings});
+        }
+        if(key === 'enableCookies'){
+            data.settings.enableCookies = value;
+            transform({settings: data.settings, title: data.title, slug: data.slug});
         }
     }
 
     async function deleteForm() {
         if (confirm('Are you sure?')) {
-            //window redirect
             window.location.href = '/panel/forms/' + form.uuid + '/delete';
-            // formulir.delete(window.location.origin + '/panel/forms/' + form.uuid, form.id, {
-            //     preserveScroll: true,
-            //     onSuccess: () => {
-            //         toast.success('Form has been deleted');
-            //         window.location.href = window.location.origin + '/panel/forms';
-            //         // Inertia.reload();
-            //     }
-            // });
             return true;
-            // await axios.delete(window.location.origin + '/panel/forms/' + form.uuid)
-            // window.location.href = window.location.origin + '/panel/forms';
         }
         return false;
     }
@@ -57,6 +52,11 @@ function SettingTab({form, setting, transform}) {
                            className="focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-transparent block appearance-none w-full py-1 mt-2 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded"
                            placeholder="Untitled Form"/>
                 </div>
+                <div className="flex items-center">
+                    <SwitchButton name="enableCookies" value={data.settings.enableCookies} onChanged={handleChange} />
+                    <span className="ml-3" id="toggleLabel"><span
+                        className="text-sm font-medium text-gray-900">Aktifkan Session </span></span></div>
+                <span className="text-sm mt-3 text-gray-500">jika session di aktifkan, maka lead yang sudah isi form akan langsung di redirect ke halaman response</span>
 
                 <div className="relative mt-10 mb-4">
                     <div className="absolute inset-0 flex items-center" aria-hidden="true">

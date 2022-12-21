@@ -8,9 +8,9 @@ import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ResponseFields from "../../Panel/Forms/ResponseFields/ResponseFields";
 
-function ViewForm({form, fields, responseFields,reference, submitButton, settings, config}) {
+function ViewForm({form, fields, responseFields,reference, submitButton, settings,submission, config}) {
     const formData = form;
-    const [showResponse, setShowResponse] = useState(false);
+    const [showResponse, setShowResponse] = useState(submission);
     const [submissionId, setSubmissionId] = useState(false);
     form = useForm([]);
     const handleChanges = (fieldList) => {
