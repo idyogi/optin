@@ -19,7 +19,6 @@ function Countdown({
                        handleUp,
                        deleteFieldList,
                        setActive,
-                       submissionId,
                        isPublic = false
                    }) {
     const [field, setField] = useState(fieldList[index]);

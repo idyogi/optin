@@ -5,6 +5,7 @@ import {arrayMoveImmutable} from 'array-move';
 import InputPhone from "./Fields/InputPhone";
 import SubmitButton from "./Fields/SubmitButton";
 import WhatsappRotator from "./Fields/WhatsappRotator";
+import Countdown from "../Pages/Panel/Forms/ResponseFields/Countdown";
 
 function Fields({
                     form,
@@ -20,6 +21,7 @@ function Fields({
     const [active, setActive] = useState(0);
     const [fieldList, setFieldList] = useState(fields);
     const hasSubmitButton = fieldList.filter(field => field.type === 'submit_button').length > 0;
+
     function addFieldList(type) {
         const field = formatFields[type];
         setFieldList([...fieldList, field]);
@@ -93,6 +95,13 @@ function Fields({
                                          isPublic={isPublic} updateField={updateField} form={form}
                                          publicSubmit={publicSubmit} deleteFieldList={deleteFieldList}/>)
                 }
+                if (field.element === 'countdown') {
+                    return (<Countdown key={index} fieldList={fieldList} fields={field} index={index}
+                                       handleUp={handleUp} handleDown={handleDown} active={active}
+                                       setActive={setActive} updateField={updateField}
+                                       deleteFieldList={deleteFieldList}
+                                       isPublic={isPublic}/>)
+                }
 
 
             })}
@@ -107,6 +116,7 @@ function Fields({
                 <ButtonInput name={"text"} type={'custom_html'} callback={addFieldList}/>
                 <div className="mt-2">Widget</div>
                 <ButtonInput name={"whatsapp rotator"} type={'whatsapp_rotator'} callback={addFieldList}/>
+                <ButtonInput name={"countdown"} type={'countdown'} callback={addFieldList}/>
             </div>)}
         </div>)
 }

@@ -69,7 +69,7 @@ function ResponseFields({form, responseFields, transform, formatFields,submissio
                     return (<Countdown key={index} fieldList={fieldList} fields={responseField} index={index}
                                    handleUp={handleUp} handleDown={handleDown} active={active}
                                    setActive={setActive} updateField={updateField}
-                                   deleteFieldList={deleteFieldList} submissionId={submissionId}  isPublic={isPublic}/>)
+                                   deleteFieldList={deleteFieldList}  isPublic={isPublic}/>)
                 }
             })}
             {!isPublic && (
