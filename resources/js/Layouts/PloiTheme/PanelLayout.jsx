@@ -3,6 +3,11 @@ import {ToastContainer} from "react-toastify";
 import RightMenu from "../../Components/RightMenu";
 
 function PanelLayout({children, footer, title = null, subTitle = null, trailing = null}) {
+    const [showMenu, setShowMenu] = React.useState(false);
+
+    function handleMenu() {
+        setShowMenu(!showMenu);
+    }
 
     const pageTitle = () => (
         <div className="row g-2 align-items-center">
@@ -23,9 +28,11 @@ function PanelLayout({children, footer, title = null, subTitle = null, trailing 
             <ToastContainer/>
             <div className="flex min-h-screen w-full flex-nowrap">
                 <aside
-                    className="fixed inset-y-0 left-0 z-30 mt-16 w-full bg-gray-800 text-white transition duration-200 ease-in-out lg:visible lg:sticky lg:top-0 lg:left-auto lg:mt-0 lg:h-screen lg:w-64 lg:translate-x-0 invisible -translate-x-full transform">
-                    <header className="flex h-16 items-center bg-gray-900 px-4"><p className="text-lg"><span
-                        className="font-bold">Funnel</span>.ink </p></header>
+                    className={`${showMenu ? '' : 'invisible -translate-x-full transform'} fixed inset-y-0 left-0 z-30 mt-16 w-full bg-gray-800 text-white transition duration-200 ease-in-out lg:visible lg:sticky lg:top-0 lg:left-auto lg:mt-0 lg:h-screen lg:w-64 lg:translate-x-0`}>
+                    <header className="flex h-16 items-center bg-gray-900 px-4">
+                        <p className="text-lg">
+                            <a href="/"><span
+                                className="font-bold">Funnel</span>.ink</a></p></header>
 
                     <ul className="my-4 space-y-2 px-2">
                         <li><a target="_self"
@@ -38,7 +45,8 @@ function PanelLayout({children, footer, title = null, subTitle = null, trailing 
                     <div>
                         <header
                             className="sticky top-0 z-30 flex h-16 items-center bg-white px-8 shadow dark:bg-gray-700 dark:text-white">
-                            <button className="mr-auto inline-block lg:hidden"><i className="fas fa-bars"></i></button>
+                            <button onClick={(e) => handleMenu()} className="mr-auto inline-block lg:hidden"><i
+                                className="fas fa-bars"></i></button>
                             <div className="ml-auto flex items-center space-x-4">
                                 <RightMenu/>
                             </div>
