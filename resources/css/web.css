@@ -7913,3 +7913,6 @@ tr {
 .to-pink-500 {
     --tw-gradient-to: #ec4899
 }
+.tox-statusbar__branding {
+    display: none
+}
