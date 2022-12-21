@@ -181,6 +181,29 @@ class FormsController extends Controller
 
     public function destroy(form $form)
     {
+        if ($form->delete()) {
+            //redirect
+            return redirect()->route('panel.forms.index')->with('success', 'Form Deleted Successfully');
+//            return redirect('/panel/forms')->with('success', 'Form Deleted Successfully');
+//            return redirect()->route('panel.forms.index')->with('success', 'Form Deleted Successfully');
+//            return back()->with('success', 'Form Deleted Successfully');
+        }
+        return redirect()->route('panel.forms.index')->withErrors(['error' => 'Something went wrong']);
+    }
+    public function delete($uuid)
+    {
+        $form = form::where('uuid', $uuid)->firstOrFail();
+        if($form->user_id != auth()->id()){
+            die('Unauthorized');
+        }
+        if ($form->delete()) {
+            //redirect
+            return redirect()->route('panel.forms.index')->with('success', 'Form Deleted Successfully');
+//            return redirect('/panel/forms')->with('success', 'Form Deleted Successfully');
+//            return redirect()->route('panel.forms.index')->with('success', 'Form Deleted Successfully');
+//            return back()->with('success', 'Form Deleted Successfully');
+        }
+        return redirect()->route('panel.forms.index')->withErrors(['error' => 'Something went wrong']);
     }
 
     public function upload(Request $request)

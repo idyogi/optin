@@ -96,7 +96,7 @@ function EditForm({form, fields, responseFields, formatFields, submitButton, con
                                                          transform={handleResponseChanges}
                                                          formatFields={formatFields}/>)}
                                         {activeTab === 'settings' && (
-                                            <SettingTab setting={settingData.data} transform={handleSettingChanges}/>)}
+                                            <SettingTab form={form} setting={settingData.data} transform={handleSettingChanges}/>)}
 
                                     </div>
                                 </div>
