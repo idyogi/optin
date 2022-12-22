@@ -1,11 +1,11 @@
 import React, {useState} from 'react';
 import InputText from "./Fields/InputText";
-import CustomHtml from "./Fields/CustomHtml";
 import {arrayMoveImmutable} from 'array-move';
 import InputPhone from "./Fields/InputPhone";
 import SubmitButton from "./Fields/SubmitButton";
-import WhatsappRotator from "./Fields/WhatsappRotator";
 import Countdown from "../Pages/Panel/Forms/ResponseFields/Countdown";
+import CustomHtml from "../Pages/Panel/Forms/ResponseFields/CustomHtml";
+import ResponseWhatsappRotator from "../Pages/Panel/Forms/ResponseFields/ResponseWhatsappRotator";
 
 function Fields({
                     form,
@@ -29,40 +29,9 @@ function Fields({
         transform([...fieldList, field]);
     }
 
-    function deleteFieldList(index) {
-        const newFieldList = fieldList.filter((field, i) => i !== index);
-        setFieldList(newFieldList);
-        setActive(0);
-        transform(newFieldList);
-    }
-
     function updateField(index, value) {
-        const newFieldList = [...fieldList];
-        newFieldList[index] = value;
-        transform(newFieldList);
-    }
-
-    function handleUp(index) {
-        const newFieldList = arrayMoveImmutable(fieldList, index, index - 1);
-        setFieldList(newFieldList)
-        setActive(index - 1);
-        console.log(newFieldList);
-        transform(newFieldList);
-    }
-
-    function handleDown(index) {
-        const newFieldList = arrayMoveImmutable(fieldList, index, index + 1);
-        setFieldList(newFieldList)
-        setActive(index + 1);
-        transform(newFieldList);
-    }
-
-    const handleChanges = (fieldList) => {
+        setActive(index);
         transform(fieldList);
-    }
-
-    function handleSubmit(value) {
-        handleOnSubmit(fieldList);
     }
 
     return (
@@ -70,43 +39,43 @@ function Fields({
             {fieldList.map(function (field, index) {
 
                 if (field.element === 'input_text') {
-                    return (<InputText key={index} fieldList={fieldList} field={field} index={index} active={active}
-                                       setActive={setActive} handleUp={handleUp} handleDown={handleDown}
+                    return (<InputText key={index} fieldList={fieldList} index={index} active={active}
+
                                        isPublic={isPublic} updateField={updateField}
-                                       deleteFieldList={deleteFieldList}/>)
+                    />)
                 }
                 if (field.element === 'phone') {
-                    return (<InputPhone key={index} fieldList={fieldList} field={field} index={index} active={active}
-                                        setActive={setActive} handleUp={handleUp} handleDown={handleDown}
+                    return (<InputPhone key={index} fieldList={fieldList} index={index} active={active}
+
                                         isPublic={isPublic} updateField={updateField}
-                                        deleteFieldList={deleteFieldList}/>)
+                    />)
                 }
                 if (field.element === 'custom_html') {
-                    return (<CustomHtml key={index} fieldList={fieldList} field={field} index={index} active={active}
-                                        setActive={setActive} handleUp={handleUp} handleDown={handleDown}
+                    return (<CustomHtml key={index} fieldList={fieldList} index={index} active={active}
+
                                         isPublic={isPublic} updateField={updateField}
-                                        deleteFieldList={deleteFieldList}/>)
+                    />)
                 }
                 if (field.element === 'whatsapp_rotator') {
 
                     return (
-                        <WhatsappRotator key={index} fieldList={fieldList} field={field} index={index} active={active}
-                                         setActive={setActive} handleUp={handleUp} handleDown={handleDown}
+                        <ResponseWhatsappRotator key={index} fieldList={fieldList} index={index} active={active}
+publicSubmit={publicSubmit}
                                          isPublic={isPublic} updateField={updateField} form={form}
-                                         publicSubmit={publicSubmit} deleteFieldList={deleteFieldList}/>)
+                                         publicSubmit={publicSubmit}/>)
                 }
                 if (field.element === 'countdown') {
                     return (<Countdown key={index} fieldList={fieldList} fields={field} index={index}
-                                       handleUp={handleUp} handleDown={handleDown} active={active}
-                                       setActive={setActive} updateField={updateField}
-                                       deleteFieldList={deleteFieldList}
+                                       active={active}
+                                       updateField={updateField}
+
                                        isPublic={isPublic}/>)
                 }
 
 
             })}
             {!hasSubmitButton && (
-                <SubmitButton form={form} submitField={submitField} active={active} setActive={setActive}
+                <SubmitButton form={form} submitField={submitField} active={active}
                               isPublic={isPublic} handleSubmitChanges={handleSubmitChanges}
                               publicSubmit={publicSubmit}/>)}
             {!isPublic && (<div className="py-3 px-6 bg-gray-200 border-t-1 border-gray-300">

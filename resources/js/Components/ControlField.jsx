@@ -2,7 +2,7 @@ import React, {useMemo, useRef, useState} from 'react';
 import {Switch} from '@headlessui/react'
 
 function ControlField({fieldList, index, updateField}) {
-    const [required, setRequired] = useState(fieldList[index].element !== 'custom_html' ? fieldList[index].settings.validation_rules.required.value : false);
+    const [required, setRequired] = useState(fieldList[index].element !== 'custom_html' ? fieldList[index].required : false);
 
     function deleteFieldList(index) {
         fieldList.splice(index, 1);

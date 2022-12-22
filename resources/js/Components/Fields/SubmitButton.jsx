@@ -6,15 +6,15 @@ import {useForm} from "@inertiajs/inertia-react";
 
 function SubmitButton({form, submitField, handleSubmitChanges, isPublic, active, setActive, publicSubmit}) {
     const {data, setData} = useForm({
-        'label': submitField.settings.button_ui.text,
-        'editor_title': submitField.editor_options.title
+        'label': submitField.label,
+        'title': submitField.title
     });
 
     function handleChanges(key, value) {
         setData(key, value);
         const newSubmitButton = submitField;
         if (key === 'label') {
-            newSubmitButton.settings.button_ui.text = value;
+            newSubmitButton.label = value;
         }
         console.log(newSubmitButton);
         handleSubmitChanges(newSubmitButton);
@@ -65,7 +65,7 @@ function SubmitButton({form, submitField, handleSubmitChanges, isPublic, active,
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
                                           d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"></path>
                                 </svg>
-                                <div className="ml-1">{data.editor_title}</div>
+                                <div className="ml-1">{data.title}</div>
                             </div>
                         </div>
                     </div>

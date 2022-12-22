@@ -11,11 +11,11 @@ import ResponseFields from "../../Panel/Forms/ResponseFields/ResponseFields";
 function ViewForm({form, fields, responseFields,reference, submitButton, settings,submission, config}) {
     const formData = form;
     const [showResponse, setShowResponse] = useState(submission);
-    const [submissionId, setSubmissionId] = useState(false);
+    const [submissionId, setSubmissionId] = useState(submission);
     form = useForm([]);
     const handleChanges = (fieldList) => {
         const newData = fieldList.map(field => {
-            return {name: field.element, value: field.attributes.value}
+            return {name: field.element, value: field.value}
         });
         const data = {};
         data.fields = newData;

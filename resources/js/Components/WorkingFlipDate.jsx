@@ -26,7 +26,6 @@ export const WorkingFlipDate = ({value}) => {
     // Start the Tick.down process
     useEffect(() => {
         const offset = new Date(tickValue);
-        console.log('dataserver',new Date(), offset);
         const counter = Tick.count.down(offset, {
             format: ["h", "m", "s"],
             server: false

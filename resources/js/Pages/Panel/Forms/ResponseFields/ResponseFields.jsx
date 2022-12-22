@@ -21,28 +21,6 @@ function ResponseFields({form, responseFields, transform, formatFields, submissi
         //set active to index
         setActive(index);
         transform(fieldList);
-
-    }
-
-    function deleteFieldList(index) {
-        // const newFieldList = fieldList.filter((field, i) => i !== index);
-        // setFieldList(newFieldList);
-        // setActive(0);
-        // transform(newFieldList);
-    }
-
-    function handleUp(index) {
-        // const newFieldList = arrayMoveImmutable(fieldList, index, index - 1);
-        // setFieldList(newFieldList)
-        // setActive(index - 1);
-        // transform(newFieldList);
-    }
-
-    function handleDown(index) {
-        // const newFieldList = arrayMoveImmutable(fieldList, index, index + 1);
-        // setFieldList(newFieldList)
-        // setActive(index + 1);
-        // transform(newFieldList);
     }
 
     return (

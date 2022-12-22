@@ -7,20 +7,16 @@ function ResponseWhatsappRotator({
                                      submissionId,
                                      index,
                                      active,
-                                     setActive,
-                                     handleUp,
-                                     handleDown,
                                      isPublic,
                                      updateField,
-                                     deleteFieldList,
                                      publicSubmit
                                  }) {
     const [field, setField] = useState(fieldList[index]);
     const {data, setData} = useForm({
-        label: field.settings.button_ui.text,
-        placeholder: field.attributes.placeholder,
-        required: field.settings.validation_rules.required.value,
-        numbers: field.settings.numbers,
+        label: field.label,
+        placeholder: field.placeholder,
+        required: field.required,
+        numbers: field.numbers,
     });
     const form = useForm([]);
 
@@ -30,19 +26,27 @@ function ResponseWhatsappRotator({
                 // window.location.href
             }
         });
+
     }
 
     function addNumber() {
-        setData('numbers', [...data.numbers, field.settings.numbers[0]]);
-        updateField(index, {
-            ...field,
-            settings: {...field.settings, numbers: [...data.numbers, field.settings.numbers[0]]}
-        });
+        setData('numbers', [...data.numbers, field.numbers[0]]);
+        //add number to fieldlist[index]
+        fieldList[index].numbers = [...data.numbers, field.numbers[0]];
+        updateField(index, fieldList[index]);
+    }
+
+    function removeNumber(i) {
+        const newNumbers = [...data.numbers];
+        newNumbers.splice(i, 1);
+        setData('numbers', newNumbers);
+        //remove number from fieldlist[index]
+        fieldList[index].numbers = newNumbers;
+        updateField(index, fieldList[index]);
     }
 
     function handleChangeNumbers(key, value, i) {
         if (key === 'number') {
-
             setData('numbers', data.numbers.map((number, index) => {
                 if (index === i) {
                     return {...number, number: value}
@@ -74,20 +78,22 @@ function ResponseWhatsappRotator({
                 return text;
             }));
         }
-        updateField(index, {...field, settings: {...field.settings, numbers: data.numbers}});
+        console.log(key, value, i);
+        fieldList[index].numbers[i] = {...fieldList[index].numbers[i], [key]: value};
+        updateField(index, fieldList[index]);
     }
 
     function handleChange(key, value) {
         setData(key, value);
         const newFieldList = [...fieldList];
         if (key === 'label') {
-            newFieldList[index].settings.label = value;
+            newFieldList[index].label = value;
         }
         if (key === 'placeholder') {
-            newFieldList[index].attributes.placeholder = value;
+            newFieldList[index].placeholder = value;
         }
         if (key === 'required') {
-            newFieldList[index].settings.validation_rules.required.value = value;
+            newFieldList[index].required = value;
         }
 
         updateField(index, newFieldList[index]);
@@ -99,8 +105,12 @@ function ResponseWhatsappRotator({
             <div className="flex-auto px-6 py-1">
                 <div className="my-3">
                     <div>
+                        {console.log(submissionId)}
+                        {submissionId && (
                         <button
-                            type="submit" onClick={() => goTo()}
+                            type="submit"
+
+                            onClick={()=>goTo()}
                             disabled={form.processing}
 
                             className="bg-indigo-600 w-full text-lg mt-1 inline-flex items-center justify-center px-6 py-3 border border-transparent rounded-md shadow-sm text-base font-semibold text-white">
@@ -119,19 +129,37 @@ function ResponseWhatsappRotator({
                             </div>
                             {form.processing ? 'Loading...' : data.label}
 
-                        </button>
+                        </button>)}
+                        {!submissionId && (
+                        <button
+                            type="submit"
+
+                            onClick={publicSubmit}
+                            disabled={form.processing}
+
+                            className="bg-indigo-600 w-full text-lg mt-1 inline-flex items-center justify-center px-6 py-3 border border-transparent rounded-md shadow-sm text-base font-semibold text-white">
+                            <div className="mr-1">
+                                <div>
+                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                         className="h-6 w-6" fill="none"
+                                         viewBox="0 0 24 24"
+                                         stroke="currentColor">
+                                        <path strokeLinecap="round"
+                                              strokeLinejoin="round" strokeWidth="2"
+                                              d="M13 9l3 3m0 0l-3 3m3-3H8m13 0a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                    </svg>
+                                </div>
+
+                            </div>
+                            {form.processing ? 'Loading...' : data.label}
+
+                        </button>)}
                     </div>
                 </div>
             </div>
         )
     }
 
-    function removeNumber(i) {
-        const newNumbers = [...data.numbers];
-        newNumbers.splice(i, 1);
-        setData('numbers', newNumbers);
-        updateField(index, {...field, settings: {...field.settings, numbers: newNumbers}});
-    }
 
     if (index === active) {
         return (
@@ -150,7 +178,7 @@ function ResponseWhatsappRotator({
                                           strokeWidth="2"
                                           d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"></path>
                                 </svg>
-                                <div className="ml-1">{field.editor_options.title}</div>
+                                <div className="ml-1">{field.title}</div>
                             </div>
                         </div>
                     </div>
@@ -218,14 +246,13 @@ function ResponseWhatsappRotator({
                                 type="text" placeholder="Pesan"/>
                         </div>
                     ))}
-                    <ControlField key={index} fieldList={fieldList} field={field} index={index} handleUp={handleUp}
-                                  handleDown={handleDown} updateField={updateField} deleteFieldList={deleteFieldList}/>
+                    <ControlField key={index} fieldList={fieldList} index={index} updateField={updateField}/>
 
                 </div>
             </div>
         );
     } else {
-        return (<div className="flex-auto px-6 py-1" onClick={() => setActive(index)}>
+        return (<div className="flex-auto px-6 py-1" onClick={() => updateField(index, fieldList[index])}>
             <div className="my-3">
 
                 <div>

@@ -127,9 +127,18 @@ class FormsController extends Controller
         if (Cookie::has('form_submitted') && $settings['enableCookies']) {
             $submission_id = Cookie::get('form_submitted');
             $submission = submission::where('id', $submission_id)->first();
-            if ($form->id != $submission->form_id) {
+            if (!$submission) {
                 $submission = false;
+            } else {
+                if ($form->id != $submission->form_id) {
+                    $submission = false;
+                }else{
+                    $submission = $submission_id;
+                }
+
             }
+
+
         }
         return inertia('Web/Forms/ViewForm', [
             'form' => $form,
