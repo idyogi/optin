@@ -5,8 +5,7 @@ import PanelLayout from "../../../Layouts/PloiTheme/PanelLayout";
 function IndexForm({forms, config}) {
 
     return (
-        <PanelLayout title={'List Form'} subTitle={''} trailing={(<a disabled="false"
-                                                                     className="inline-flex items-center justify-center text-sm font-medium transition-all ease-in-out duration-100 focus:outline-none focus:ring border rounded-md border-primary-500 bg-primary-500 text-white shadow hover:bg-primary-400 hover:border-primary-400 focus:border-primary-700 focus:bg-primary-600 px-3 py-2 text-sm"
+        <PanelLayout title={'List Form'} subTitle={''} trailing={(<a className="inline-flex items-center justify-center text-sm font-medium transition-all ease-in-out duration-100 focus:outline-none focus:ring border rounded-md border-primary-500 bg-primary-500 text-white shadow hover:bg-primary-400 hover:border-primary-400 focus:border-primary-700 focus:bg-primary-600 px-3 py-2 text-sm"
                                                                      target="_self"
                                                                      href="/panel/forms/create"> Create Form </a>)}>
             {forms.length === 0 && (
@@ -30,7 +29,7 @@ function IndexForm({forms, config}) {
                     <div>
                         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                             {forms.map((item, index) => (
-                                <div>
+                                <div key={index}>
                                     <div className="col-span-1 bg-white rounded-lg shadow divide-y divide-gray-200">
                                         <div className="w-full flex items-center justify-between p-6 space-x-6">
                                             <div className="flex-1 truncate">

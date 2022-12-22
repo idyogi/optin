@@ -16,12 +16,12 @@ function CustomHtml({
                         deleteFieldList
                     }) {
     function createMarkup() {
-        return {__html: field.settings.html_codes};
+        return {__html: field.html_codes};
     }
 
     function handleChange(html) {
         const newFieldList = [...fieldList];
-        newFieldList[index].settings.html_codes = html;
+        newFieldList[index].html_codes = html;
         updateField(index, newFieldList[index]);
     }
 
@@ -58,7 +58,7 @@ function CustomHtml({
                     </div>
                     <div>
                         <FormGroup>
-                            <Tinymce html={field.settings.html_codes} onChange={handleChange}/>
+                            <Tinymce html={field.html_codes} onChange={handleChange}/>
                         </FormGroup>
                         <div>
 

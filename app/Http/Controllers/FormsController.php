@@ -184,6 +184,7 @@ class FormsController extends Controller
         $form->slug = $validated['settings']['slug'];
         $form->setFormMeta('formSettings', json_encode($validated['settings']['settings']));
         if ($form->save()) {
+//            dd($form);
             return redirect()->route('panel.forms.edit', $form->uuid)->with('success', 'Form Updated Successfully');
         }
         return back()->withErrors(['error' => 'Something went wrong']);

@@ -198,8 +198,8 @@ class form extends Model implements HasMedia
                     "element" => "custom_html",
                     "attributes" => [
                     ],
+                    "html_codes" => '<h3><span style="color: #ff0000;">Some description</span> about this section</h3>',
                     "settings" => [
-                        "html_codes" => '<h3><span style="color: #ff0000;">Some description</span> about this section</h3>',
                         "validation_rules" => [
                             "required" => [
                                 "value" => false,
@@ -281,8 +281,8 @@ class form extends Model implements HasMedia
                     "element" => "custom_html",
                     "attributes" => [
                     ],
+                    "html_codes" => '<h3>Thank you for your submission.</h3>',
                     "settings" => [
-                        "html_codes" => '<h3>Thank you for your submission.</h3>',
                         "validation_rules" => [
                             "required" => [
                                 "value" => false,

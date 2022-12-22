@@ -3,18 +3,19 @@ import {FormGroup} from "reactstrap";
 import Tinymce from "../../../../Components/Tinymce";
 import ControlField from "../../../../Components/ControlField";
 
-function CustomHtml({fieldList, index, active, updateField, handleDown, handleUp, deleteFieldList, setActive, isPublic}) {
+function CustomHtml({fieldList, index, active, updateField, isPublic}) {
     const [field, setField] = useState(fieldList[index]);
 
     function createMarkup() {
-        return {__html: field.settings.html_codes};
+        return {__html: fieldList[index].html_codes};
     }
 
-    function handleChange(html) {
-        const newFieldList = [...fieldList];
-        newFieldList[index].settings.html_codes = html;
-        updateField(index, newFieldList[index]);
+    function handleChange(key, value) {
+        setField({...field, [key]: value}); //do not remove this line
+        fieldList[index] = {...fieldList[index], [key]: value};
+        updateField(index, fieldList[index]);
     }
+
     if (isPublic) {
         return (<div className="flex-auto px-8 py-1">
             <div className="mb-4 pr-6 ">
@@ -46,7 +47,8 @@ function CustomHtml({fieldList, index, active, updateField, handleDown, handleUp
                     </div>
                     <div>
                         <FormGroup>
-                            <Tinymce html={field.settings.html_codes} onChange={handleChange} height={250}/>
+                            <Tinymce html={fieldList[index].html_codes}
+                                     onChange={html => handleChange('html_codes', html)} height={250}/>
                         </FormGroup>
                         <div>
 
@@ -54,8 +56,7 @@ function CustomHtml({fieldList, index, active, updateField, handleDown, handleUp
                         <br/>
                     </div>
 
-                    <ControlField key={index} fieldList={fieldList} field={field} index={index} handleUp={handleUp}
-                                  handleDown={handleDown} deleteFieldList={deleteFieldList}/>
+                    <ControlField key={index} fieldList={fieldList} index={index} updateField={updateField} />
 
                 </div>
             </div>
@@ -66,7 +67,7 @@ function CustomHtml({fieldList, index, active, updateField, handleDown, handleUp
 
         return (<div
             className="flex-auto px-6 py-1"
-            onClick={() => setActive(index)}>
+            onClick={() => updateField(index,fieldList[index])}>
             <div className="my-3">
                 <div className="ql-editor">
                     <div dangerouslySetInnerHTML={createMarkup()}/>

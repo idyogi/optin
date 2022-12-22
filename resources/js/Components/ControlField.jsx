@@ -1,15 +1,28 @@
 import React, {useMemo, useRef, useState} from 'react';
 import {Switch} from '@headlessui/react'
 
-function ControlField({fieldList, index, active, handleUp, handleDown, updateField, deleteFieldList}) {
-    const [field, setField] = useState(fieldList[index]);
-    const [required, setRequired] = useState(field.element !== 'custom_html' ? field.settings.validation_rules.required.value : false);
+function ControlField({fieldList, index, updateField}) {
+    const [required, setRequired] = useState(fieldList[index].element !== 'custom_html' ? fieldList[index].settings.validation_rules.required.value : false);
+
+    function deleteFieldList(index) {
+        fieldList.splice(index, 1);
+        updateField(100, fieldList[index]);
+    }
+
+    function handleUp(index) {
+        fieldList.splice(index - 1, 0, fieldList.splice(index, 1)[0]);
+        updateField(index - 1, fieldList[index]);
+    }
+
+    function handleDown(index) {
+        fieldList.splice(index + 1, 0, fieldList.splice(index, 1)[0]);
+        updateField(index + 1, fieldList[index]);
+    }
 
     function handleRequired() {
         setRequired(!required);
         const newFieldList = [...fieldList];
         newFieldList[index].settings.validation_rules.required.value = !required;
-        console.log(newFieldList);
         updateField(index, newFieldList[index]);
     }
 
@@ -47,7 +60,9 @@ function ControlField({fieldList, index, active, handleUp, handleDown, updateFie
             </button>
             <button
                 //delete button
-                onClick={() => { if (window.confirm('Are you sure you wish to delete this item?')) deleteFieldList(index) }}
+                onClick={() => {
+                    if (window.confirm('Are you sure you wish to delete this item?')) deleteFieldList(index)
+                }}
                 className="ml-1 inline-block align-middle text-center select-none border font-normal whitespace-no-wrap rounded no-underline py-1 px-2 leading-tight text-xs">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6"
                      fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -59,7 +74,7 @@ function ControlField({fieldList, index, active, handleUp, handleDown, updateFie
 
             <div className="ml-1 flex items-center justify-center bg-white">
                 <div className="flex items-center">
-                    {field.element !== 'custom_html' ? (<div><Switch
+                    {fieldList[index].element !== 'custom_html' ? (<div><Switch
                         checked={required}
                         onChange={handleRequired}
                         className={`${required ? 'bg-indigo-600' : 'bg-gray-200'} z-0

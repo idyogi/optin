@@ -12,7 +12,7 @@ function PanelLayout({children, footer, title = null, subTitle = null, trailing 
     const pageTitle = () => (
         <div className="row g-2 align-items-center">
             <div className="col">
-                {subTitle && <div className="page-subtitle">{subTitle} </div>}
+                {subTitle && <div className="page-subtitle">{subTitle}</div>}
                 <h2 className="page-title">
                     {title}
                 </h2>
@@ -35,9 +35,14 @@ function PanelLayout({children, footer, title = null, subTitle = null, trailing 
                                 className="font-bold">Funnel</span>.ink</a></p></header>
 
                     <ul className="my-4 space-y-2 px-2">
-                        <li><a target="_self"
+                        <li>
+                            <a target="_self"
                                className="h-10 flex items-center w-full px-2 rounded-lg font-medium text-sm transition-all ease-in-out duration-100 focus:outline-none bg-gray-900 text-white"
                                href="/panel/forms"><i className="fas fa-server mr-2 fa-fw"></i>Dashboard</a>
+                        </li>
+                        <li><a target="_self"
+                               className="h-10 flex items-center w-full px-2 rounded-lg font-medium text-sm transition-all ease-in-out duration-100 focus:outline-none text-gray-300 hover:bg-gray-700 focus:bg-gray-900"
+                               href="/panel/broadcast"><i className="fa fa-bullhorn mr-2"></i>Broadcast</a>
                         </li>
                     </ul>
                 </aside>

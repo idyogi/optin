@@ -15,43 +15,19 @@ function Countdown({
                        index,
                        active,
                        updateField,
-                       handleDown,
-                       handleUp,
-                       deleteFieldList,
-                       setActive,
                        isPublic = false
                    }) {
     const [field, setField] = useState(fieldList[index]);
-    const {data, setData} = useForm({
-        countdown_type: field.countdown_type,
-        evergreen_time: field.evergreen_time,
-        fixed_time: field.fixed_time,
-    });
+
     const countdown_type = [
         {name: 'Fixed Time', code: 'fixed'},
         {name: 'Evergreen', code: 'evergreen'},
     ]
-    const [selected, setSelected] = useState(data.countdown_type)
-
-
-    function handleSelect(event) {
-        setSelected(event.target.value)
-        handleChange('countdown_type', event.target.value)
-    }
 
     function handleChange(key, value) {
-        setData(key, value);
-        const newFieldList = [...fieldList];
-        if (key === 'countdown_type') {
-            newFieldList[index].countdown_type = value;
-        }
-        if (key === 'evergreen_time') {
-            newFieldList[index].evergreen_time = value;
-        }
-        if (key === 'fixed_time') {
-            newFieldList[index].fixed_time = value;
-        }
-        updateField(index, newFieldList[index]);
+        setField({...field, [key]: value}); //do not remove this line
+        fieldList[index] = {...fieldList[index], [key]: value};
+        updateField(index, fieldList[index]);
     }
 
     if (index === active) {
@@ -79,11 +55,10 @@ function Countdown({
                                         <FormControl sx={{m: 1, width: '25ch'}} variant="outlined">
                                             <Select
                                                 id="demo-simple-select"
-                                                value={selected}
-                                                onChange={handleSelect}
-                                            >
+                                                value={fieldList[index].countdown_type}
+                                                onChange={e => handleChange('countdown_type', e.target.value)}>
                                                 {countdown_type.map((item, index) => (
-                                                    <MenuItem value={item.code}>{item.name}</MenuItem>
+                                                    <MenuItem key={index} value={item.code}>{item.name}</MenuItem>
                                                 ))}
                                             </Select>
                                         </FormControl>
@@ -92,12 +67,12 @@ function Countdown({
                             </div>
                             <div className="w-1/2 pl-1">
                                 <div className="mb-4"><label htmlFor="">Waktu Expire</label>
-                                    {data.countdown_type === 'evergreen' ? (
+                                    {fieldList[index].countdown_type === 'evergreen' ? (
                                         <div className="relative rounded-md shadow-sm">
                                             <FormControl sx={{m: 1, width: '25ch'}} variant="outlined">
                                                 <OutlinedInput
                                                     id="outlined-adornment-weight"
-                                                    type={'number'} value={data.evergreen_time}
+                                                    type={'number'} value={fieldList[index].evergreen_time}
                                                     onChange={(e) => handleChange('evergreen_time', e.target.value)}
                                                     endAdornment={<InputAdornment
                                                         position="end">minutes</InputAdornment>}
@@ -111,7 +86,7 @@ function Countdown({
                                         <div className="relative rounded-md shadow-sm">
                                             <FormControl sx={{m: 1, width: '25ch'}} variant="outlined">
                                                 <DatePicker
-                                                    name={"fixed_time"} datetime={data.fixed_time}
+                                                    name={"fixed_time"} datetime={fieldList[index].fixed_time}
                                                     onChanged={handleChange}/>
                                             </FormControl>
                                         </div>)}
@@ -120,8 +95,7 @@ function Countdown({
                         </div>
                     </div>
 
-                    <ControlField key={index} fieldList={fieldList} field={field} index={index} handleUp={handleUp}
-                                  handleDown={handleDown} deleteFieldList={deleteFieldList}/>
+                    <ControlField key={index} fieldList={fieldList} index={index} updateField={updateField} />
 
                 </div>
             </div>
@@ -132,12 +106,13 @@ function Countdown({
 
         return (<div
             className="flex-auto px-6 py-1"
-            onClick={() => !isPublic ? setActive(index) : goTo()}>
+            onClick={() => !isPublic ? updateField(index,fieldList[index]) : goTo()}>
             <div className="my-3">
                 <div>
                     <div className="text-6xl text-center flex w-full items-center justify-center">
-                        {data.countdown_type === 'evergreen' ? (<FlipDate value={data.evergreen_time}/>) :
-                            (<WorkingFlipDate value={data.fixed_time}/>)}
+                        {fieldList[index].countdown_type === 'evergreen' ? (
+                                <FlipDate value={fieldList[index].evergreen_time}/>) :
+                            (<WorkingFlipDate value={fieldList[index].fixed_time}/>)}
                     </div>
                 </div>
             </div>

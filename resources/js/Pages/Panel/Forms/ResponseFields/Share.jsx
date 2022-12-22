@@ -4,14 +4,15 @@ import Tinymce from "../../../../Components/Tinymce";
 import ControlField from "../../../../Components/ControlField";
 import {useForm} from "@inertiajs/inertia-react";
 
-function Share({fieldList, index, active, updateField, handleDown, handleUp, deleteFieldList, setActive,submissionId, isPublic = false}) {
-    const [field, setField] = useState(fieldList[index]);
-    const {data, setData} = useForm({
-        action_cooldown: field.action_cooldown,
-        points: field.points,
-        share_cta: field.share_cta,
-        share_to: field.share_to,
-    });
+function Share({
+                   fieldList,
+                   index,
+                   active,
+                   updateField,
+                   submissionId,
+                   isPublic = false
+               }) {
+    const [field, setField] = useState(fieldList[index]); //do not remove this line
     const url = window.location.href + '?ref=' + submissionId;
     const sosmed = [
         {name: 'Facebook', code: 'facebook'},
@@ -19,42 +20,24 @@ function Share({fieldList, index, active, updateField, handleDown, handleUp, del
         {name: 'Whatsapp', code: 'whatsapp'},
         {name: 'Telegram', code: 'telegram'},
     ]
-    const [selected, setSelected] = useState(data.share_to)
-
-    function handleSelect(code) {
-        setSelected(code)
-        handleChange('share_to', code)
-    }
 
     function handleChange(key, value) {
-        setData(key, value);
-        const newFieldList = [...fieldList];
-        if (key === 'action_cooldown') {
-            newFieldList[index].action_cooldown = value;
-        }
-        if (key === 'points') {
-            newFieldList[index].points = value;
-        }
-        if (key === 'share_to') {
-            newFieldList[index].share_to = value;
-        }
-        if (key === 'share_cta') {
-            newFieldList[index].share_cta = value;
-        }
-        updateField(index, newFieldList[index]);
+        setField({...field, [key]: value}); //do not remove this line
+        fieldList[index] = {...fieldList[index], [key]: value};
+        updateField(index, fieldList[index]);
     }
 
     function goTo() {
-        if(data.share_to === 'facebook') {
+        if (fieldList[index].share_to === 'facebook') {
             window.open('https://www.facebook.com/sharer/sharer.php?u=' + url, '_blank');
         }
-        if(data.share_to === 'twitter') {
+        if (fieldList[index].share_to === 'twitter') {
             window.open('https://twitter.com/intent/tweet?url=' + url, '_blank');
         }
-        if(data.share_to === 'whatsapp') {
+        if (fieldList[index].share_to === 'whatsapp') {
             window.open('https://api.whatsapp.com/send?text=' + url, '_blank');
         }
-        if(data.share_to === 'telegram') {
+        if (fieldList[index].share_to === 'telegram') {
             window.open('https://telegram.me/share/url?url=' + url, '_blank');
         }
     }
@@ -85,8 +68,8 @@ function Share({fieldList, index, active, updateField, handleDown, handleUp, del
                             <div className="w-1/2">
                                 <div className="mb-4"><label htmlFor="">Share to</label>
                                     <select
-                                        value={selected}
-                                        onChange={e => handleSelect(e.target.value)}
+                                        value={fieldList[index].share_to}
+                                        onChange={e => handleChange('share_to', e.target.value)}
                                         className="focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-transparent block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded">
                                         {sosmed.map((item, index) => (
                                             <option
@@ -98,9 +81,8 @@ function Share({fieldList, index, active, updateField, handleDown, handleUp, del
                             <div className="w-1/2 pl-1">
                                 <div className="mb-4"><label htmlFor="">Share Point</label>
                                     <input type="text"
-
                                            id="price"
-                                           value={data.points}
+                                           value={fieldList[index].points}
                                            onChange={e => handleChange('points', e.target.value)}
                                            className="focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-transparent block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded"
                                            placeholder="120"
@@ -110,7 +92,8 @@ function Share({fieldList, index, active, updateField, handleDown, handleUp, del
                             <div className="w-1/2">
                                 <div className="mb-4"><label htmlFor="">Call to Action</label>
                                     <input type="text"
-                                           value={data.share_cta}
+                                           key={index}
+                                           value={fieldList[index].share_cta}
                                            onChange={e => handleChange('share_cta', e.target.value)}
                                            className="focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-transparent block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded"/>
                                 </div>
@@ -120,7 +103,7 @@ function Share({fieldList, index, active, updateField, handleDown, handleUp, del
                                     <div className="relative rounded-md shadow-sm">
                                         <input type="text"
                                                id="price"
-                                               value={data.action_cooldown}
+                                               value={fieldList[index].action_cooldown}
                                                onChange={e => handleChange('action_cooldown', e.target.value)}
                                                className="focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-transparent block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded"
                                                placeholder="120"
@@ -136,8 +119,8 @@ function Share({fieldList, index, active, updateField, handleDown, handleUp, del
                         </div>
                     </div>
 
-                    <ControlField key={index} fieldList={fieldList} field={field} index={index} handleUp={handleUp}
-                                  handleDown={handleDown} deleteFieldList={deleteFieldList}/>
+                    <ControlField fieldList={fieldList} index={index}
+                                  updateField={updateField}/>
 
                 </div>
             </div>
@@ -148,10 +131,10 @@ function Share({fieldList, index, active, updateField, handleDown, handleUp, del
 
         return (<div
             className="flex-auto px-6 py-1"
-            onClick={() => !isPublic ? setActive(index) : goTo()}>
+            onClick={() => !isPublic ? updateField(index, fieldList[index]) : goTo()}>
             <div className="my-3">
                 <div>
-                    {data.share_to === 'facebook' && (
+                    {fieldList[index].share_to === 'facebook' && (
                         <button type="submit"
                                 className={'facebook-bg-color w-full text-lg mt-1 inline-flex items-center justify-center px-6 py-2 border border-transparent rounded-md shadow-sm text-base font-semibold text-white'}>
                             <div className="mr-1">
@@ -164,10 +147,11 @@ function Share({fieldList, index, active, updateField, handleDown, handleUp, del
 
                                 </div>
                             </div>
-                            {data.share_cta} <small className="text-sm ml-1">({data.points} poin)</small>
+                            {fieldList[index].share_cta} <small
+                            className="text-sm ml-1">({fieldList[index].points} poin)</small>
                         </button>
                     )}
-                    {data.share_to === 'twitter' && (
+                    {fieldList[index].share_to === 'twitter' && (
                         <button type="submit"
                                 className={'twitter-bg-color w-full text-lg mt-1 inline-flex items-center justify-center px-6 py-2 border border-transparent rounded-md shadow-sm text-base font-semibold text-white'}>
                             <div className="mr-1">
@@ -180,10 +164,11 @@ function Share({fieldList, index, active, updateField, handleDown, handleUp, del
 
                                 </div>
                             </div>
-                            {data.share_cta} <small className="text-sm ml-1">({data.points} poin)</small>
+                            {fieldList[index].share_cta} <small
+                            className="text-sm ml-1">({fieldList[index].points} poin)</small>
                         </button>
                     )}
-                    {data.share_to === 'whatsapp' && (
+                    {fieldList[index].share_to === 'whatsapp' && (
                         <button type="submit"
                                 className={'whatsapp-bg-color w-full text-lg mt-1 inline-flex items-center justify-center px-6 py-2 border border-transparent rounded-md shadow-sm text-base font-semibold text-white'}>
                             <div className="mr-1">
@@ -196,10 +181,11 @@ function Share({fieldList, index, active, updateField, handleDown, handleUp, del
 
                                 </div>
                             </div>
-                            {data.share_cta} <small className="text-sm ml-1">({data.points} poin)</small>
+                            {fieldList[index].share_cta} <small
+                            className="text-sm ml-1">({fieldList[index].points} poin)</small>
                         </button>
                     )}
-                    {data.share_to === 'telegram' && (
+                    {fieldList[index].share_to === 'telegram' && (
                         <button type="submit"
                                 className={'telegram-bg-color w-full text-lg mt-1 inline-flex items-center justify-center px-6 py-2 border border-transparent rounded-md shadow-sm text-base font-semibold text-white'}>
                             <div className="mr-1">
@@ -213,7 +199,8 @@ function Share({fieldList, index, active, updateField, handleDown, handleUp, del
 
                                 </div>
                             </div>
-                            {data.share_cta} <small className="text-sm ml-1">({data.points} poin)</small>
+                            {fieldList[index].share_cta} <small
+                            className="text-sm ml-1">({fieldList[index].points} poin)</small>
                         </button>
                     )}
                 </div>

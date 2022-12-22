@@ -26,6 +26,7 @@ function EditForm({form, settings, fields, responseFields, formatFields, submitB
         setData(fieldList);
     }
     const handleResponseChanges = (fieldList) => {
+        console.log(fieldList);
         responseData.setData(fieldList);
     }
     const handleSettingChanges = (data) => {
@@ -67,7 +68,7 @@ function EditForm({form, settings, fields, responseFields, formatFields, submitB
                 <path
                     d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z"></path>
             </svg>
-            <div className="ml-2">{config.app.url}/form/{form.slug}</div>
+            <span className="ml-2">{config.app.url}/form/{form.slug}</span>
         </a>)} trailing={(<button onClick={handlePublish}
                                   className="inline-flex items-center justify-center text-sm font-medium transition-all ease-in-out duration-100 focus:outline-none focus:ring border rounded-md border-primary-500 bg-primary-500 text-white shadow hover:bg-primary-400 hover:border-primary-400 focus:border-primary-700 focus:bg-primary-600 px-3 py-2 text-sm"
         >Save
