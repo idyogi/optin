@@ -228,7 +228,7 @@ function ResponseWhatsappRotator({
                                         className="focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-transparent block appearance-none w-32 ml-1 py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded"
                                         placeholder="1"/>
 
-                                    <div className="input-group-append">
+                                    <div className="input-group-append flex">
                                         <button
                                             onClick={() => handleChangeNumbers('pause', !data.numbers[i].pause, i)}
                                             className={`${data.numbers[i].pause ? 'text-blue-600 border-blue-600 hover:bg-blue-600 hover:text-white bg-white hover:bg-blue-700' : 'text-red-600 border-red-600 hover:bg-red-600 hover:text-white bg-white hover:bg-red-700'}inline-block ml-1 align-middle text-center select-none border font-normal whitespace-no-wrap rounded py-1 px-3 leading-normal no-underline`}
