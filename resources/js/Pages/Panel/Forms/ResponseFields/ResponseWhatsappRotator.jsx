@@ -105,7 +105,6 @@ function ResponseWhatsappRotator({
             <div className="flex-auto px-6 py-1">
                 <div className="my-3">
                     <div>
-                        {console.log(submissionId)}
                         {submissionId && (
                         <button
                             type="submit"

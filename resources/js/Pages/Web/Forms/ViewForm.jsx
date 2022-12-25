@@ -36,7 +36,7 @@ function ViewForm({form, fields, responseFields,reference, submitButton, setting
                 console.log(res.props.flash.success);
                 //open link new tab
                 if (res.props.flash.success.redirectTo) {
-                    window.open(res.props.flash.success.redirectTo, '_blank');
+                    window.open(res.props.flash.success.redirectTo, '_self');
                 }
             }
         });

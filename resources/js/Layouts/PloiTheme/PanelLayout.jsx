@@ -42,7 +42,7 @@ function PanelLayout({children, footer, title = null, subTitle = null, trailing 
                         </li>
                         <li><a target="_self"
                                className="h-10 flex items-center w-full px-2 rounded-lg font-medium text-sm transition-all ease-in-out duration-100 focus:outline-none text-gray-300 hover:bg-gray-700 focus:bg-gray-900"
-                               href="/panel/broadcast"><i className="fa fa-bullhorn mr-2"></i>Broadcast</a>
+                               href="/panel/campaigns"><i className="fa fa-bullhorn mr-2"></i>Broadcast</a>
                         </li>
                     </ul>
                 </aside>
