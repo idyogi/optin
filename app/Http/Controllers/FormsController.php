@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\FormLeadRequest;
 use App\Http\Resources\FormCollection;
 use App\Http\Resources\FormResource;
 use App\Models\form;
@@ -56,17 +57,19 @@ class FormsController extends Controller
     {
     }
 
-    public function lead(Request $request, $slug)
+    public function lead(FormLeadRequest $request, $slug)
     {
 
-        $validated = $request->validate([
-            'fields' => 'required|array',
-            'reference' => 'nullable|string',
-        ]);
+        $validated = $request->validated();
         $form = form::where('slug', $slug)->first();
         $fields = $form->fields()['fields'];
         if (count($fields) != count($validated['fields'])) {
             return back()->withErrors(['fields' => 'Invalid fields']);
+        }
+        foreach ($fields as $key => $field) {
+            if (isset($field['required']) && $field['required'] == true && !$validated['fields'][$key]['value']){
+                return back()->withErrors(['fields' => 'Silahkan isi form yang tersedia']);
+            }
         }
         $data['response'] = json_encode($validated['fields']);
         if (array_key_exists('reference', $validated)) {
@@ -77,9 +80,7 @@ class FormsController extends Controller
         $submisson_metas = [];
         $redirectTo = false;
         foreach ($validated['fields'] as $field) {
-            //if field name is whatsapp rotator
             if ($field['name'] === 'whatsapp_rotator') {
-                //get random number from rotator
                 $rotator = $form->rotators();
                 $redirectTo = 'https://wa.me/' . $rotator['number'] . '?text=' . urlencode($rotator['text']);
                 $submisson_metas[] = [
@@ -122,8 +123,7 @@ class FormsController extends Controller
             $settings['enableCookies'] = true;
         }
         $form->setFormMeta('total_views', 1, 'increment');
-//dd(Cookie::has('form_submitted'), $settings['enableCookies']);
-        //check if has cookie
+
         if (Cookie::has('form_submitted') && $settings['enableCookies']) {
             $submission_id = Cookie::get('form_submitted');
             $submission = submission::where('id', $submission_id)->first();
@@ -132,7 +132,7 @@ class FormsController extends Controller
             } else {
                 if ($form->id != $submission->form_id) {
                     $submission = false;
-                }else{
+                } else {
                     $submission = $submission_id;
                 }
 

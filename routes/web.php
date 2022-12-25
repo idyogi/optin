@@ -14,6 +14,7 @@ Route::controller(AuthController::class)->group(function () {
 });
 Route::controller(FormsController::class)->group(function () {
     Route::get('/', 'index');
+    Route::get('/{slug}', [FormsController::class, 'show']);
     Route::get('/form/{slug}', [FormsController::class, 'show'])->name('form.show');
     Route::post('/form/{slug}/lead', [FormsController::class, 'lead'])->name('form.lead');
 });
