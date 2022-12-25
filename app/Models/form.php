@@ -201,6 +201,7 @@ class form extends Model implements HasMedia
 
             $is_reached = $percentage_limit <= $percentage_lead;
             //if pause is true, then skip this number
+            $number['pause'] = $number['pause'] ?? false;
             if ($number['pause'] || $is_reached) {
                 continue;
             }
