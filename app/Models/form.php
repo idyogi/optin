@@ -213,7 +213,7 @@ class form extends Model implements HasMedia
         }
 
         $shuffle = collect($rotator['numbers'])->reject(function ($item){
-            return $item['pause'];
+            return $item['pause'] ?? false;
         })->shuffle();
         $rotator['numbers'] = $shuffle->toArray();
         $this->setFormMeta('whatsapp_rotator', json_encode($rotator));
