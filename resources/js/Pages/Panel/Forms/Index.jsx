@@ -46,7 +46,7 @@ function IndexForm({forms, config}) {
                                                     </svg>
                                                     <div className="ml-2"><a target="_blank"
                                                                              className="hover:underline"
-                                                                             href={config.app.url + '/form/' + item.slug}>{config.app.url}/form/{item.slug}</a>
+                                                                             href={config.app.url + '/' + item.slug}>{config.app.url}/{item.slug}</a>
                                                     </div>
                                                 </div>
                                                 <div className="text-gray-500 mt-2 text-sm flex">
