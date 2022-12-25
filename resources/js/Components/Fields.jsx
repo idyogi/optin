@@ -60,7 +60,6 @@ function Fields({
 
                     return (
                         <ResponseWhatsappRotator key={index} fieldList={fieldList} index={index} active={active}
-publicSubmit={publicSubmit}
                                          isPublic={isPublic} updateField={updateField} form={form}
                                          publicSubmit={publicSubmit}/>)
                 }
