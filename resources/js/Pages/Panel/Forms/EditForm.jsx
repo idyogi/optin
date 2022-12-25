@@ -60,7 +60,7 @@ function EditForm({form, settings, fields, responseFields, formatFields, submitB
     };
     return (
         <PanelLayout title={'Edit Form'} subTitle={(<a target="_blank" className="hover:underline flex"
-                                                       href={config.app.url + /form/ + form.slug}>
+                                                       href={config.app.url + '/' + form.slug}>
             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20"
                  fill="currentColor">
                 <path
@@ -68,7 +68,7 @@ function EditForm({form, settings, fields, responseFields, formatFields, submitB
                 <path
                     d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z"></path>
             </svg>
-            <span className="ml-2">{config.app.url}/form/{form.slug}</span>
+            <span className="ml-2">{config.app.url}/{form.slug}</span>
         </a>)} trailing={(<button onClick={handlePublish}
                                   className="inline-flex items-center justify-center text-sm font-medium transition-all ease-in-out duration-100 focus:outline-none focus:ring border rounded-md border-primary-500 bg-primary-500 text-white shadow hover:bg-primary-400 hover:border-primary-400 focus:border-primary-700 focus:bg-primary-600 px-3 py-2 text-sm"
         >Save

@@ -82,6 +82,7 @@ class form extends Model implements HasMedia
                             'portion' => 1,
                             "current_lead" => 0,
                             "text" => "Hello, I want to ask about this product",
+                            "pause" => false,
                         ],
                     ],
                     "uniqElKey" => Str::uuid()
@@ -199,6 +200,10 @@ class form extends Model implements HasMedia
             $percentage_lead = ($number['current_lead']) / ($total_lead + 1) * 100;
 
             $is_reached = $percentage_limit <= $percentage_lead;
+            //if pause is true, then skip this number
+            if ($number['pause'] || $is_reached) {
+                continue;
+            }
             if (!$is_reached) {
                 $number['current_lead'] += 1;
                 $rotator['numbers'][$key] = $number;
@@ -206,7 +211,9 @@ class form extends Model implements HasMedia
             }
         }
 
-        $shuffle = collect($rotator['numbers'])->shuffle();
+        $shuffle = collect($rotator['numbers'])->reject(function ($item){
+            return $item['pause'];
+        })->shuffle();
         $rotator['numbers'] = $shuffle->toArray();
         $this->setFormMeta('whatsapp_rotator', json_encode($rotator));
         $this->setFormMeta('total_leads', $total_lead);

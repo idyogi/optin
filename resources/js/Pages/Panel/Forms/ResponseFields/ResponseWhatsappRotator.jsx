@@ -40,7 +40,6 @@ function ResponseWhatsappRotator({
         const newNumbers = [...data.numbers];
         newNumbers.splice(i, 1);
         setData('numbers', newNumbers);
-        //remove number from fieldlist[index]
         fieldList[index].numbers = newNumbers;
         updateField(index, fieldList[index]);
     }
@@ -78,6 +77,14 @@ function ResponseWhatsappRotator({
                 return text;
             }));
         }
+        if (key === 'pause') {
+            setData('numbers', data.numbers.map((pause, index) => {
+                if (index === i) {
+                    return {...pause, pause: value}
+                }
+                return pause;
+            }));
+        }
         console.log(key, value, i);
         fieldList[index].numbers[i] = {...fieldList[index].numbers[i], [key]: value};
         updateField(index, fieldList[index]);
@@ -106,53 +113,53 @@ function ResponseWhatsappRotator({
                 <div className="my-3">
                     <div>
                         {submissionId && (
-                        <button
-                            type="submit"
+                            <button
+                                type="submit"
 
-                            onClick={()=>goTo()}
-                            disabled={form.processing}
+                                onClick={() => goTo()}
+                                disabled={form.processing}
 
-                            className="bg-indigo-600 w-full text-lg mt-1 inline-flex items-center justify-center px-6 py-3 border border-transparent rounded-md shadow-sm text-base font-semibold text-white">
-                            <div className="mr-1">
-                                <div>
-                                    <svg xmlns="http://www.w3.org/2000/svg"
-                                         className="h-6 w-6" fill="none"
-                                         viewBox="0 0 24 24"
-                                         stroke="currentColor">
-                                        <path strokeLinecap="round"
-                                              strokeLinejoin="round" strokeWidth="2"
-                                              d="M13 9l3 3m0 0l-3 3m3-3H8m13 0a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                    </svg>
+                                className="bg-indigo-600 w-full text-lg mt-1 inline-flex items-center justify-center px-6 py-3 border border-transparent rounded-md shadow-sm text-base font-semibold text-white">
+                                <div className="mr-1">
+                                    <div>
+                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                             className="h-6 w-6" fill="none"
+                                             viewBox="0 0 24 24"
+                                             stroke="currentColor">
+                                            <path strokeLinecap="round"
+                                                  strokeLinejoin="round" strokeWidth="2"
+                                                  d="M13 9l3 3m0 0l-3 3m3-3H8m13 0a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                        </svg>
+                                    </div>
+
                                 </div>
+                                {form.processing ? 'Loading...' : data.label}
 
-                            </div>
-                            {form.processing ? 'Loading...' : data.label}
-
-                        </button>)}
+                            </button>)}
                         {!submissionId && (
-                        <button
-                            type="submit"
+                            <button
+                                type="submit"
 
-                            onClick={publicSubmit}
-                            disabled={form.processing}
+                                onClick={publicSubmit}
+                                disabled={form.processing}
 
-                            className="bg-indigo-600 w-full text-lg mt-1 inline-flex items-center justify-center px-6 py-3 border border-transparent rounded-md shadow-sm text-base font-semibold text-white">
-                            <div className="mr-1">
-                                <div>
-                                    <svg xmlns="http://www.w3.org/2000/svg"
-                                         className="h-6 w-6" fill="none"
-                                         viewBox="0 0 24 24"
-                                         stroke="currentColor">
-                                        <path strokeLinecap="round"
-                                              strokeLinejoin="round" strokeWidth="2"
-                                              d="M13 9l3 3m0 0l-3 3m3-3H8m13 0a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                    </svg>
+                                className="bg-indigo-600 w-full text-lg mt-1 inline-flex items-center justify-center px-6 py-3 border border-transparent rounded-md shadow-sm text-base font-semibold text-white">
+                                <div className="mr-1">
+                                    <div>
+                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                             className="h-6 w-6" fill="none"
+                                             viewBox="0 0 24 24"
+                                             stroke="currentColor">
+                                            <path strokeLinecap="round"
+                                                  strokeLinejoin="round" strokeWidth="2"
+                                                  d="M13 9l3 3m0 0l-3 3m3-3H8m13 0a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                        </svg>
+                                    </div>
+
                                 </div>
+                                {form.processing ? 'Loading...' : data.label}
 
-                            </div>
-                            {form.processing ? 'Loading...' : data.label}
-
-                        </button>)}
+                            </button>)}
                     </div>
                 </div>
             </div>
@@ -194,7 +201,7 @@ function ResponseWhatsappRotator({
                                                                      className="ml-3 inline-block align-middle text-center select-none border font-normal whitespace-no-wrap rounded no-underline py-1 px-2 leading-tight text-xs text-blue-600 border-blue-600 hover:bg-blue-600 hover:text-white bg-white hover:bg-blue-600"><i
                         className="fas fa-plus mr-1"></i> tambah pilihan</span></div>
                     {data.numbers.map((number, i) => (
-                        <div key={i} className="mb-3">
+                        <div key={i} className={`mb-3 ${data.numbers[i].pause ? "border-gray-300 focus:border-blue-300 w-full shadow-sm dark:bg-gray-800 dark:text-gray-300 dark:border-gray-900 opacity-50" : ""}`}>
                             <div className="relative items-stretch w-full mb-3">
                                 <input type="text"
                                        onChange={(e) => {
@@ -222,6 +229,12 @@ function ResponseWhatsappRotator({
                                         placeholder="1"/>
 
                                     <div className="input-group-append">
+                                        <button
+                                            onClick={() => handleChangeNumbers('pause', !data.numbers[i].pause, i)}
+                                            className={`${data.numbers[i].pause ? 'text-blue-600 border-blue-600 hover:bg-blue-600 hover:text-white bg-white hover:bg-blue-700' : 'text-red-600 border-red-600 hover:bg-red-600 hover:text-white bg-white hover:bg-red-700'}inline-block ml-1 align-middle text-center select-none border font-normal whitespace-no-wrap rounded py-1 px-3 leading-normal no-underline`}
+                                            type="button">
+                                            <i className={`fa ${data.numbers[i].pause ? "fa-user" : "fa-user-slash"}`}></i>
+                                        </button>
                                         <button
                                             onClick={() => removeNumber(i)}
                                             className="inline-block ml-1 align-middle text-center select-none border font-normal whitespace-no-wrap rounded py-1 px-3 leading-normal no-underline text-red-600 border-red-600 hover:bg-red-600 hover:text-white bg-white hover:bg-red-700"
