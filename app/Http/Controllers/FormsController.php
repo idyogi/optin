@@ -25,7 +25,7 @@ class FormsController extends Controller
     {
         $form = form::where('uuid', $uuid)->firstOrFail();
 
-        $leads = $form->leads()->latest()->with('meta')->paginate(10)
+        $leads = $form->leads()->latest()->with('meta')->paginate(20)
             ->withQueryString();
 
         $filteredColumns = $form->columns();

@@ -4,11 +4,13 @@ import TableData from "../../../Components/TableData";
 import {
     createColumnHelper,
     flexRender,
-    getCoreRowModel,
+    getCoreRowModel, getPaginationRowModel,
     useReactTable,
 } from '@tanstack/react-table'
 import moment from 'moment'
 import PanelLayout from "../../../Layouts/PloiTheme/PanelLayout";
+import {useQuery} from "react-query";
+import Paginate from "../../../Components/Paginate";
 
 
 function IndexForm({form, leads, filteredColumns}) {
@@ -27,7 +29,6 @@ function IndexForm({form, leads, filteredColumns}) {
     });
     const [data, setData] = React.useState(() => [...submissions])
 
-    const rerender = React.useReducer(() => ({}), {})[1]
     const columnHelper = createColumnHelper()
     let columns = [];
     const array = ["React", "is", "awesome", "!"];
@@ -48,11 +49,10 @@ function IndexForm({form, leads, filteredColumns}) {
             footer: info => info.column.id,
         }),
     ]
-
     const table = useReactTable({
-        data,
+        data: data,
         columns,
-        getCoreRowModel: getCoreRowModel(),
+        getCoreRowModel: getCoreRowModel()
     })
 
 
@@ -108,6 +108,8 @@ function IndexForm({form, leads, filteredColumns}) {
                                         </tbody>
 
                                     </table>
+
+                                    {leads.last_page > 1 && (<Paginate pagination={leads.links}/>)}
                                 </div>
                             </div>
                         </div>
@@ -116,6 +118,19 @@ function IndexForm({form, leads, filteredColumns}) {
             </div>
         </PanelLayout>
     );
+}
+
+export async function fetchData(options) {
+    // Simulate some network latency
+    await new Promise(r => setTimeout(r, 500))
+    console.log(pageIndex, pageSize)
+    return {
+        rows: data.slice(
+            options.pageIndex * options.pageSize,
+            (options.pageIndex + 1) * options.pageSize
+        ),
+        pageCount: Math.ceil(data.length / options.pageSize),
+    }
 }
 
 export default IndexForm;

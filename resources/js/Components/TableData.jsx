@@ -47,11 +47,11 @@ function TableData({children, title, headers = [], pagination = null}) {
                 </div>
             </CardHeader>
             <div className="table-responsive">
-                <Table className="table table-vcenter card-table">
-                    <thead>
-                    <tr>
+                <Table className="vtl-table vtl-table-hover vtl-table-bordered">
+                    <thead className="vtl-thead">
+                    <tr className="vtl-thead-tr">
                         {headers.map((column, index) => (
-                            <th key={index}>{column}</th>
+                            <th key={index} className="vtl-thead-th">{column} </th>
                         ))}
                     </tr>
                     </thead>
