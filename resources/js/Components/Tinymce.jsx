@@ -54,6 +54,9 @@ export default function Tinymce({html, onChange, height = 300}) {
                 init={{
                     height: height,
                     menubar: false,
+                    relative_urls: false,
+                    remove_script_host: false,
+                    convert_urls: true,
                     plugins: [
                         'advlist', 'autolink', 'lists', 'link', 'image', 'charmap',
                         'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
