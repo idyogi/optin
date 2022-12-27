@@ -14,7 +14,7 @@ function SettingTab({form, setting, transform}) {
     function handleChange(key, value) {
         setData(key, value);
         if (key === 'title') {
-            tranform({title: value, slug: data.slug, settings: data.settings});
+            transform({title: value, slug: data.slug, settings: data.settings});
         }
         if (key === 'slug') {
             transform({title: data.title, slug: value, settings: data.settings});

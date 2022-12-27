@@ -32,7 +32,7 @@ function PanelLayout({children, footer, title = null, subTitle = null, trailing 
                     <header className="flex h-16 items-center bg-gray-900 px-4">
                         <p className="text-lg">
                             <a href="/"><span
-                                className="font-bold">Funnel</span>.ink</a></p></header>
+                                className="font-bold">Admin</span>Selvi</a></p></header>
 
                     <ul className="my-4 space-y-2 px-2">
                         <li>
