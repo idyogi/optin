@@ -67,7 +67,7 @@ class FormsController extends Controller
             return back()->withErrors(['fields' => 'Invalid fields']);
         }
         foreach ($fields as $key => $field) {
-            if (isset($field['required']) && $field['required'] == true && !$validated['fields'][$key]['value']){
+            if (isset($field['required']) && $field['required'] == true && !$validated['fields'][$key]['value']) {
                 return back()->withErrors(['fields' => 'Silahkan isi form yang tersedia']);
             }
         }
@@ -80,6 +80,32 @@ class FormsController extends Controller
         $submisson_metas = [];
         $redirectTo = false;
         foreach ($validated['fields'] as $field) {
+            if ($field['name'] === 'phone') {
+                //if not number, then return error
+                if (!is_numeric($field['value'])) {
+                    return back()->withErrors(['fields' => 'Nomor telepon tidak valid']);
+                }
+                //if value is "08" then add 62
+                $phone = $field['value'];
+                if (substr($phone, 0, 2) === '08') {
+                    $phone = '62' . substr($phone, 1);
+                }
+                // if value is "8" then add 62
+                if (substr($phone, 0, 1) === '8') {
+                    $phone = '62' . $phone;
+                }
+                //if not start with 0 or 8 then return error
+                if (!preg_match('/^0|8/', $field['value'])) {
+                    return back()->withErrors(['fields' => 'Nomor telepon tidak valid']);
+                }
+                //if phone length is not between 12-15 then return error
+                if (strlen($phone) < 13 || strlen($phone) > 15) {
+                    return back()->withErrors(['fields' => 'Nomor telepon tidak valid']);
+                }
+                $field['value'] = $phone;
+
+
+            }
             if ($field['name'] === 'whatsapp_rotator') {
                 $rotator = $form->rotators();
                 $redirectTo = 'https://wa.me/' . $rotator['number'] . '?text=' . urlencode($rotator['text']);
