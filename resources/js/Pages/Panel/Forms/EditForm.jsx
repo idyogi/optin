@@ -59,7 +59,7 @@ function EditForm({form, settings, fields, responseFields, formatFields, submitB
         setActiveTab(value);
     };
     return (
-        <PanelLayout title={'Edit Form'} subTitle={(<a target="_blank" className="hover:underline flex"
+        <PanelLayout title={form.title} subTitle={(<a target="_blank" className="hover:underline flex"
                                                        href={config.app.url + '/' + form.slug}>
             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20"
                  fill="currentColor">

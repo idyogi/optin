@@ -9,6 +9,7 @@ use App\Models\form;
 use App\Models\submission;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Str;
 use Inertia\Inertia;
 
 class FormsController extends Controller
@@ -241,11 +242,7 @@ class FormsController extends Controller
     public function destroy(form $form)
     {
         if ($form->delete()) {
-            //redirect
             return redirect()->route('panel.forms.index')->with('success', 'Form Deleted Successfully');
-//            return redirect('/panel/forms')->with('success', 'Form Deleted Successfully');
-//            return redirect()->route('panel.forms.index')->with('success', 'Form Deleted Successfully');
-//            return back()->with('success', 'Form Deleted Successfully');
         }
         return redirect()->route('panel.forms.index')->withErrors(['error' => 'Something went wrong']);
     }
@@ -257,13 +254,35 @@ class FormsController extends Controller
             die('Unauthorized');
         }
         if ($form->delete()) {
-            //redirect
             return redirect()->route('panel.forms.index')->with('success', 'Form Deleted Successfully');
-//            return redirect('/panel/forms')->with('success', 'Form Deleted Successfully');
-//            return redirect()->route('panel.forms.index')->with('success', 'Form Deleted Successfully');
-//            return back()->with('success', 'Form Deleted Successfully');
         }
         return redirect()->route('panel.forms.index')->withErrors(['error' => 'Something went wrong']);
+    }
+    public function duplicate($uuid)
+    {
+        $form = form::where('uuid', $uuid)->firstOrFail();
+        if ($form->user_id != auth()->id()) {
+            die('Unauthorized');
+        }
+        //duplicate form and metas
+        $newForm = $form->replicate();
+        $newForm->uuid = Str::uuid();
+        $newForm->title = $newForm->title . ' (copy)';
+        $newForm->slug = $newForm->slug();
+        $newForm->save();
+        $metas = $form->metas;
+
+        foreach ($metas as $meta) {
+            $newMeta = $meta->replicate();
+            //if meta key is total_views or total_leads, set it to 0
+            if ($newMeta->meta_key == 'total_views' || $newMeta->meta_key == 'total_leads') {
+                $newMeta->value = 0;
+            }
+            $newMeta->form_id = $newForm->id;
+            $newMeta->save();
+        }
+
+        return redirect()->route('panel.forms.edit', $newForm->uuid)->with('success', 'Form Duplicated Successfully');
     }
 
     public function upload(Request $request)

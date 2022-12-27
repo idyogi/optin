@@ -27,6 +27,7 @@ Route::name('panel.')->prefix('panel')->middleware('auth')->group(function () {
     Route::post('forms/upload', [FormsController::class, 'upload'])->name('forms.upload');
     Route::resource('forms', FormsController::class);
     Route::get('forms/{uuid}/leads', [FormsController::class, 'leads'])->name('forms.leads');
+    Route::get('forms/{uuid}/duplicate', [FormsController::class, 'duplicate'])->name('forms.duplicate');
     Route::get('forms/{uuid}/delete', [FormsController::class, 'delete'])->name('forms.delete');
     Route::post('forms/{uuid}/slug-change', [FormsController::class, 'changeSlug'])->name('forms.slug-change');
 });

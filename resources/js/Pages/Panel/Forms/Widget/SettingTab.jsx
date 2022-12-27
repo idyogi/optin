@@ -19,7 +19,7 @@ function SettingTab({form, setting, transform}) {
         if (key === 'slug') {
             transform({title: data.title, slug: value, settings: data.settings});
         }
-        if(key === 'enableCookies'){
+        if (key === 'enableCookies') {
             data.settings.enableCookies = value;
             transform({settings: data.settings, title: data.title, slug: data.slug});
         }
@@ -31,6 +31,11 @@ function SettingTab({form, setting, transform}) {
             return true;
         }
         return false;
+    }
+
+    async function duplicate() {
+        window.location.href = '/panel/forms/' + form.uuid + '/duplicate';
+        return true;
     }
 
     return (
@@ -53,7 +58,7 @@ function SettingTab({form, setting, transform}) {
                            placeholder="Untitled Form"/>
                 </div>
                 <div className="flex items-center">
-                    <SwitchButton name="enableCookies" value={data.settings.enableCookies} onChanged={handleChange} />
+                    <SwitchButton name="enableCookies" value={data.settings.enableCookies} onChanged={handleChange}/>
                     <span className="ml-3" id="toggleLabel"><span
                         className="text-sm font-medium text-gray-900">Aktifkan Session </span></span></div>
                 <span className="text-sm mt-3 text-gray-500">jika session di aktifkan, maka lead yang sudah isi form akan langsung di redirect ke halaman response</span>
@@ -98,6 +103,11 @@ function SettingTab({form, setting, transform}) {
                     <button type="button"
                             onClick={deleteForm}
                             className="text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900">Hapus
+                        Form
+                    </button>
+                    <button type="button"
+                            onClick={duplicate}
+                            className="text-sky-700 hover:text-white border border-sky-700 hover:bg-sky-800 focus:ring-4 focus:outline-none focus:ring-sky-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:border-red-500 dark:text-sky-500 dark:hover:text-white dark:hover:bg-sky-600 dark:focus:ring-sky-900">Duplikat
                         Form
                     </button>
                 </div>
