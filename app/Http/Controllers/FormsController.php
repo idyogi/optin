@@ -76,7 +76,7 @@ class FormsController extends Controller
             $data['ref'] = (int)$validated['reference'];
         }
         $submisson = $form->leads()->create($data);
-        Cookie::queue('form_submitted', $submisson->id, 3600);
+        Cookie::queue('form_submitted', $submisson->id, 1440);//only one day
         $submisson_metas = [];
         $redirectTo = false;
         foreach ($validated['fields'] as $field) {
