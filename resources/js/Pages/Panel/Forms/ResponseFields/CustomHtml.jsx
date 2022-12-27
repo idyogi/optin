@@ -2,10 +2,16 @@ import React, {useMemo, useRef, useState} from 'react';
 import {FormGroup} from "reactstrap";
 import Tinymce from "../../../../Components/Tinymce";
 import ControlField from "../../../../Components/ControlField";
+import {Head} from "@inertiajs/inertia-react";
 
 function CustomHtml({fieldList, index, active, updateField, isPublic}) {
     const [field, setField] = useState(fieldList[index]);
-
+    //find image from html_codes
+    const image = useMemo(() => {
+        const regex = /<img.*?src="(.*?)"/;
+        const match = field.html_codes.match(regex);
+        return match ? match[1] : null;
+    }, [field.html_codes]);
     function createMarkup() {
         return {__html: fieldList[index].html_codes};
     }
@@ -17,7 +23,16 @@ function CustomHtml({fieldList, index, active, updateField, isPublic}) {
     }
 
     if (isPublic) {
+        let getImageFromHtml = (html_codes) => {
+            let div = document.createElement('div');
+            div.innerHTML = html;
+            let img = div.querySelector('img');
+            return img ? img.src : '';
+        };
         return (<div className="flex-auto px-8 py-1">
+            {image && (<Head>
+                <meta property="og:image" content={image}/>
+            </Head>)}
             <div className="mb-4 pr-6 ">
                 <div dangerouslySetInnerHTML={createMarkup()}/>
             </div>

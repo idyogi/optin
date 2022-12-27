@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {Button, FormFeedback, FormGroup, Label, Spinner} from "reactstrap";
 import {Input} from "postcss";
 import Fields from "../../../Components/Fields";
-import {useForm, usePage} from "@inertiajs/inertia-react";
+import {Head, useForm, usePage} from "@inertiajs/inertia-react";
 import {Inertia} from "@inertiajs/inertia";
 import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -33,16 +33,12 @@ function ViewForm({form, fields, responseFields, reference, submitButton, settin
                 setSubmissionId(res.props.flash.success.submission_id);
                 toast.success('Data berhasil dikirim');
                 setShowResponse(true);
-                console.log(res.props.flash.success);
                 //open link new tab
                 if (res.props.flash.success.redirectTo) {
                     window.open(res.props.flash.success.redirectTo, '_self');
                 }
             }
         });
-        // setSubmitted(true);
-        // Inertia.reload();
-
     }
 
     function createMarkup() {
@@ -50,10 +46,18 @@ function ViewForm({form, fields, responseFields, reference, submitButton, settin
     }
 
 
+    let getImageFromContent = (content) => {
+        let img = content.match(/<img[^>]+src="([^">]+)"/g);
+        if (img) {
+            return img[0].replace(/<img[^>]+src="([^">]+)"/g, '$1');
+        }
+        return null;
+    }
     return (
-
-
         <div className="min-h-screen bg-gray-100">
+            <Head>
+                <title>{formData.title}</title>
+            </Head>
             <ToastContainer/>
             <div className="font-sans max-w-3xl mx-auto sm:px-6 lg:py-6 lg:px-8">
                 <div className="bg-white  shadow-xl rounded-lg pb-8 pt-6">
