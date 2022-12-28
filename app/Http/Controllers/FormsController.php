@@ -77,7 +77,7 @@ class FormsController extends Controller
             $data['ref'] = (int)$validated['reference'];
         }
         $submisson = $form->leads()->create($data);
-        Cookie::queue('form_submitted_cookies', $submisson->id, 1);//only 1 minute
+        Cookie::queue('Selviform_submitted_cks', $submisson->id, 1);//only 1 minute
         $submisson_metas = [];
         $redirectTo = false;
         foreach ($validated['fields'] as $field) {
@@ -151,8 +151,8 @@ class FormsController extends Controller
         }
         $form->setFormMeta('total_views', 1, 'increment');
 
-        if (Cookie::has('form_submitted_cookies') && $settings['enableCookies']) {
-            $submission_id = Cookie::get('form_submitted_cookies');
+        if (Cookie::has('Selviform_submitted_cks') && $settings['enableCookies']) {
+            $submission_id = Cookie::get('Selviform_submitted_cks');
             $submission = submission::where('id', $submission_id)->first();
             if (!$submission) {
                 $submission = false;
