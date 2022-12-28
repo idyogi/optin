@@ -77,7 +77,7 @@ class FormsController extends Controller
             $data['ref'] = (int)$validated['reference'];
         }
         $submisson = $form->leads()->create($data);
-        Cookie::queue('form_submitted_cookies', $submisson->id, 120);//only 2 hours
+        Cookie::queue('form_submitted_cookies', $submisson->id, 1);//only 1 minute
         $submisson_metas = [];
         $redirectTo = false;
         foreach ($validated['fields'] as $field) {
@@ -100,7 +100,7 @@ class FormsController extends Controller
                     return back()->withErrors(['fields' => 'Nomor telepon tidak valid']);
                 }
                 //if phone length is not between 12-15 then return error
-                if (strlen($phone) < 13 || strlen($phone) > 15) {
+                if (strlen($phone) < 11 || strlen($phone) > 15) {
                     return back()->withErrors(['fields' => 'Nomor telepon tidak valid']);
                 }
                 $field['value'] = $phone;
