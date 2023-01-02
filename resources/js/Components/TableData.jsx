@@ -1,5 +1,15 @@
 import React, {useState} from 'react';
-import {Button, Card, CardHeader, Input, InputGroup, Pagination, PaginationItem, PaginationLink, Table} from "reactstrap";
+import {
+    Button,
+    Card,
+    CardHeader,
+    Input,
+    InputGroup,
+    Pagination,
+    PaginationItem,
+    PaginationLink,
+    Table
+} from "reactstrap";
 import {getCurrentUrl} from "../utils/helper";
 import {Inertia} from "@inertiajs/inertia";
 import {IconTrash, IconX} from "@tabler/icons";
@@ -33,33 +43,44 @@ function TableData({children, title, headers = [], pagination = null}) {
     return (
         <Card>
             <CardHeader>
-                <div className="d-flex justify-content-between w-full align-items-center">
-                    <h3>{title}</h3>
+                <div className="flex items-center justify-between border-b border-gray-200 bg-white px-8 py-4 dark:border-gray-600 dark:bg-gray-700 dark:text-white">
+                    <div>
+                        <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-300">
+                            {title}
+                        </h2>
+                    </div>
                     <div className="d-flex gap-3">
                         <form onSubmit={handleSearch}>
                             <InputGroup>
-                                <Input type={'text'} placeholder={'Search'} value={searchText} onChange={(e) => setSearchText(e.target.value)}/>
-                                <Button color={'primary'}>Search</Button>
-                                {search && <Button color={'danger'} onClick={clearSearch}><IconTrash/></Button>}
+                                <Input type={'text'} placeholder={'Search then enter'} value={searchText}
+                                       onChange={(e) => setSearchText(e.target.value)}
+                                       className="form-input form-search w-full rounded-md border-gray-300 placeholder-gray-500 shadow-sm focus:border-blue-300 dark:border-gray-900 dark:bg-gray-800 dark:text-gray-300"/>
+
+                                {/*{search && <Button color={'danger'} onClick={clearSearch}><IconTrash/></Button>}*/}
                             </InputGroup>
                         </form>
                     </div>
                 </div>
             </CardHeader>
-            <div className="table-responsive">
-                <Table className="vtl-table vtl-table-hover vtl-table-bordered">
+            <div
+                className="divide-y divide-gray-200 rounded-lg bg-white shadow dark:divide-gray-800 dark:bg-gray-700 dark:text-gray-300">
+                <Table
+                    className="w-full divide-y divide-gray-200 overflow-hidden rounded-t-lg text-left text-sm dark:divide-gray-800">
                     <thead className="vtl-thead">
-                    <tr className="vtl-thead-tr">
+                    <tr className="bg-gray-50 text-gray-500 dark:border-gray-800 dark:bg-gray-600 dark:text-gray-300">
                         {headers.map((column, index) => (
-                            <th key={index} className="vtl-thead-th">{column} </th>
+                            <th key={index} className="py-2 px-4 font-medium">{column} </th>
                         ))}
                     </tr>
                     </thead>
-                    <tbody>
+                    <tbody className="dark:border-gray-800">
                     {children}
                     </tbody>
                 </Table>
-                <Paginate pagination={pagination}/>
+                <div className="pb-1 pt-6">
+                    {/*<Paginate pagination={pagination}/>*/}
+
+                </div>
             </div>
         </Card>
     );

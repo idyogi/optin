@@ -11,6 +11,9 @@ return new class extends Migration {
             $table->id();
             $table->foreignIdFor(\App\Models\Contact::class);
             $table->foreignIdFor(\App\Models\Campaign::class);
+            $table->foreignIdFor(\App\Models\SendingServer::class);
+            $table->enum('status', ['sent', 'failed']);
+            $table->text('error_message')->nullable();
             $table->dateTime('sent_at');
             $table->timestamps();
         });

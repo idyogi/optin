@@ -52,6 +52,7 @@
         "react-toastify": "^9.1.1",
         "reactstrap": "^9.1.5",
         "rsuite": "^5.23.3",
+        "socket.io-client": "^4.5.4",
         "tinymce": "^6.3.1"
     }
 }

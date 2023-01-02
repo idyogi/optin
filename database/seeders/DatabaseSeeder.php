@@ -48,20 +48,26 @@ class DatabaseSeeder extends Seeder
                         'value' => $field['element'].$index.$j,
                     ];
                 });
-                $submisson = $form->leads()->create([
-                    'response' => json_encode($fields),
-                ]);
-                $submisson_metas = [];
-                foreach ($fields as $field) {
-                    $submisson_metas[] = [
-                        'submission_id' => $submisson->id,
-                        'meta_key' => $field['name'],
-                        'value' => $field['value'] ?? null,
-                        'user_id' => auth()->id() ?? null,
-                    ];
-                }
-                $submisson->meta()->createMany($submisson_metas);
+//                $submisson = $form->leads()->create([
+//                    'response' => json_encode($fields),
+//                ]);
+//                $submisson_metas = [];
+//                foreach ($fields as $field) {
+//                    $submisson_metas[] = [
+//                        'submission_id' => $submisson->id,
+//                        'meta_key' => $field['name'],
+//                        'value' => $field['value'] ?? null,
+//                        'user_id' => auth()->id() ?? null,
+//                    ];
+//                }
+//                $submisson->meta()->createMany($submisson_metas);
             }
+
+            //run lists seeder
+            $this->call([
+                ListsSeeder::class,
+                CampaignSeeder::class
+            ]);
 
         }
     }

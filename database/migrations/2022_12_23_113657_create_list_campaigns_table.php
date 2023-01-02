@@ -10,7 +10,6 @@ return new class extends Migration {
         Schema::create('list_campaigns', function (Blueprint $table) {
             $table->foreignIdFor(\App\Models\Lists::class);
             $table->foreignIdFor(\App\Models\Campaign::class);
-            $table->timestamps();
         });
     }
 

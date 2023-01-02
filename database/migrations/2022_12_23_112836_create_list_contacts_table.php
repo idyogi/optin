@@ -8,9 +8,8 @@ return new class extends Migration {
     public function up()
     {
         Schema::create('list_contacts', function (Blueprint $table) {
-            $table->foreignIdFor(\App\Models\Lists::class);
-            $table->foreignIdFor(\App\Models\Contact::class);
-            $table->timestamps();
+            $table->foreignIdFor(\App\Models\Lists::class, 'list_id')->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(\App\Models\Contact::class, 'contact_id')->constrained()->cascadeOnDelete();
         });
     }
 

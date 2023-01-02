@@ -150,6 +150,10 @@ class form extends Model implements HasMedia
     {
         return $this->belongsTo(User::class);
     }
+    public function list(): BelongsTo
+    {
+        return $this->belongsTo(Lists::class);
+    }
 
     //get form meta
     public function getFormMeta($key)
@@ -259,6 +263,20 @@ class form extends Model implements HasMedia
     function leads()
     {
         return $this->hasMany(submission::class);
+    }
+
+    //get leads from meta
+    public function getLeads()
+    {
+        $leads = $this->leads()->orderBy('id', 'desc')->get();
+        $leads = $leads->map(function ($lead) {
+
+            $lead->meta = $lead->meta->mapWithKeys(function ($item) {
+                return [$item->meta_key => $item->value];
+            });
+            return $lead;
+        });
+        return $leads;
     }
 
     public

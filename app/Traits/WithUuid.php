@@ -8,10 +8,11 @@ use Illuminate\Support\Str;
 
 trait WithUuid
 {
-    protected static function bootWithUuid() {
+    protected static function bootWithUuid()
+    {
         static::creating(function ($model) {
-            if (! $model->getKey()) {
-                $model->uuid = (string) Str::orderedUuid();
+            if (!$model->getKey()) {
+                $model->uuid = (string)Str::orderedUuid();
             }
         });
     }
@@ -20,6 +21,7 @@ trait WithUuid
     {
         return static::where('uuid', $uuid)->first();
     }
+
     public static function findBySku(string $sku): ?Model
     {
         return static::where('sku', $sku)->first();
@@ -33,6 +35,11 @@ trait WithUuid
     public function getPrimaryKey(): string
     {
         return 'uuid';
+    }
+
+    public function getUid(): ?string
+    {
+        return $this->uuid;
     }
 
 }

@@ -6,9 +6,11 @@ use App\Http\Requests\FormLeadRequest;
 use App\Http\Resources\FormCollection;
 use App\Http\Resources\FormResource;
 use App\Models\form;
+use App\Models\Lists;
 use App\Models\submission;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
 
@@ -58,10 +60,45 @@ class FormsController extends Controller
     {
     }
 
+    public function frontendSave($request, $form)
+    {
+        $list = $form->list;
+
+        if ($form->list == null) {
+            // Create a new list with the form name
+            $list = Lists::create([
+                'name' => $form->title,
+                'user_id' => auth()->id(),
+            ]);
+        }
+        $form->list_id = $list->id;
+        $form->save();
+
+
+        try {
+            // Create contact
+            list($validator, $contact) = $list->addContact($request, Lists::SOURCE_EMBEDDED_FORM);
+        } catch (\Exception $ex) {
+            return response()->json([
+                'message' => $ex->getMessage()
+            ], 400);
+        }
+
+        // if fails
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 400);
+        }
+
+        return response()->json([
+            'message' => 'OK',
+        ]);
+    }
+
     public function lead(FormLeadRequest $request, $slug)
     {
 
         $validated = $request->validated();
+
         $form = form::where('slug', $slug)->first();
         $fields = $form->fields()['fields'];
         if (count($fields) != count($validated['fields'])) {
@@ -76,6 +113,7 @@ class FormsController extends Controller
         if (array_key_exists('reference', $validated)) {
             $data['ref'] = (int)$validated['reference'];
         }
+        DB::beginTransaction();
         $submisson = $form->leads()->create($data);
         Cookie::queue('Selviform_submitted_cks', $submisson->id, 1);//only 1 minute
         $submisson_metas = [];
@@ -84,6 +122,7 @@ class FormsController extends Controller
             if ($field['name'] === 'phone') {
                 //if not number, then return error
                 if (!is_numeric($field['value'])) {
+                    DB::rollBack();
                     return back()->withErrors(['fields' => 'Nomor telepon tidak valid']);
                 }
                 //if value is "08" then add 62
@@ -97,10 +136,12 @@ class FormsController extends Controller
                 }
                 //if not start with 0 or 8 then return error
                 if (!preg_match('/^0|8/', $field['value'])) {
+                    DB::rollBack();
                     return back()->withErrors(['fields' => 'Nomor telepon tidak valid']);
                 }
                 //if phone length is not between 12-15 then return error
                 if (strlen($phone) < 11 || strlen($phone) > 15) {
+                    DB::rollBack();
                     return back()->withErrors(['fields' => 'Nomor telepon tidak valid']);
                 }
                 $field['value'] = $phone;
@@ -128,11 +169,15 @@ class FormsController extends Controller
         }
         $submisson->meta()->createMany($submisson_metas);
 
+        $addToList = $this->frontendSave($validated['fields'], $form);
+        DB::commit();
         if ($redirectTo) {
             return back()->with('success', ['submission_id' => $submisson->id, 'redirectTo' => $redirectTo]);
 
         }
         return back()->with('success', ['submission_id' => $submisson->id]);
+
+
     }
 
     public function show(Request $request, $slug)
@@ -258,6 +303,7 @@ class FormsController extends Controller
         }
         return redirect()->route('panel.forms.index')->withErrors(['error' => 'Something went wrong']);
     }
+
     public function duplicate($uuid)
     {
         $form = form::where('uuid', $uuid)->firstOrFail();

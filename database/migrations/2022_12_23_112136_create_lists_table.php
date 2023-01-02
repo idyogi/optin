@@ -9,6 +9,7 @@ return new class extends Migration {
     {
         Schema::create('lists', function (Blueprint $table) {
             $table->id();
+            $table->uuid('uuid')->unique();
             $table->foreignIdFor(\App\Models\User::class);
             $table->string('name');
             $table->integer('sort_order')->default(0);

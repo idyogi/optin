@@ -3,6 +3,8 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CampaignsController;
 use App\Http\Controllers\FormsController;
+use App\Http\Controllers\ListsController;
+use App\Http\Controllers\SendingServersController;
 use App\Http\Controllers\SubmissionsController;
 use Illuminate\Support\Facades\Route;
 
@@ -23,6 +25,14 @@ Route::controller(SubmissionsController::class)->group(function () {
 });
 Route::name('panel.')->prefix('panel')->middleware('auth')->group(function () {
     Route::resource('campaigns', CampaignsController::class);
+    Route::resource('devices', SendingServersController::class);
+    //getQrCode from devices
+    Route::post('/devices/{device}/qr', [SendingServersController::class, 'getQrCode'])->name('devices.qr');
+    //duplicate campaign
+    Route::get('/campaigns/{campaign}/duplicate', [CampaignsController::class, 'duplicate'])->name('campaigns.duplicate');
+    Route::resource('lists', ListsController::class);
+    //post import from form leads
+    Route::post('/lists/import', [ListsController::class, 'import'])->name('lists.import');
 
     Route::post('forms/upload', [FormsController::class, 'upload'])->name('forms.upload');
     Route::resource('forms', FormsController::class);
@@ -30,4 +40,6 @@ Route::name('panel.')->prefix('panel')->middleware('auth')->group(function () {
     Route::get('forms/{uuid}/duplicate', [FormsController::class, 'duplicate'])->name('forms.duplicate');
     Route::get('forms/{uuid}/delete', [FormsController::class, 'delete'])->name('forms.delete');
     Route::post('forms/{uuid}/slug-change', [FormsController::class, 'changeSlug'])->name('forms.slug-change');
+    Route::get('logs', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index']);
+
 });

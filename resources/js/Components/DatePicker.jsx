@@ -25,6 +25,8 @@ export default function DatePicker({name, datetime, onChanged}) {
                 <DateTimePicker
                     value={value}
                     onChange={handleChange}
+                    ampm={false}
+                    disablePast={true}
                     inputFormat="YYYY-MM-DD HH:mm:ss"
                     renderInput={(params) => <TextField {...params} />}
                 />
