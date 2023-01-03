@@ -34,17 +34,12 @@ class CampaignsController extends Controller
 
     public function create()
     {
-        $list = Lists::create([
-            'name' => 'List ' . Carbon::now()->format('Y-m-d H:i:s'),
-            'user_id' => auth()->id(),
-        ]);
         //create campaign and redirect to edit page
         $campaign = new Campaign();
         $campaign->name = 'New Campaign';
         $campaign->text = 'Hai, live Facebook jam 9 pagi ya';
         $campaign->scheduled_at = now()->addHours(9);
         $campaign->user_id = auth()->id();
-        $campaign->default_list_id = $list->id;
         $campaign->save();
         return redirect()->route('panel.campaigns.edit', $campaign->uuid);
     }
@@ -61,7 +56,7 @@ class CampaignsController extends Controller
     {
         //campaign with lists
         $lists = $campaign->lists()->get();
-        $allLists = \App\Models\Lists::all();
+        $allLists = \App\Models\Lists::with('contacts')->get();
         return inertia('Panel/Campaigns/ManageCampaign', [
             'campaign' => (new CampaignResource($campaign))->jsonSerialize(),
             'lists' => $lists,
@@ -88,7 +83,15 @@ class CampaignsController extends Controller
     public function destroy(Campaign $campaign)
     {
     }
-
+    public function draft(Campaign $campaign)
+    {
+        $campaign->pause();
+        $campaign->status = 'new';
+        if ($campaign->save()) {
+            return redirect()->route('panel.campaigns.index')->with('success', 'Campaigns saved successfully');
+        }
+        return redirect()->route('panel.campaigns.index')->withErrors(['error' => 'Something went wrong']);
+    }
     //dupicate campaign
     public function duplicate(Request $request, Campaign $campaign)
     {

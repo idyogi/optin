@@ -28,7 +28,8 @@ Route::name('panel.')->prefix('panel')->middleware('auth')->group(function () {
     Route::resource('devices', SendingServersController::class);
     //getQrCode from devices
     Route::post('/devices/{device}/qr', [SendingServersController::class, 'getQrCode'])->name('devices.qr');
-    //duplicate campaign
+
+    Route::get('/campaigns/{campaign}/draft', [CampaignsController::class, 'draft'])->name('campaigns.draft');
     Route::get('/campaigns/{campaign}/duplicate', [CampaignsController::class, 'duplicate'])->name('campaigns.duplicate');
     Route::resource('lists', ListsController::class);
     //post import from form leads

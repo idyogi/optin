@@ -73,7 +73,6 @@ function Campaigns({campaigns, list_count, sender_count}) {
                             headers={['Title', 'Status', '', 'Updated at']}
                             pagination={campaigns.links}>
                             {campaigns.data.map((item, index) => {
-                                console.log(item.data)
                                 const campaign = item.data;
                                 return (<tr key={index}>
                                         <td className="px-4 py-2">
@@ -88,9 +87,12 @@ function Campaigns({campaigns, list_count, sender_count}) {
 								{campaign.SubscriberCount} contacts
 							</span><br/>
 
-
+                                                     {(campaign.status !== 'new') && (
                                                     <span
-                                                        className="text-muted2 d-block">Scheduled at: {moment(campaign.scheduled_at).format('DD/MM/YYYY HH:mm')}<br/>{moment(campaign.scheduled_at).fromNow()}</span>
+                                                        className="text-muted2 d-block">
+                                                        Scheduled at: {moment(campaign.scheduled_at).format('DD/MM/YYYY HH:mm')}
+                                                        <br/>{moment(campaign.scheduled_at).fromNow()}
+                                                    </span>)}
                                                 </div>)}
                                         </td>
                                         <td className="px-4 py-2">

@@ -11,6 +11,7 @@ import {toast} from "react-toastify";
 function ManageCampaign({campaign, lists, allLists}) {
     const form = useForm(campaign || {});
     const {data, setData, post, processing, errors} = form;
+    const [total, setTotal] = React.useState(0);
     //default schedule time is +1 hour from now
     const defaultScheduleTime = moment().add(30, 'minutes').format('YYYY-MM-DD HH:mm:ss');
     const [selectedLists, setSelectedLists] = React.useState(lists.map((list) => list.id) || []);
@@ -44,8 +45,15 @@ function ManageCampaign({campaign, lists, allLists}) {
     }
 
     function handleChange(e) {
-        // set selected lists
-        console.log(e.target.value);
+        const selectedID = e.target.value;
+        let totalContacts = 0;
+        // loop selectedID, then find the list with the same id
+        allLists.forEach((list) => {
+            if (selectedID.includes(list.id)) {
+                totalContacts += list.contacts.length;
+            }
+        });
+        setTotal(totalContacts);
         setSelectedLists(e.target.value);
     }
 
@@ -97,11 +105,11 @@ function ManageCampaign({campaign, lists, allLists}) {
                                                                     key={list.id}
                                                                     value={list.id}
                                                                 >
-                                                                    {list.name}
+                                                                    {list.name} ({list.contacts.length} contacts)
                                                                 </MenuItem>
                                                             ))}
                                                         </Select>
-                                                        <FormHelperText>{campaign.SubscriberCount} contacts</FormHelperText>
+                                                        <FormHelperText>{total} contacts</FormHelperText>
 
                                                     </FormControl>
                                                 </div>
@@ -134,6 +142,14 @@ function ManageCampaign({campaign, lists, allLists}) {
                             <footer
                                 className="rounded-b-lg bg-gray-50 px-6 py-3 dark:border-gray-800 dark:bg-gray-800 dark:text-gray-200">
                                 <div className="flex items-center justify-end space-x-2">
+                                    <button
+                                        onClick={() => Inertia.get('/panel/campaigns/' + campaign.uuid + '/draft')}
+                                        type="button"
+                                        //classname
+                                        className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-warning-500 hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+
+                                        Save as draft
+                                    </button>
                                     {campaign.status === 'done' ? (
                                             <button
                                                 onClick={() => Inertia.get('/panel/campaigns/' + campaign.uuid + '/duplicate')}

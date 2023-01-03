@@ -369,4 +369,26 @@ class Campaign extends Model
             $page += 1;
         } while ($list->hasMorePages());
     }
+
+       public function cancelAndDeleteJobs($jobType = null)
+    {
+        $query = $this->jobMonitors();
+
+        if (!is_null($jobType)) {
+            $query = $query->byJobType($jobType);
+        }
+
+        foreach ($query->get() as $job) {
+            $job->cancel();
+        }
+    }
+      /**
+     * Pause campaign.
+     *
+     * @return bool
+     */
+    public function pause()
+    {
+        $this->cancelAndDeleteJobs();
+    }
 }
