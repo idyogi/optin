@@ -34,9 +34,19 @@ class CampaignsController extends Controller
 
     public function create()
     {
-        return inertia('Panel/Campaigns/ManageCampaign', [
-            'campaign' => new Campaign(),
+        $list = Lists::create([
+            'name' => 'List ' . Carbon::now()->format('Y-m-d H:i:s'),
+            'user_id' => auth()->id(),
         ]);
+        //create campaign and redirect to edit page
+        $campaign = new Campaign();
+        $campaign->name = 'New Campaign';
+        $campaign->text = 'Hai, live Facebook jam 9 pagi ya';
+        $campaign->scheduled_at = now()->addHours(9);
+        $campaign->user_id = auth()->id();
+        $campaign->default_list_id = $list->id;
+        $campaign->save();
+        return redirect()->route('panel.campaigns.edit', $campaign->uuid);
     }
 
     public function store(Request $request)

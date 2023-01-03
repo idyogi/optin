@@ -19,7 +19,17 @@ function ManageCampaign({campaign, lists, allLists}) {
     }
 
     const handlePublish = () => {
-        Inertia.put('/panel/campaigns/' + campaign.uuid, {
+        let url = getCurrentUrl();
+        url = url.replace('/create', '');
+        url = url.replace('/edit', '');
+        if (campaign) {
+            form.transform((data) => {
+                return {...data, _method: 'PUT'}
+            });
+            // add put to url
+            url = url + '?_method=PUT';
+        }
+        Inertia.put(url, {
             ...data,
             lists: selectedLists
         }, {
@@ -129,7 +139,7 @@ function ManageCampaign({campaign, lists, allLists}) {
                                                 onClick={() => Inertia.get('/panel/campaigns/' + campaign.uuid + '/duplicate')}
                                                 type="button"
                                                 className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-warning-500 hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                                                Duplicate  campaign
+                                                Duplicate campaign
                                             </button>)
                                         :
                                         (<button
