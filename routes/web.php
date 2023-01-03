@@ -29,6 +29,7 @@ Route::name('panel.')->prefix('panel')->middleware('auth')->group(function () {
     //getQrCode from devices
     Route::post('/devices/{device}/qr', [SendingServersController::class, 'getQrCode'])->name('devices.qr');
 
+    Route::get('/campaigns/{campaign}/delete', [CampaignsController::class, 'delete'])->name('campaigns.delete');
     Route::get('/campaigns/{campaign}/draft', [CampaignsController::class, 'draft'])->name('campaigns.draft');
     Route::get('/campaigns/{campaign}/duplicate', [CampaignsController::class, 'duplicate'])->name('campaigns.duplicate');
     Route::resource('lists', ListsController::class);
@@ -42,5 +43,8 @@ Route::name('panel.')->prefix('panel')->middleware('auth')->group(function () {
     Route::get('forms/{uuid}/delete', [FormsController::class, 'delete'])->name('forms.delete');
     Route::post('forms/{uuid}/slug-change', [FormsController::class, 'changeSlug'])->name('forms.slug-change');
     Route::get('logs', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index']);
+    Route::get('changelog', function () {
+        return inertia('Panel/Changelog');
+    });
 
 });

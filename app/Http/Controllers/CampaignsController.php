@@ -80,6 +80,11 @@ class CampaignsController extends Controller
         return redirect()->route('panel.campaigns.index');
     }
 
+    public function delete(Campaign $campaign)
+    {
+        $campaign->delete();
+        return redirect()->route('panel.campaigns.index');
+    }
     public function destroy(Campaign $campaign)
     {
     }

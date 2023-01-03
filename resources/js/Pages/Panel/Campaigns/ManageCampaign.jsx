@@ -143,6 +143,13 @@ function ManageCampaign({campaign, lists, allLists}) {
                                 className="rounded-b-lg bg-gray-50 px-6 py-3 dark:border-gray-800 dark:bg-gray-800 dark:text-gray-200">
                                 <div className="flex items-center justify-end space-x-2">
                                     <button
+                                        onClick={() => Inertia.get('/panel/campaigns/' + campaign.uuid + '/delete')}
+                                        type="button"
+                                        //classname
+                                        className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-danger-500 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+                                        Delete
+                                    </button>
+                                    <button
                                         onClick={() => Inertia.get('/panel/campaigns/' + campaign.uuid + '/draft')}
                                         type="button"
                                         //classname

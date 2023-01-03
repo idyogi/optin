@@ -59,51 +59,56 @@ function PanelLayout({children, footer, title = null, subTitle = null, trailing 
 
                             <li className="relative px-2 py-2 text-sm font-medium rounded-md">
                                 <a href="/panel/forms"
-                                   className={`${activeMenu === '/panel/forms' ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 focus:bg-gray-900'}`+' h-10 flex items-center w-full px-2 rounded-lg font-medium text-sm transition-all ease-in-out duration-100 focus:outline-none'}>
+                                   className={`${activeMenu === '/panel/forms' ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 focus:bg-gray-900'}` + ' h-10 flex items-center w-full px-2 rounded-lg font-medium text-sm transition-all ease-in-out duration-100 focus:outline-none'}>
                                     <i className="fas fa-server mr-2 fa-fw"></i>Dashboard</a>
                             </li>
                             <li className="relative px-2 py-2 text-sm font-medium rounded-md">
                                 <a href="/panel/campaigns"
-                                   className={`${activeMenu === '/panel/campaigns' ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 focus:bg-gray-900'}`+' h-10 flex items-center w-full px-2 rounded-lg font-medium text-sm transition-all ease-in-out duration-100 focus:outline-none'}>
+                                   className={`${activeMenu === '/panel/campaigns' ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 focus:bg-gray-900'}` + ' h-10 flex items-center w-full px-2 rounded-lg font-medium text-sm transition-all ease-in-out duration-100 focus:outline-none'}>
                                     <i className="fas fa-users mr-2 fa-fw"></i>Broadcast</a>
+                            </li>
+                            <li className="relative px-2 py-2 text-sm font-medium rounded-md">
+                                <a href="/panel/changelog"
+                                   className={`${activeMenu === '/panel/changelog' ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 focus:bg-gray-900'}` + ' h-10 flex items-center w-full px-2 rounded-lg font-medium text-sm transition-all ease-in-out duration-100 focus:outline-none'}>
+                                    <i className="fas fa-history mr-2 fa-fw"></i>Changelog</a>
                             </li>
                         </ul>
                     </aside>
-                    )}
+                )}
 
-                    <main className="flex flex-1 flex-col">
+                <main className="flex flex-1 flex-col">
                     <div>
-                    <header
-                    className="sticky top-0 z-30 flex h-16 items-center bg-white px-8 shadow dark:bg-gray-700 dark:text-white">
-                    <button onClick={(e) => handleMenu()} className="mr-auto inline-block lg:hidden"><i
-                    className="fas fa-bars"></i></button>
-                    <div className="ml-auto flex items-center space-x-4">
-                    <RightMenu/>
-                    </div>
-                    </header>
+                        <header
+                            className="sticky top-0 z-30 flex h-16 items-center bg-white px-8 shadow dark:bg-gray-700 dark:text-white">
+                            <button onClick={(e) => handleMenu()} className="mr-auto inline-block lg:hidden"><i
+                                className="fas fa-bars"></i></button>
+                            <div className="ml-auto flex items-center space-x-4">
+                                <RightMenu/>
+                            </div>
+                        </header>
                     </div>
                     <div>
-                    <div
-                    className="flex items-center justify-between border-b border-gray-200 bg-white px-8 py-4 dark:border-gray-600 dark:bg-gray-700 dark:text-white">
-                    <div><h1 className="text-xl font-medium">{title}</h1><p
-                    className="text-sm text-gray-500 dark:text-gray-400">{subTitle}</p></div>
-                    <div className="flex h-full items-center space-x-2">
-                {trailing}
+                        <div
+                            className="flex items-center justify-between border-b border-gray-200 bg-white px-8 py-4 dark:border-gray-600 dark:bg-gray-700 dark:text-white">
+                            <div><h1 className="text-xl font-medium">{title}</h1><p
+                                className="text-sm text-gray-500 dark:text-gray-400">{subTitle}</p></div>
+                            <div className="flex h-full items-center space-x-2">
+                                {trailing}
 
+                            </div>
+                        </div>
+                        <div className="py-6">
+                            <div className="mx-auto w-full">
+                                {children}
+                            </div>
+                        </div>
                     </div>
-                    </div>
-                    <div className="py-6">
-                    <div className="mx-auto w-full">
-                {children}
-                    </div>
-                    </div>
-                    </div>
-                    </main>
+                </main>
 
-                    </div>
-                    </div>
+            </div>
+        </div>
 
-                    );
-                }
+    );
+}
 
-                export default PanelLayout;
+export default PanelLayout;
