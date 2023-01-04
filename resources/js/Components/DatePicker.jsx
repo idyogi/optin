@@ -28,6 +28,7 @@ export default function DatePicker({name, datetime, onChanged}) {
                     ampm={false}
                     disablePast={true}
                     inputFormat="YYYY-MM-DD HH:mm:ss"
+                    toolbarFormat="YYYY-MM-DD HH:mm:ss"
                     renderInput={(params) => <TextField {...params} />}
                 />
             </Stack>

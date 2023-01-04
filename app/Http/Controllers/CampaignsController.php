@@ -73,7 +73,7 @@ class CampaignsController extends Controller
             'lists' => 'required',
             'scheduled_at' => 'required',
         ]);
-        $validated['scheduled_at'] = Carbon::create($validated['scheduled_at']);
+        $validated['scheduled_at'] = date('Y-m-d h:i:s', strtotime($validated['scheduled_at']));
         $campaign->update($validated);
         $campaign->lists()->sync($validated['lists']);
         $campaign->schedule();

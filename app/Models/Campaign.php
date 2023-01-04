@@ -45,6 +45,10 @@ class Campaign extends Model
         'runtime_message_id',
     ];
 
+    protected $casts = [
+        'scheduled_at' => 'datetime',
+    ];
+
     public function lists()
     {
         return $this->belongsToMany(\App\Models\Lists::class, 'list_campaigns');
