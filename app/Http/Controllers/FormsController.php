@@ -68,7 +68,7 @@ class FormsController extends Controller
             // Create a new list with the form name
             $list = Lists::create([
                 'name' => $form->title,
-                'user_id' => auth()->id(),
+                'user_id' => $form->user_id,
             ]);
         }
         $form->list_id = $list->id;
