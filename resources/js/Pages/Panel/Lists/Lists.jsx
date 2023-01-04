@@ -7,7 +7,7 @@ function Lists({lists}) {
             <PanelLayout title={'Lists'} trailing={(
                 <a className="inline-flex items-center justify-center text-sm font-medium transition-all ease-in-out duration-100 focus:outline-none focus:ring border rounded-md border-primary-500 bg-primary-500 text-white shadow hover:bg-primary-400 hover:border-primary-400 focus:border-primary-700 focus:bg-primary-600 px-3 py-2 text-sm"
                    target="_self"
-                   href="/panel/campaigns/create"> Create List </a>)}>
+                   href="/panel/lists/create"> Create List </a>)}>
                 {lists.length === 0 && (
                     <div className="p-8">
                         <div

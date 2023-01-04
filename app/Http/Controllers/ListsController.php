@@ -19,6 +19,12 @@ class ListsController extends Controller
 
     public function create()
     {
+        //create list and redirect to edit page
+        $list = new Lists();
+        $list->name = 'New List';
+        $list->user_id = auth()->id();
+        $list->save();
+        return redirect()->route('panel.lists.edit', $list->uuid);
     }
 
     public function store(Request $request)
