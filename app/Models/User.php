@@ -43,4 +43,9 @@ class User extends Authenticatable implements HasMedia
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function forms()
+    {
+        return $this->hasMany(form::class);
+    }
 }

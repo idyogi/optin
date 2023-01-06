@@ -43,7 +43,7 @@ class ListsController extends Controller
             })
             ->paginate(10));
         //all forms pluck title and id
-        $forms = \App\Models\Form::get();
+        $forms = auth()->user()->forms()->get();
         return inertia('Panel/Lists/ManageLists', [
             'list' => $list,
             'contacts' => $contacts,
