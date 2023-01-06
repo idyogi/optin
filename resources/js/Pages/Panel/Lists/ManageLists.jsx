@@ -3,7 +3,7 @@ import PanelLayout from "../../../Layouts/PloiTheme/PanelLayout";
 import {useForm} from "@inertiajs/inertia-react";
 import {FormControl, InputLabel, MenuItem, OutlinedInput, Select} from "@mui/material";
 import moment from "moment";
-import DatePicker from "../../../Components/DatePicker";
+import DatePicker2 from "../../../Components/DatePicker2";
 import {getCurrentUrl} from "../../../utils/helper";
 import {Inertia} from "@inertiajs/inertia";
 import {toast} from "react-toastify";

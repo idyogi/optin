@@ -2,7 +2,7 @@ import React from 'react';
 import PanelLayout from "../../../Layouts/PloiTheme/PanelLayout";
 import {useForm} from "@inertiajs/inertia-react";
 import {FormControl, FormHelperText, InputLabel, MenuItem, OutlinedInput, Select} from "@mui/material";
-import DatePicker from "../../../Components/DatePicker";
+import DatePicker2 from "../../../Components/DatePicker2";
 import {getCurrentUrl} from "../../../utils/helper";
 import {Inertia} from "@inertiajs/inertia";
 import {toast} from "react-toastify";
@@ -131,7 +131,7 @@ function ManageCampaign({campaign, lists, allLists}) {
                                         className="inline-block text-sm font-medium dark:text-gray-300">Schedule</label>
                                     <div className="relative rounded-md shadow-sm">
                                         <FormControl sx={{m: 1, width: '25ch'}} variant="outlined">
-                                            <DatePicker
+                                            <DatePicker2
                                                 name={"scheduled_at"} datetime={data.scheduled_at}
                                                 onChanged={handleChangeSchedule}/>
                                         </FormControl>

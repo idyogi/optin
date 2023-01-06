@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CampaignsController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FormsController;
 use App\Http\Controllers\ListsController;
 use App\Http\Controllers\SendingServersController;
@@ -24,6 +25,7 @@ Route::controller(SubmissionsController::class)->group(function () {
     Route::post('/submission/{id}/whatsapp-rotator', [SubmissionsController::class, 'whatsappRotator'])->name('submissions.whatsapp-rotator');
 });
 Route::name('panel.')->prefix('panel')->middleware('auth')->group(function () {
+    Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::resource('campaigns', CampaignsController::class);
     Route::resource('devices', SendingServersController::class);
     //getQrCode from devices
@@ -45,5 +47,7 @@ Route::name('panel.')->prefix('panel')->middleware('auth')->group(function () {
     Route::get('changelog', function () {
         return inertia('Panel/Changelog');
     });
+    Route::get('fetch', [DashboardController::class, 'fetch']);
+    Route::get('fetch30d', [DashboardController::class, 'fetch30d']);
 
 });

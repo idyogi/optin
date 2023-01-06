@@ -6,6 +6,7 @@ use App\Traits\WithUuid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -150,6 +151,7 @@ class form extends Model implements HasMedia
     {
         return $this->belongsTo(User::class);
     }
+
     public function list(): BelongsTo
     {
         return $this->belongsTo(Lists::class);
@@ -216,7 +218,7 @@ class form extends Model implements HasMedia
             }
         }
 
-        $shuffle = collect($rotator['numbers'])->reject(function ($item){
+        $shuffle = collect($rotator['numbers'])->reject(function ($item) {
             return $item['pause'] ?? false;
         })->shuffle();
         $rotator['numbers'] = $shuffle->toArray();
@@ -263,6 +265,41 @@ class form extends Model implements HasMedia
     function leads()
     {
         return $this->hasMany(submission::class);
+    }
+    //get lead per 2 seconds in 30 minutes by 30 rows
+    //sample return ['2021-01-01 00:00:00' => '1 lead', '2021-01-01 00:00:02' => '0 lead,, '2021-01-01 00:00:04' => '3 lead', '2021-01-01 00:00:06' => '0 lead']
+    static public function getLeadsPerMinutes($minutes = 1, $byDay = false)
+    {
+        $data = [];
+        $start = Carbon::now()->subMinutes($minutes);
+        $end = Carbon::now();
+        $interval = 2;
+        $total = 0;
+        $leads = submission::whereBetween('created_at', [$start, $end])->get();
+        $total = $leads->count();
+        $leads = $leads->groupBy(function ($item) use ($interval, $byDay) {
+            if ($byDay) {
+                return Carbon::parse($item->created_at)->format('Y-m-d');
+            }
+            return Carbon::parse($item->created_at)->format('Y-m-d H:i:s');
+        });
+        $leads = $leads->map(function ($item) {
+            return $item->count();
+        });
+        $leads = $leads->toArray();
+        $start = $start->format('Y-m-d H:i:s');
+        $end = $end->format('Y-m-d H:i:s');
+        $time = strtotime($start);
+        $endTime = strtotime($end);
+        while ($time <= $endTime) {
+            if ($byDay) {
+                $data[date('Y-m-d', $time)] = $leads[date('Y-m-d', $time)] ?? 0;
+            } else {
+                $data[date('Y-m-d H:i:s', $time)] = $leads[date('Y-m-d H:i:s', $time)] ?? 0;
+            }
+            $time += $interval;
+        }
+        return $data;
     }
 
     //get leads from meta

@@ -6,7 +6,7 @@ import {useForm} from "@inertiajs/inertia-react";
 import FlipCountdown from "../../../../Components/FlipCountdown";
 import {FlipDate} from "../../../../Components/FlipDate";
 import {WorkingFlipDate} from "../../../../Components/WorkingFlipDate";
-import DatePicker from "../../../../Components/DatePicker";
+import DatePicker2 from "../../../../Components/DatePicker2";
 import TextField from "@mui/material/TextField";
 import {FormControl, InputAdornment, MenuItem, OutlinedInput, Select} from "@mui/material";
 
@@ -85,7 +85,7 @@ function Countdown({
                                         </div>) : (
                                         <div className="relative rounded-md shadow-sm">
                                             <FormControl sx={{m: 1, width: '25ch'}} variant="outlined">
-                                                <DatePicker
+                                                <DatePicker2
                                                     name={"fixed_time"} datetime={fieldList[index].fixed_time}
                                                     onChanged={handleChange}/>
                                             </FormControl>

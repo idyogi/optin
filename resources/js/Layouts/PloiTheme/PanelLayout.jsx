@@ -60,9 +60,14 @@ function PanelLayout({children, footer, title = null, subTitle = null, trailing 
                         <ul className="my-4 space-y-2 px-2">
 
                             <li className="relative px-2 py-2 text-sm font-medium rounded-md">
+                                <a href="/panel/dashboard"
+                                   className={`${activeMenu === '/panel/dashboard' ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 focus:bg-gray-900'}` + ' h-10 flex items-center w-full px-2 rounded-lg font-medium text-sm transition-all ease-in-out duration-100 focus:outline-none'}>
+                                    <i className="fas fa-server mr-2 fa-fw"></i>Dashboard</a>
+                            </li>
+                            <li className="relative px-2 py-2 text-sm font-medium rounded-md">
                                 <a href="/panel/forms"
                                    className={`${activeMenu === '/panel/forms' ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 focus:bg-gray-900'}` + ' h-10 flex items-center w-full px-2 rounded-lg font-medium text-sm transition-all ease-in-out duration-100 focus:outline-none'}>
-                                    <i className="fas fa-server mr-2 fa-fw"></i>Dashboard</a>
+                                    <i className="fas fa-server mr-2 fa-fw"></i>Forms</a>
                             </li>
                             <li className="relative px-2 py-2 text-sm font-medium rounded-md">
                                 <a href="/panel/campaigns"

@@ -25,5 +25,4 @@ class submission_meta extends Model
         }, $meta_value);
         return $meta_value;
     }
-
 }

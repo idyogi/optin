@@ -9,7 +9,7 @@ import {DateTimePicker} from '@mui/x-date-pickers/DateTimePicker';
 import {DesktopDatePicker} from '@mui/x-date-pickers/DesktopDatePicker';
 import {MobileDatePicker} from '@mui/x-date-pickers/MobileDatePicker';
 
-export default function DatePicker({name, datetime, onChanged}) {
+export default function DatePicker2({name, datetime, onChanged}) {
     const [value, setValue] = React.useState(
         dayjs(datetime),
     );
