@@ -1,8 +1,5 @@
 import React, { useState } from 'react';
 
-import Notifications from '../components/DropdownNotifications';
-import Help from '../components/DropdownHelp';
-import UserMenu from '../components/DropdownProfile';
 
 function Header({
   sidebarOpen,
@@ -51,12 +48,6 @@ function Header({
                 </svg>
               </button>
             </div>
-            <Notifications align="right" />
-            <Help align="right" />
-            {/*  Divider */}
-            <hr className="w-px h-6 bg-slate-200 mx-3" />
-            <UserMenu align="right" />
-
           </div>
 
         </div>
