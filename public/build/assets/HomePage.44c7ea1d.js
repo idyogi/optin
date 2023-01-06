@@ -1,0 +1,1 @@
+import{R as e}from"./app.556a3bcf.js";function n({services:s,projects:a,insights:t,carousels:o}){return useTranslation(),e.createElement("div",{className:"mx-auto font-sans p-0"})}export{n as default};
