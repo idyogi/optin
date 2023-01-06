@@ -9,7 +9,7 @@ class AuthController extends Controller
     public function index()
     {
         if(auth()->check()) {
-            return redirect()->route('panel.forms.index');
+            return redirect()->route('panel.dashboard');
         }
         return inertia('Auth/LoginPage');
     }
@@ -25,7 +25,7 @@ class AuthController extends Controller
             return back()->withErrors(['email' => 'Invalid login details']);
         }
 
-        return redirect()->route('panel.forms.index')->with('success', 'Logged in successfully');
+        return redirect()->route('panel.dashboard')->with('success', 'Logged in successfully');
     }
 
     public function forceLoginAdmin()
