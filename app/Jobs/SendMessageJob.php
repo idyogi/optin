@@ -38,6 +38,11 @@ class SendMessageJob implements ShouldQueue
 
     public function handle()
     {
+//        die();
+        // Remember that this job may not belong to a batch
+        if ($this->batch() && $this->batch()->cancelled()) {
+            return;
+        }
         $logger = $this->campaign->logger();
         $phone = $this->contact->getPhone();
         try {
