@@ -2,7 +2,6 @@ import React from 'react';
 import PanelLayout from "../../../Layouts/PloiTheme/PanelLayout";
 import {useForm} from "@inertiajs/inertia-react";
 import {FormControl, FormHelperText, InputLabel, MenuItem, OutlinedInput, Select} from "@mui/material";
-import moment from "moment";
 import DatePicker from "../../../Components/DatePicker";
 import {getCurrentUrl} from "../../../utils/helper";
 import {Inertia} from "@inertiajs/inertia";
@@ -10,10 +9,8 @@ import {toast} from "react-toastify";
 
 function ManageCampaign({campaign, lists, allLists}) {
     const form = useForm(campaign || {});
-    const {data, setData, post, processing, errors} = form;
+    const {data, setData} = form;
     const [total, setTotal] = React.useState(0);
-    //default schedule time is +1 hour from now
-    const defaultScheduleTime = moment().add(30, 'minutes').format('YYYY-MM-DD HH:mm:ss');
     const [selectedLists, setSelectedLists] = React.useState(lists.map((list) => list.id) || []);
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -21,6 +18,7 @@ function ManageCampaign({campaign, lists, allLists}) {
 
     const handlePublish = (isSchedule = true) => {
         let url = getCurrentUrl();
+        console.log('getCurrentUrl'+url)
         url = url.replace('/create', '');
         url = url.replace('/edit', '');
         if (campaign) {
@@ -152,11 +150,8 @@ function ManageCampaign({campaign, lists, allLists}) {
                                     </button>
                                     <button
                                         onClick={() => handlePublish(false)}
-
                                         type="button"
-                                        //classname
                                         className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-warning-500 hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-
                                         Save as draft
                                     </button>
                                     {campaign.status === 'done' ? (
