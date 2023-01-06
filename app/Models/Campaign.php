@@ -241,9 +241,10 @@ class Campaign extends Model
         // create tracking log for message
         try {
             $log = LogSent::create($params);
+            $this->logger()->warning('Log sent id: ' . $log->id);
         } catch (\Exception $e) {
+            $this->logger()->error('Cannot create log sent: ' . $e->getMessage());
         }
-        $this->logger()->warning('Log sent id: ' . $log->id);
     }
 
     public function contactsToSend()
@@ -304,7 +305,7 @@ class Campaign extends Model
      *
      * @return mixed
      */
-    public static function resetMaxExecutionTime()
+    public static function resetMaxExecutionTime() : void
     {
         set_time_limit(0);
         ini_set('max_execution_time', 0);
@@ -374,7 +375,7 @@ class Campaign extends Model
         } while ($list->hasMorePages());
     }
 
-       public function cancelAndDeleteJobs($jobType = null)
+    public function cancelAndDeleteJobs($jobType = null)
     {
         $query = $this->jobMonitors();
 
@@ -386,12 +387,13 @@ class Campaign extends Model
             $job->cancel();
         }
     }
-      /**
+
+    /**
      * Pause campaign.
      *
      * @return bool
      */
-    public function pause()
+    public function pause() : void
     {
         $this->cancelAndDeleteJobs();
     }
