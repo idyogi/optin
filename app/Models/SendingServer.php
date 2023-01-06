@@ -13,9 +13,6 @@ class SendingServer extends Model
 
     public const DELIVERY_STATUS_SENT = 'sent';
     public const DELIVERY_STATUS_FAILED = 'failed';
-    public const TYPE_SELVI_API = 'selvi';
-    public const TYPE_STARSENDER_API = 'starsender';
-    public const TYPE_DRIPSENDER_API = 'dripsender';
     protected $table = 'sending_servers';
     protected $fillable = [
         'name',
@@ -26,20 +23,13 @@ class SendingServer extends Model
         'api_key',
         'status',
     ];
-    // Supported server types
-    public static $serverMapping = array(
-        self::TYPE_SELVI_API => 'SendingServerSelvi',
-    );
 
-    public function send($message, $phone)
+    public function send($message, $phone): array
     {
         $url = 'https://api.adminselvi.com/send-message';
 
-        $headers = [
-
-        ];
         $data = [
-            'api_key' => 'awCnq3n2no7IWCiSYgE3xDbcQKTphd',
+            'api_key' => "awCnq3n2no7IWCiSYgE3xDbcQKTphd",
             'sender' => $this->number,
             'number' => '082312225580',
             'message' => $message.' '.$phone,
@@ -64,8 +54,8 @@ class SendingServer extends Model
             'status' => self::DELIVERY_STATUS_FAILED,
         );
     }
-    static public function getAllActive()
+    public static function getAllActive()
     {
-        return SendingServer::where('status', 'connected')->get();
+        return self::where('status', 'connected')->get();
     }
 }
