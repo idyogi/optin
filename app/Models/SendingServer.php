@@ -32,7 +32,7 @@ class SendingServer extends Model
         $data = [
             'api_key' => "awCnq3n2no7IWCiSYgE3xDbcQKTphd",
             'sender' => $this->number,
-            'number' => '082312225580',
+            'number' => $phone,
             'message' => $message . ' ' . $phone,
         ];
         $sent = Http::withOptions(['verify' => false])->asForm()->post($url, $data);
