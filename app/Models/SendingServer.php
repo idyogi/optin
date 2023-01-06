@@ -11,8 +11,8 @@ class SendingServer extends Model
 {
     use WithUuid, HasFactory;
 
-    public const DELIVERY_STATUS_SENT = 'sent';
-    public const DELIVERY_STATUS_FAILED = 'failed';
+    public const DEVICE_STATUS_DISCONNECTED = 'disconnected';
+    public const DEVICE_STATUS_CONNECTED = 'connected';
     protected $table = 'sending_servers';
     protected $fillable = [
         'name',
@@ -39,19 +39,19 @@ class SendingServer extends Model
             //touch the server
             $this->touch();
             return array(
-                'status' => self::DELIVERY_STATUS_SENT,
+                'status' => self::DEVICE_STATUS_CONNECTED,
             );
 
         }
         $body = $sent->json();
         //if body msg is 'Sender is disconnected' then set status to disconnected
         if ($body['msg'] === 'Sender is disconnected') {
-        $this->status = self::DELIVERY_STATUS_FAILED;
+        $this->status = self::DEVICE_STATUS_DISCONNECTED;
         $this->save();
         }
 
         return array(
-            'status' => self::DELIVERY_STATUS_FAILED,
+            'status' => self::DEVICE_STATUS_DISCONNECTED,
         );
     }
     public static function getAllActive()
