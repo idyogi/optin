@@ -57,6 +57,11 @@ class CampaignsController extends Controller
         //campaign with lists
         $lists = $campaign->lists()->get();
         $allLists = \App\Models\Lists::with('contacts')->get();
+        //devices with status connected
+        $devices = SendingServer::where('status', SendingServer::DEVICE_STATUS_CONNECTED)->get();
+        if($devices->count() === 0){
+            return redirect()->route('panel.campaigns.index')->with('error', 'No connected devices found');
+        }
         return inertia('Panel/Campaigns/ManageCampaign', [
             'campaign' => (new CampaignResource($campaign))->jsonSerialize(),
             'lists' => $lists,

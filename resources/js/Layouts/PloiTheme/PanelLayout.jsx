@@ -2,6 +2,7 @@ import React from 'react';
 import {ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import RightMenu from "../../Components/RightMenu";
+import FlashMessage from "../../Components/FlashMessage";
 
 function PanelLayout({children, footer, title = null, subTitle = null, trailing = null, showSubMenu = false}) {
     const [showMenu, setShowMenu] = React.useState(false);
@@ -100,6 +101,11 @@ function PanelLayout({children, footer, title = null, subTitle = null, trailing 
                         </div>
                         <div className="py-6">
                             <div className="mx-auto w-full">
+                                <div className="mx-auto w-full px-8 max-w-5xl space-y-6">
+                                    <FlashMessage/>
+                                </div>
+
+
                                 {children}
                             </div>
                         </div>

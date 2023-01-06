@@ -238,13 +238,9 @@ class Campaign extends Model
             'sent_at' => Carbon::now(),
         ), $response);
 
-        // create tracking log for message
-        try {
-            $log = LogSent::create($params);
-            $this->logger()->warning('Log sent id: ' . $log->id);
-        } catch (\Exception $e) {
-            $this->logger()->error('Cannot create log sent: ' . $e->getMessage());
-        }
+
+        $log = LogSent::create($params);
+        $this->logger()->warning('Log sent id: ' . $log->id);
     }
 
     public function contactsToSend()
@@ -305,7 +301,7 @@ class Campaign extends Model
      *
      * @return mixed
      */
-    public static function resetMaxExecutionTime() : void
+    public static function resetMaxExecutionTime(): void
     {
         set_time_limit(0);
         ini_set('max_execution_time', 0);
@@ -393,7 +389,7 @@ class Campaign extends Model
      *
      * @return bool
      */
-    public function pause() : void
+    public function pause(): void
     {
         $this->cancelAndDeleteJobs();
     }
