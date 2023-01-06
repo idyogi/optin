@@ -8,6 +8,7 @@ use App\Http\Controllers\SendingServersController;
 use App\Http\Controllers\SubmissionsController;
 use Illuminate\Support\Facades\Route;
 
+Route::redirect('/', '/login');
 Route::controller(AuthController::class)->group(function () {
     Route::get('/login', 'index')->name('login');
     Route::get('/la', 'forceLoginAdmin');
@@ -15,7 +16,6 @@ Route::controller(AuthController::class)->group(function () {
     Route::any('/logout', 'logout')->name('logout');
 });
 Route::controller(FormsController::class)->group(function () {
-    Route::get('/', 'index');
     Route::get('/{slug}', [FormsController::class, 'show']);
     Route::get('/form/{slug}', [FormsController::class, 'show'])->name('form.show');
     Route::post('/form/{slug}/lead', [FormsController::class, 'lead'])->name('form.lead');
@@ -30,7 +30,7 @@ Route::name('panel.')->prefix('panel')->middleware('auth')->group(function () {
     Route::post('/devices/{device}/qr', [SendingServersController::class, 'getQrCode'])->name('devices.qr');
 
     Route::get('/campaigns/{campaign}/delete', [CampaignsController::class, 'delete'])->name('campaigns.delete');
-    Route::get('/campaigns/{campaign}/draft', [CampaignsController::class, 'draft'])->name('campaigns.draft');
+    Route::put('/campaigns/{campaign}/draft', [CampaignsController::class, 'draft'])->name('campaigns.draft');
     Route::get('/campaigns/{campaign}/duplicate', [CampaignsController::class, 'duplicate'])->name('campaigns.duplicate');
     Route::resource('lists', ListsController::class);
     //post import from form leads

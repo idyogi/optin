@@ -72,33 +72,58 @@ class CampaignsController extends Controller
             'default_list_id' => 'nullable',
             'lists' => 'required',
             'scheduled_at' => 'required',
+            'is_schedule' => 'required',
         ]);
         $validated['scheduled_at'] = date('Y-m-d h:i:s', strtotime($validated['scheduled_at']));
         $campaign->update($validated);
         $campaign->lists()->sync($validated['lists']);
-        $campaign->schedule();
-        return redirect()->route('panel.campaigns.index');
+        if ($validated['is_schedule']) {
+            $campaign->schedule();
+            return redirect()->route('panel.campaigns.index');
+
+        }
+        $campaign->status = 'draft';
+        $campaign->save();
+        return redirect()->route('panel.campaigns.index')->with('success', 'Campaign updated');
+
     }
 
-    public function delete(Campaign $campaign)
+    public
+    function delete(Campaign $campaign)
     {
         $campaign->delete();
         return redirect()->route('panel.campaigns.index');
     }
-    public function destroy(Campaign $campaign)
+
+    public
+    function destroy(Campaign $campaign)
     {
     }
-    public function draft(Campaign $campaign)
+
+    public
+    function draft(Request $request, Campaign $campaign)
     {
+        $validated = $request->validate([
+            'name' => 'required',
+            'text' => 'required',
+            'default_list_id' => 'nullable',
+            'lists' => 'required',
+            'scheduled_at' => 'required',
+        ]);
+        $campaign->update($validated);
+
         $campaign->pause();
         $campaign->status = 'new';
+        $campaign->lists()->sync($validated['lists']);
         if ($campaign->save()) {
             return redirect()->route('panel.campaigns.index')->with('success', 'Campaigns saved successfully');
         }
         return redirect()->route('panel.campaigns.index')->withErrors(['error' => 'Something went wrong']);
     }
-    //dupicate campaign
-    public function duplicate(Request $request, Campaign $campaign)
+
+//dupicate campaign
+    public
+    function duplicate(Request $request, Campaign $campaign)
     {
         $newCampaign = $campaign->replicate();
         $newCampaign->name = $newCampaign->name . ' (copy)';

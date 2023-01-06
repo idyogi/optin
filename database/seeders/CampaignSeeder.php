@@ -32,7 +32,7 @@ class CampaignSeeder extends Seeder
 //        create sending server
         $server = \App\Models\SendingServer::factory()->create([
             'name' => 'CS Selvi',
-            'number' => '0',
+            'number' => '5554576471',
             'type' => 'selvi',
             'webhook_url' => 'https://api.adminselvi.com/send-message',
             'api_key' => 'awCnq3n2no7IWCiSYgE3xDbcQKTphd',

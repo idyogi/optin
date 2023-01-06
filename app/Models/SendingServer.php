@@ -36,9 +36,10 @@ class SendingServer extends Model
         $url = 'https://api.adminselvi.com/send-message';
 
         $headers = [
-            'api_key' => 'awCnq3n2no7IWCiSYgE3xDbcQKTphd',
+
         ];
         $data = [
+            'api_key' => 'awCnq3n2no7IWCiSYgE3xDbcQKTphd',
             'sender' => $this->number,
             'number' => '082312225580',
             'message' => $message.' '.$phone,

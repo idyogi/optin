@@ -3,7 +3,6 @@ import PanelLayout from "../../../Layouts/PloiTheme/PanelLayout";
 import {useForm} from "@inertiajs/inertia-react";
 import moment from "moment";
 import {toast} from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import io from 'socket.io-client';
 import {Inertia} from "@inertiajs/inertia";
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import {ToastContainer} from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 import RightMenu from "../../Components/RightMenu";
 
 function PanelLayout({children, footer, title = null, subTitle = null, trailing = null, showSubMenu = false}) {

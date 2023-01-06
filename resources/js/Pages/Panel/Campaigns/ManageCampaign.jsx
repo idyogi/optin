@@ -19,7 +19,7 @@ function ManageCampaign({campaign, lists, allLists}) {
         e.preventDefault();
     }
 
-    const handlePublish = () => {
+    const handlePublish = (isSchedule = true) => {
         let url = getCurrentUrl();
         url = url.replace('/create', '');
         url = url.replace('/edit', '');
@@ -32,7 +32,8 @@ function ManageCampaign({campaign, lists, allLists}) {
         }
         Inertia.put(url, {
             ...data,
-            lists: selectedLists
+            lists: selectedLists,
+            is_schedule: isSchedule,
         }, {
             preserveScroll: true,
             onSuccess: () => {
@@ -150,7 +151,8 @@ function ManageCampaign({campaign, lists, allLists}) {
                                         Delete
                                     </button>
                                     <button
-                                        onClick={() => Inertia.get('/panel/campaigns/' + campaign.uuid + '/draft')}
+                                        onClick={() => handlePublish(false)}
+
                                         type="button"
                                         //classname
                                         className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-warning-500 hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
@@ -166,7 +168,8 @@ function ManageCampaign({campaign, lists, allLists}) {
                                             </button>)
                                         :
                                         (<button
-                                            onClick={handlePublish}
+                                            onClick={() => handlePublish(true)}
+
                                             className="inline-flex items-center justify-center text-sm font-medium transition-all ease-in-out duration-100 focus:outline-none focus:ring border rounded-md border-primary-500 bg-primary-500 text-white shadow hover:bg-primary-400 hover:border-primary-400 focus:border-primary-700 focus:bg-primary-600 px-3 py-2 text-sm">
                                             Schedule
                                             campaign

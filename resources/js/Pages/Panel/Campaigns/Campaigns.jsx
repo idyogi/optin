@@ -4,6 +4,7 @@ import TableData from "../../../Components/TableData";
 import {InputGroup} from "reactstrap";
 import {Link} from "@inertiajs/inertia-react";
 import moment from "moment";
+import {toast} from "react-toastify";
 
 function Campaigns({campaigns, list_count, sender_count}) {
 
