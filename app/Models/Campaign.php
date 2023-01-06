@@ -208,8 +208,8 @@ class Campaign extends Model
     {
         $this->setQueuing();
         // Schedule Job initialize
-//        $scheduler = (new ScheduleCampaignJob($this))->delay($this->scheduled_at);
-        $scheduler = (new ScheduleCampaignJob($this))->delay(now()->addSeconds(10));
+        $scheduler = (new ScheduleCampaignJob($this))->delay($this->scheduled_at);
+//        $scheduler = (new ScheduleCampaignJob($this))->delay(now()->addSeconds(10));
         $this->dispatchWithMonitor($scheduler);
         // After this job is dispatched successfully, set status to "queuing"
         // Notice the different between the two statuses
