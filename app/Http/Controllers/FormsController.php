@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\formExport;
 use App\Exports\LeadExport;
 use App\Http\Requests\FormLeadRequest;
 use App\Http\Resources\FormCollection;
@@ -376,7 +377,6 @@ class FormsController extends Controller
 
     public function export(Request $request, form $form)
     {
-        $leads = $form->getAllLeads($request)->get();
-        return Excel::download($leads, $form->slug.'-all-leads.xlsx');
+        return Excel::download(new formExport(), 'all-leads.xlsx');
     }
 }
