@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import EditMenu from '../../components/DropdownEditMenu';
+import EditMenu from '../../Components/DropdownEditMenu';
 
 function UsersTabsCard(props) {
   return (

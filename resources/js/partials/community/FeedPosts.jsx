@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import EditMenu from '../../components/DropdownEditMenu';
+import EditMenu from '../../Components/DropdownEditMenu';
 
 import UserImage02 from '../../../../public/images/user-40-02.jpg';
 import UserImage03 from '../../../../public/images/user-40-03.jpg';
