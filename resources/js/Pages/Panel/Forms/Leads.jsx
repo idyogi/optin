@@ -19,6 +19,7 @@ import Datepicker from "../../../Components/Datepicker";
 
 
 function IndexForm({form, leads, filteredColumns, filtered}) {
+    console.log(filtered.links)
     const [selectedItems, setSelectedItems] = useState([]);
 
     const handleSelectedItems = (selectedItems) => {

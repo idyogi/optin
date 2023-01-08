@@ -14,14 +14,8 @@ class CampaignCollection extends ResourceCollection
      */
     public function toArray($request)
     {
-        return [
-            'data' => $this->collection,
-            'links' => [
-                'first' => $this->url(1),
-                'last' => $this->url($this->lastPage()),
-                'prev' => $this->previousPageUrl(),
-                'next' => $this->nextPageUrl(),
-            ],
-        ];
+        $resource =  $this->resource;
+        $resource->data = $this->collection;
+        return $resource;
     }
 }

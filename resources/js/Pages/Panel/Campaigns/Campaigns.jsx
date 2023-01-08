@@ -5,9 +5,9 @@ import {InputGroup} from "reactstrap";
 import {Link} from "@inertiajs/inertia-react";
 import moment from "moment";
 import {toast} from "react-toastify";
+import Paginate from "../../../Components/Paginate";
 
 function Campaigns({campaigns, list_count, sender_count}) {
-
     return (
         <div>
             <PanelLayout title={'Broadcast campaign'} trailing={(
@@ -72,7 +72,7 @@ function Campaigns({campaigns, list_count, sender_count}) {
                         <TableData
                             title={'Campaigns'}
                             headers={['Title', 'Status', '', 'Updated at']}
-                            pagination={campaigns.links}>
+                        >
                             {campaigns.data.map((item, index) => {
                                 const campaign = item.data;
                                 return (<tr key={index}>
@@ -88,11 +88,11 @@ function Campaigns({campaigns, list_count, sender_count}) {
 								{campaign.SubscriberCount} contacts
 							</span><br/>
 
-                                                     {(campaign.status !== 'new') && (
-                                                    <span
-                                                        className="text-muted2 d-block">
+                                                    {(campaign.status !== 'new') && (
+                                                        <span
+                                                            className="text-muted2 d-block">
                                                         Scheduled at: {moment(campaign.scheduled_at).format('DD/MM/YYYY HH:mm')}
-                                                        <br/>{moment(campaign.scheduled_at).fromNow()}
+                                                            <br/>{moment(campaign.scheduled_at).fromNow()}
                                                     </span>)}
                                                 </div>)}
                                         </td>
@@ -122,6 +122,10 @@ function Campaigns({campaigns, list_count, sender_count}) {
                                 )
                             })}
                         </TableData>
+                        <div className="mt-8">
+                            <Paginate pagination={campaigns.links} from={campaigns.from} to={campaigns.to}
+                                      total={campaigns.total}/>
+                        </div>
                     </div>
                 </div>
             </PanelLayout>
