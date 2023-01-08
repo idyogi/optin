@@ -15,6 +15,8 @@ import {Inertia} from "@inertiajs/inertia";
 import {IconTrash, IconX} from "@tabler/icons";
 import {Link} from "@inertiajs/inertia-react";
 import Paginate from "./Paginate";
+import Datepicker from "./Datepicker";
+import moment from "moment";
 
 function TableData({children, title, headers = [], pagination = null}) {
     const [currentUrl, setCurrentUrl] = useState(getCurrentUrl());
@@ -39,17 +41,24 @@ function TableData({children, title, headers = [], pagination = null}) {
             {preserveScroll: true, preserveState: true}
         );
     }
-
+    const handleSelectDate = (dateRange) => {
+        const [startDate, endDate] = dateRange;
+        Inertia.get(
+            currentUrl,
+            {startDate: moment(startDate).format('YYYY-MM-DD'), endDate: moment(endDate).format('YYYY-MM-DD')},
+            {preserveScroll: true, preserveState: true}
+        );
+    }
     return (
         <Card>
             <CardHeader>
-                <div className="flex items-center justify-between border-b border-gray-200 bg-white px-8 py-4 dark:border-gray-600 dark:bg-gray-700 dark:text-white">
-                    <div>
-                        <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-300">
-                            {title}
-                        </h2>
-                    </div>
-                    <div className="d-flex gap-3">
+                <div
+                    className="flex items-center justify-between border-b border-gray-200 bg-white px-8 py-4 dark:border-gray-600 dark:bg-gray-700 dark:text-white">
+                    <header className="px-5 py-4">
+                        <h2 className="font-semibold text-slate-800">{title}</h2>
+                    </header>
+                    <div className="flex gap-3">
+                            <Datepicker align="right" onChange={handleSelectDate}/>
                         <form onSubmit={handleSearch}>
                             <InputGroup>
                                 <Input type={'text'} placeholder={'Search then enter'} value={searchText}
@@ -78,8 +87,7 @@ function TableData({children, title, headers = [], pagination = null}) {
                     </tbody>
                 </Table>
                 <div className="pb-1 pt-6">
-                    {/*<Paginate pagination={pagination}/>*/}
-
+                    <Paginate pagination={pagination}/>
                 </div>
             </div>
         </Card>

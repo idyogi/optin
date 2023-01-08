@@ -28,14 +28,45 @@ class FormsController extends Controller
     {
         $form = form::where('uuid', $uuid)->firstOrFail();
 
-        $leads = $form->leads()->latest()->with('meta')->paginate(20)
+        $filtered = $form->leads()->latest()->with('meta')
+            ->when(request('search'), function ($query) {
+                $query->where(DB::raw('lower(response)'), 'like', '%' . strtolower(request('search')) . '%');
+            })
+            ->when(request('startDate'), function ($query) {
+                $query->where('created_at', '>=', request('startDate') . ' 00:00:00');
+            })
+            ->when(request('endDate'), function ($query) {
+                $query->where('created_at', '<=', request('endDate') . ' 23:59:59');
+            })
+            //where response only json
+            ->where('response', 'like', '%:%')
+            ->paginate(20)
             ->withQueryString();
+        $leads = $filtered->getCollection()->reject(function ($lead) {
+            return !json_decode($lead->response);
+        });
 
+        $data = $leads->map(function ($lead) {
+            $meta = $lead->meta->mapWithKeys(function ($item) {
+                return [$item->meta_key => $item->value];
+            })->reject(function ($value) {
+                return $value === null;
+            })->toArray();
+            //add created_at to meta
+            $meta['created_at'] = date('Y-m-d H:i:s', strtotime($lead->created_at));
+            return $meta;
+        });
         $filteredColumns = $form->columns();
+        $dataFields = $data->map(function ($item) {
+            return collect($item)->map(function ($value,) {
+                return $value;
+            })->toArray();
+        });
         return inertia('Panel/Forms/Leads', [
-            'leads' => $leads,
+            'leads' => $dataFields,
             'form' => $form,
             'filteredColumns' => $filteredColumns,
+            'filtered' => $filtered,
         ]);
     }
 
@@ -195,6 +226,7 @@ class FormsController extends Controller
             $settings['enableCookies'] = true;
         }
         $form->setFormMeta('total_views', 1, 'increment');
+        $form->setFormMeta('total_views_' . date('Y-m-d'), 1, 'increment');
 
         if (Cookie::has('Selviform_submitted_cks') && $settings['enableCookies']) {
             $submission_id = Cookie::get('Selviform_submitted_cks');

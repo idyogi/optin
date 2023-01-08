@@ -256,6 +256,11 @@ class form extends Model implements HasMedia
                 'label' => $field['label'],
             ];
         });
+        //add created at
+        $collection->push([
+            'name' => 'created_at',
+            'label' => 'Created At',
+        ]);
         $values = $collection->values();
 
         return $values->all();

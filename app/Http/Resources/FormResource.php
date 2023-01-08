@@ -14,6 +14,9 @@ class FormResource extends JsonResource
      */
     public function toArray($request)
     {
+        $leads = $this->leads();
+        $total = $leads->count();
+        $today = $leads->where('created_at', '>=', now()->startOfDay())->count();
         return [
             'id' => $this->id,
             'uuid' => $this->uuid,
@@ -25,7 +28,9 @@ class FormResource extends JsonResource
             'has_payment' => $this->has_payment,
             'type' => $this->type,
             'conditions' => $this->conditions,
-            'total_leads' => $this->leads()->count(),
+            'today_leads' => $today,
+            'today_views' => $this->getFormMeta('total_views_'.date('Y-m-d')) ?? 0,
+            'total_leads' => $total,
             'total_views' => $this->getFormMeta('total_views') ?? 0,
             'created_by' => $this->created_by,
             'created_at' => $this->created_at,

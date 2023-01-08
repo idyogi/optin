@@ -2,7 +2,8 @@ import React from 'react';
 import Flatpickr from 'react-flatpickr';
 
 function Datepicker({
-  align
+  align,
+    onChange,
 }) {
 
   const options = {
@@ -20,6 +21,7 @@ function Datepicker({
     },
     onChange: (selectedDates, dateStr, instance) => {
       instance.element.value = dateStr.replace('to', '-');
+      onChange(selectedDates);
     },
   }
 
