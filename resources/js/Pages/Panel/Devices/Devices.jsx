@@ -41,8 +41,7 @@ function Devices({devices}) {
                             </div>)}
                         <TableData
                             title={'Devices'}
-                            headers={['Name', 'Status', 'Updated at']}
-                            pagination={devices.links}>
+                            headers={['Name', 'Status', 'Updated at']}>
                             {devices.data.map((device, index) => {
                                 return (<tr key={index}>
                                         <td className="px-4 py-2">

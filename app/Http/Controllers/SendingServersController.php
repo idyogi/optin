@@ -16,7 +16,7 @@ class SendingServersController extends Controller
             ->when(request('search'), function ($query) {
                 $query->where(DB::raw('lower(name)'), 'like', '%' . strtolower(request('search')) . '%');
             })
-            ->paginate(10)->withQueryString();
+            ->paginate(100)->withQueryString();
         $deviceCollections = new DeviceCollection($servers);
         return inertia('Panel/Devices/Devices', [
             'devices' => $deviceCollections,
