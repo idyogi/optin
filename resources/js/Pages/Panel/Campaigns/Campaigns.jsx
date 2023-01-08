@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, useState} from 'react';
 import PanelLayout from "../../../Layouts/PloiTheme/PanelLayout";
 import TableData from "../../../Components/TableData";
 import {InputGroup} from "reactstrap";
@@ -8,6 +8,7 @@ import {toast} from "react-toastify";
 import Paginate from "../../../Components/Paginate";
 
 function Campaigns({campaigns, list_count, sender_count}) {
+    const [list, setList] = useState(campaigns)
     return (
         <div>
             <PanelLayout title={'Broadcast campaign'} trailing={(
@@ -30,7 +31,7 @@ function Campaigns({campaigns, list_count, sender_count}) {
                                     href="/panel/lists">View lists</a></p></div>
                                 <div className="bg-white p-6 dark:bg-gray-700 dark:text-white"><p
                                     className="text-sm text-gray-500 dark:text-gray-200">Campaigns</p><p
-                                    className="text-xl">{campaigns.data.length}</p><p
+                                    className="text-xl">{list.data.length}</p><p
                                     className="mt-4 text-sm"><a
                                     className="text-primary-600 dark:text-primary-400 border-primary-200 border-b border-dotted font-medium"
                                     href="/panel/campaigns">View campaigns</a></p></div>
@@ -45,7 +46,7 @@ function Campaigns({campaigns, list_count, sender_count}) {
                         </div>
 
 
-                        {campaigns.data.length === 0 && (
+                        {list.data.length === 0 && (
                             <div className="p-8">
 
                                 <div

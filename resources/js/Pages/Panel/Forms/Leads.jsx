@@ -19,7 +19,6 @@ import Datepicker from "../../../Components/Datepicker";
 
 
 function IndexForm({form, leads, filteredColumns, filtered}) {
-    console.log(filtered.links)
     const [selectedItems, setSelectedItems] = useState([]);
 
     const handleSelectedItems = (selectedItems) => {
@@ -43,7 +42,7 @@ function IndexForm({form, leads, filteredColumns, filtered}) {
                             </div>
                             <CustomersTable column={filteredColumns} data={leads} selectedItems={handleSelectedItems}/>
                             <div className="mt-8">
-                                <Paginate pagination={filtered.links} from={filtered.from} to={filtered.to} total={filtered.total}/>
+                                <Paginate pagination={filtered.links} from={filtered.from} to={filtered.to} total={filtered.total} hasExport={true}/>
                             </div>
 
                         </div>

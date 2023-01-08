@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\DB;
 
 class CampaignsController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $list_count = Lists::count();
         $sender_count = SendingServer::count();
@@ -22,6 +22,12 @@ class CampaignsController extends Controller
             ->when(request('search'), function ($query) {
                 $query->where(DB::raw('lower(name)'), 'like', '%' . strtolower(request('search')) . '%');
             })
+            ->when($request['startDate'], function ($query) use ($request) {
+                    $query->where('created_at', '>=', $request['startDate'] . ' 00:00:00');
+                })
+                ->when($request['endDate'], function ($query) use ($request) {
+                    $query->where('created_at', '<=', $request['endDate'] . ' 23:59:59');
+                })
             ->paginate(10)->withQueryString();
         $campaignsCollection = (new CampaignCollection($campaigns))->jsonSerialize();
         return inertia('Panel/Campaigns/Campaigns', [

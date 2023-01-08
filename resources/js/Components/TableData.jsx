@@ -18,7 +18,7 @@ import Paginate from "./Paginate";
 import Datepicker from "./Datepicker";
 import moment from "moment";
 
-function TableData({children, title, headers = [], pagination = null}) {
+function TableData({children, title, headers = [], pagination = null, hasExport = false}) {
     const [currentUrl, setCurrentUrl] = useState(getCurrentUrl());
     const [search, setSearch] = useState(false);
     const [searchText, setSearchText] = useState('');
@@ -51,12 +51,6 @@ function TableData({children, title, headers = [], pagination = null}) {
     }
 
     function exportExcel() {
-        // Inertia.get(
-        //     currentUrl,
-        //     {export: 'excel'},
-        //     {preserveScroll: false, preserveState: false}
-        // );
-        //go to url export
         window.location.href = currentUrl + '?export=excel';
 
     }
@@ -70,14 +64,14 @@ function TableData({children, title, headers = [], pagination = null}) {
                         <h2 className="font-semibold text-slate-800">{title}</h2>
                     </header>
                     <div className="flex gap-3">
-                        <div className="relative inline-flex">
+                        {hasExport && (<div className="relative inline-flex">
                             <button
                                 className="btn bg-white border-slate-200 hover:border-slate-300 text-slate-500 hover:text-slate-600"
                                 aria-haspopup="true"
                                 onClick={exportExcel}
                             >Export
                             </button>
-                        </div>
+                        </div>)}
                         <Datepicker align="right" onChange={handleSelectDate}/>
                         <form onSubmit={handleSearch}>
                             <InputGroup>
