@@ -29,10 +29,14 @@ class FormsController extends Controller
 
     public function leads(Request $request, $uuid)
     {
+        $perPage = 20;
+        if($request->has('export')){
+            $perPage = 9999999;
+        }
         $form = form::where('uuid', $uuid)->firstOrFail();
 
         $filtered = $form->getAllLeads($request);
-        $paginator = $filtered->paginate(20)
+        $paginator = $filtered->paginate($perPage)
             ->withQueryString();
         $leads = $paginator->getCollection()->reject(function ($lead) {
             return !json_decode($lead->response);
