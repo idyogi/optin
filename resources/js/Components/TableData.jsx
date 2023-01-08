@@ -49,6 +49,18 @@ function TableData({children, title, headers = [], pagination = null}) {
             {preserveScroll: true, preserveState: true}
         );
     }
+
+    function exportExcel() {
+        // Inertia.get(
+        //     currentUrl,
+        //     {export: 'excel'},
+        //     {preserveScroll: false, preserveState: false}
+        // );
+        //go to url export
+        window.location.href = currentUrl + '?export=excel';
+
+    }
+
     return (
         <Card>
             <CardHeader>
@@ -58,7 +70,15 @@ function TableData({children, title, headers = [], pagination = null}) {
                         <h2 className="font-semibold text-slate-800">{title}</h2>
                     </header>
                     <div className="flex gap-3">
-                            <Datepicker align="right" onChange={handleSelectDate}/>
+                        <div className="relative inline-flex">
+                            <button
+                                className="btn bg-white border-slate-200 hover:border-slate-300 text-slate-500 hover:text-slate-600"
+                                aria-haspopup="true"
+                                onClick={exportExcel}
+                            >Export
+                            </button>
+                        </div>
+                        <Datepicker align="right" onChange={handleSelectDate}/>
                         <form onSubmit={handleSearch}>
                             <InputGroup>
                                 <Input type={'text'} placeholder={'Search then enter'} value={searchText}

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\LeadExport;
 use App\Http\Requests\FormLeadRequest;
 use App\Http\Resources\FormCollection;
 use App\Http\Resources\FormResource;
@@ -13,6 +14,7 @@ use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
+use Maatwebsite\Excel\Facades\Excel;
 
 class FormsController extends Controller
 {
@@ -28,26 +30,19 @@ class FormsController extends Controller
     {
         $form = form::where('uuid', $uuid)->firstOrFail();
 
-        $filtered = $form->leads()->latest()->with('meta')
-            ->when(request('search'), function ($query) {
-                $query->where(DB::raw('lower(response)'), 'like', '%' . strtolower(request('search')) . '%');
-            })
-            ->when(request('startDate'), function ($query) {
-                $query->where('created_at', '>=', request('startDate') . ' 00:00:00');
-            })
-            ->when(request('endDate'), function ($query) {
-                $query->where('created_at', '<=', request('endDate') . ' 23:59:59');
-            })
-            //where response only json
-            ->where('response', 'like', '%:%')
-            ->paginate(20)
+        $filtered = $form->getAllLeads($request);
+        $paginator = $filtered->paginate(20)
             ->withQueryString();
-        $leads = $filtered->getCollection()->reject(function ($lead) {
+        $leads = $paginator->getCollection()->reject(function ($lead) {
             return !json_decode($lead->response);
         });
 
         $data = $leads->map(function ($lead) {
             $meta = $lead->meta->mapWithKeys(function ($item) {
+                //if met_key is phone then add +
+                if ($item->meta_key === 'phone') {
+                     return ['phone' => '+'.$item->value];
+                }
                 return [$item->meta_key => $item->value];
             })->reject(function ($value) {
                 return $value === null;
@@ -62,11 +57,14 @@ class FormsController extends Controller
                 return $value;
             })->toArray();
         });
+        if($request->has('export')){
+            return Excel::download(new LeadExport($filteredColumns,$dataFields), $form->slug.'-leads.xlsx');
+        }
         return inertia('Panel/Forms/Leads', [
             'leads' => $dataFields,
             'form' => $form,
             'filteredColumns' => $filteredColumns,
-            'filtered' => $filtered,
+            'filtered' => $paginator,
         ]);
     }
 
@@ -374,5 +372,11 @@ class FormsController extends Controller
             'message' => 'File uploaded successfully.',
             'url' => $media->getUrl()
         ]);
+    }
+
+    public function export(Request $request, form $form)
+    {
+        $leads = $form->getAllLeads($request)->get();
+        return Excel::download($leads, $form->slug.'-all-leads.xlsx');
     }
 }

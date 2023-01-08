@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -270,6 +271,23 @@ class form extends Model implements HasMedia
     function leads()
     {
         return $this->hasMany(submission::class);
+    }
+
+    public function getAllLeads($request = null)
+    {
+        $query = $this->leads()->latest()->with('meta')->where('response', 'like', '%:%');
+        if ($request) {
+            $query->when($request['search'], function ($query) use ($request) {
+                $query->where(DB::raw('lower(response)'), 'like', '%' . strtolower($request['search']) . '%');
+            })
+                ->when($request['startDate'], function ($query) use ($request) {
+                    $query->where('created_at', '>=', $request['startDate'] . ' 00:00:00');
+                })
+                ->when($request['endDate'], function ($query) use ($request) {
+                    $query->where('created_at', '<=', $request['endDate'] . ' 23:59:59');
+                });
+        }
+        return $query;
     }
     //get lead per 2 seconds in 30 minutes by 30 rows
     //sample return ['2021-01-01 00:00:00' => '1 lead', '2021-01-01 00:00:02' => '0 lead,, '2021-01-01 00:00:04' => '3 lead', '2021-01-01 00:00:06' => '0 lead']
