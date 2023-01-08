@@ -14,6 +14,17 @@ function Changelog() {
 
                             >
                                 <h2
+                                    className="text-lg font-semibold">9 Januari</h2><span
+                                className="text-sm text-gray-400">List</span><p
+                                className="text-gray-500 dark:text-gray-400">
+                                - import list from excel<br/><br/>
+                            </p>
+                            </div>
+                            <div
+                                className="focus:ring-primary-200 block transform space-y-6 rounded-lg bg-white p-5 shadow transition hover:-translate-y-1 focus:outline-none focus:ring-4 dark:bg-gray-700 dark:text-gray-300"
+
+                            >
+                                <h2
                                     className="text-lg font-semibold">8 Januari</h2><span
                                 className="text-sm text-gray-400">Laporan</span><p
                                 className="text-gray-500 dark:text-gray-400">

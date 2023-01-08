@@ -36,6 +36,7 @@ Route::name('panel.')->prefix('panel')->middleware('auth')->group(function () {
     Route::resource('lists', ListsController::class);
     //post import from form leads
     Route::post('/lists/import', [ListsController::class, 'import'])->name('lists.import');
+    Route::post('/lists/{list}/importFile', [ListsController::class, 'importFile'])->name('lists.importFile');
 
     Route::post('forms/upload', [FormsController::class, 'upload'])->name('forms.upload');
     Route::resource('forms', FormsController::class);

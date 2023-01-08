@@ -8,15 +8,15 @@ import {getCurrentUrl} from "../../../utils/helper";
 import {Inertia} from "@inertiajs/inertia";
 import {toast} from "react-toastify";
 import TableData from "../../../Components/TableData";
+import Paginate from "../../../Components/Paginate";
 
 function ManageCampaign({list, contacts, forms}) {
     const form = useForm(list || {});
     const [lead_form_id, setLeadFormId] = useState(forms[0].uuid);
-    const {data, setData, post, processing, errors} = form;
+    const {data, setData} = form;
     const handleSubmit = (e) => {
         e.preventDefault();
     }
-    console.log('lead_form_id', lead_form_id)
 
     const handlePublish = () => {
         Inertia.put('/panel/lists/' + list.uuid, {
@@ -30,6 +30,15 @@ function ManageCampaign({list, contacts, forms}) {
             },
             onError: () => toast.error('Failed to update list')
         });
+    }
+    const dataFile = useForm({
+        file: null,
+        lead_form_id: lead_form_id
+    })
+
+    function submitFile(e) {
+        e.preventDefault()
+        dataFile.post('/panel/lists/' + list.uuid + '/importFile')
     }
 
     return (
@@ -68,7 +77,38 @@ function ManageCampaign({list, contacts, forms}) {
                                             </div>
                                         </footer>
                                     </form>
+                                    <div
+                                        className="divide-y divide-gray-200 rounded-lg bg-white shadow dark:divide-gray-800 dark:bg-gray-700 dark:text-gray-300">
+                                        <form onSubmit={submitFile}>
+                                            <div className="px-6 py-5">
+                                                <div className="">
+                                                    <div className="col-span-1"><h2
+                                                        className="text-md font-medium">Import
+                                                        file excel</h2>
+                                                        <div className="grid gap-4">
+                                                            <div>
 
+
+                                                                <input type="file"
+                                                                       onChange={e => dataFile.setData('file', e.target.files[0])}/>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <footer
+                                                className="rounded-b-lg bg-gray-50 px-6 py-3 dark:border-gray-800 dark:bg-gray-800 dark:text-gray-200">
+                                                <div className="flex items-center justify-end space-x-2">
+                                                    <button
+                                                        type="submit"
+                                                        className="inline-flex items-center justify-center text-sm font-medium transition-all ease-in-out duration-100 focus:outline-none focus:ring border rounded-md border-primary-500 bg-primary-500 text-white shadow hover:bg-primary-400 hover:border-primary-400 focus:border-primary-700 focus:bg-primary-600 px-3 py-2 text-sm">
+                                                        Import file
+                                                    </button>
+                                                </div>
+                                            </footer>
+                                        </form>
+                                    </div>
                                     <div
                                         className="divide-y divide-gray-200 rounded-lg bg-white shadow dark:divide-gray-800 dark:bg-gray-700 dark:text-gray-300">
                                         <div className="px-6 py-5">
@@ -101,7 +141,7 @@ function ManageCampaign({list, contacts, forms}) {
                                             <div className="flex items-center justify-end space-x-2">
                                                 <button
                                                     onClick={() => Inertia.post('/panel/lists/import', {
-                                                        lead_form_id: ''+lead_form_id,
+                                                        lead_form_id: '' + lead_form_id,
                                                         list_id: list.uuid
                                                     }, {
                                                         preserveScroll: true,
@@ -119,31 +159,36 @@ function ManageCampaign({list, contacts, forms}) {
                                         </footer>
                                     </div>
 
+
                                 </div>
                             </div>
                             <div className="col-span-1 space-y-6 lg:col-span-2">
                                 <TableData
                                     title={'Contacts'}
-                                    headers={['Name', 'Phone', 'Status', 'Updated at']}
-                                    pagination={contacts.links}>
+                                    headers={['Name', 'Phone', 'Status', 'Updated at']}>
                                     {contacts.data.map((contact, index) => {
+                                        const data = contact.data;
                                         return (<tr key={index}>
                                                 <td className="px-4 py-2">
-                                                    {contact.name}</td>
+                                                    {data.name}</td>
                                                 <td className="px-4 py-2">
-                                                    {contact.phone}
+                                                    {data.phone}
                                                 </td>
                                                 <td className="px-4 py-2">
-                                                    {contact.status}
+                                                    {data.status}
                                                 </td>
 
                                                 <td className="px-4 py-2">
-                                                    {moment(contact.updated_at).format('DD/MM/YYYY HH:mm')}
+                                                    {moment(data.updated_at).format('DD/MM/YYYY HH:mm')}
                                                 </td>
                                             </tr>
                                         )
                                     })}
                                 </TableData>
+                                <div className="mt-8">
+                                    <Paginate pagination={contacts.links} from={contacts.from} to={contacts.to}
+                                              total={contacts.total}/>
+                                </div>
                             </div>
                         </div>
 

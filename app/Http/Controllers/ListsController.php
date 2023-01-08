@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\ContactCollection;
+use App\Imports\ContactsImport;
 use App\Models\Lists;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ListsController extends Controller
 {
@@ -35,18 +37,25 @@ class ListsController extends Controller
     {
     }
 
-    public function edit(Lists $list)
+    public function edit(Request $request, Lists $list)
     {
-        $contacts = new ContactCollection($list->contacts()->latest()
+        $contacts = $list->contacts()->latest()
             ->when(request('search'), function ($query) {
                 $query->where(DB::raw('lower(name)'), 'like', '%' . strtolower(request('search')) . '%');
             })
-            ->paginate(10));
+            ->when($request['startDate'], function ($query) use ($request) {
+                $query->where('created_at', '>=', $request['startDate'] . ' 00:00:00');
+            })
+            ->when($request['endDate'], function ($query) use ($request) {
+                $query->where('created_at', '<=', $request['endDate'] . ' 23:59:59');
+            })
+            ->paginate(100)->withQueryString();
+        $collection = (new ContactCollection($contacts))->jsonSerialize();
         //all forms pluck title and id
         $forms = auth()->user()->forms()->get();
         return inertia('Panel/Lists/ManageLists', [
             'list' => $list,
-            'contacts' => $contacts,
+            'contacts' => $collection,
             'forms' => $forms,
         ]);
     }
@@ -106,5 +115,15 @@ class ListsController extends Controller
         }
 
         return redirect()->route('panel.lists.edit', $list->uuid);
+    }
+
+    public function importFile(Request $request, Lists $list)
+    {
+        $request->validate([
+            'file' => 'required|max:50000|mimes:xlsx'
+        ]);
+        Excel::import(new ContactsImport($list), request()->file('file'));
+
+        return redirect()->back()->with('success', 'All good!');
     }
 }
