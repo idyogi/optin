@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\ContactListExport;
 use App\Http\Resources\ContactCollection;
 use App\Imports\ContactsImport;
 use App\Models\Lists;
@@ -39,6 +40,10 @@ class ListsController extends Controller
 
     public function edit(Request $request, Lists $list)
     {
+        $perPage = 100;
+        if ($request->has('export')) {
+            $perPage = 9999999;
+        }
         $contacts = $list->contacts()->latest()
             ->when(request('search'), function ($query) {
                 $query->where(DB::raw('lower(name)'), 'like', '%' . strtolower(request('search')) . '%');
@@ -49,10 +54,13 @@ class ListsController extends Controller
             ->when($request['endDate'], function ($query) use ($request) {
                 $query->where('created_at', '<=', $request['endDate'] . ' 23:59:59');
             })
-            ->paginate(100)->withQueryString();
+            ->paginate($perPage)->withQueryString();
         $collection = (new ContactCollection($contacts))->jsonSerialize();
         //all forms pluck title and id
         $forms = auth()->user()->forms()->get();
+        if ($request->has('export')) {
+            return Excel::download(new ContactListExport($collection), $list->name . '-contact-list.xlsx');
+        }
         return inertia('Panel/Lists/ManageLists', [
             'list' => $list,
             'contacts' => $collection,

@@ -1,16 +1,4 @@
 import React, {useState, useEffect} from 'react';
-import Customer from './CustomersTableItem';
-
-import Image01 from '../../../../public/images/user-40-01.jpg';
-import Image02 from '../../../../public/images/user-40-02.jpg';
-import Image03 from '../../../../public/images/user-40-03.jpg';
-import Image04 from '../../../../public/images/user-40-04.jpg';
-import Image05 from '../../../../public/images/user-40-05.jpg';
-import Image06 from '../../../../public/images/user-40-06.jpg';
-import Image07 from '../../../../public/images/user-40-07.jpg';
-import Image08 from '../../../../public/images/user-40-08.jpg';
-import Image09 from '../../../../public/images/user-40-09.jpg';
-import Image10 from '../../../../public/images/user-40-10.jpg';
 import TableData from "../../Components/TableData";
 
 function CustomersTable({
@@ -20,31 +8,13 @@ function CustomersTable({
                             pagination
                         }) {
     const [headers, setHeaders] = useState([]);
-    const [selectAll, setSelectAll] = useState(false);
     const [isCheck, setIsCheck] = useState([]);
     const [list, setList] = useState([]);
 
     useEffect(() => {
-        setHeaders(column.map((col, i) => col.label));
+        setHeaders(column.map((col) => col.label));
         setList(data);
     }, []);
-
-    const handleSelectAll = () => {
-        setSelectAll(!selectAll);
-        setIsCheck(list.map(li => li.id));
-        if (selectAll) {
-            setIsCheck([]);
-        }
-    };
-
-    const handleClick = e => {
-        const {id, checked} = e.target;
-        setSelectAll(false);
-        setIsCheck([...isCheck, id]);
-        if (!checked) {
-            setIsCheck(isCheck.filter(item => item !== id));
-        }
-    };
 
     useEffect(() => {
         selectedItems(isCheck);
@@ -58,9 +28,10 @@ function CustomersTable({
                 {/* Table */}
                 <div className="overflow-x-auto">
                     <TableData
-                        title={'Posts'}
+                        title={'Laporan Leads'}
                         headers={headers}
                         pagination={pagination}
+                        hasExport={true}
                     >
                         {data.map((item, i) => (
                             <tr key={i}>

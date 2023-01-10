@@ -1,7 +1,5 @@
 @php
-    $headers = collect($columns)->map(function($column) {
-        return $column['label'];
-    });
+    $headers = ['Name', 'Phone', 'Created At'];
 @endphp
 <table>
     <thead>
@@ -13,10 +11,9 @@
     </thead>
     <tbody>
     @foreach($datas as $data)
+
         @php
-            $row = collect($columns)->map(function($column) use ($data) {
-                return $data[$column['name']]??'';
-            });
+            $row = collect($data)->only(['name', 'phone', 'created_at']);
         @endphp
         <tr>
             @foreach($row as $item)
