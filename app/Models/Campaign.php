@@ -393,4 +393,5 @@ class Campaign extends Model
     {
         $this->cancelAndDeleteJobs();
     }
+
 }

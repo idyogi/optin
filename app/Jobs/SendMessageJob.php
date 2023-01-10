@@ -46,7 +46,9 @@ class SendMessageJob implements ShouldQueue
         $logger = $this->campaign->logger();
         $phone = $this->contact->getPhone();
         try {
-            $sent = $this->server->send($this->campaign->text, $phone);
+            $text = $this->campaign->text;
+            $text = str_replace(array('[name]', '[email]', '[phone]'), array($this->contact->name, $this->contact->email, $this->contact->phone), $text);
+            $sent = $this->server->send($text, $phone);
 
             // Log successful shot
             $this->campaign->trackMessage($sent, $this->contact, $this->server);

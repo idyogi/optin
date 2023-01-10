@@ -28,7 +28,8 @@ class SendingServer extends Model
     public function send($message, $phone): array
     {
         $url = 'https://api.adminselvi.com/send-message';
-
+//phone remove +
+        $phone = str_replace('+', '', $phone);
         $data = [
             'api_key' => "awCnq3n2no7IWCiSYgE3xDbcQKTphd",
             'sender' => $this->number,

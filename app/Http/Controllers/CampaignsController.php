@@ -43,7 +43,7 @@ class CampaignsController extends Controller
         //create campaign and redirect to edit page
         $campaign = new Campaign();
         $campaign->name = 'New Campaign';
-        $campaign->text = 'Hai, live Facebook jam 9 pagi ya';
+        $campaign->text = 'Hai [name], live Facebook jam 9 pagi ya';
         $campaign->scheduled_at = now()->addHours(9);
         $campaign->user_id = auth()->id();
         $campaign->save();
