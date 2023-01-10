@@ -37,6 +37,7 @@ Route::name('panel.')->prefix('panel')->middleware('auth')->group(function () {
     //post import from form leads
     Route::post('/lists/import', [ListsController::class, 'import'])->name('lists.import');
     Route::post('/lists/{list}/importFile', [ListsController::class, 'importFile'])->name('lists.importFile');
+    Route::get('/lists/{list}/delete', [ListsController::class, 'delete'])->name('lists.delete');
 
     Route::post('forms/upload', [FormsController::class, 'upload'])->name('forms.upload');
     Route::resource('forms', FormsController::class);

@@ -26,7 +26,6 @@ function EditForm({form, settings, fields, responseFields, formatFields, submitB
         setData(fieldList);
     }
     const handleResponseChanges = (fieldList) => {
-        console.log(fieldList);
         responseData.setData(fieldList);
     }
     const handleSettingChanges = (data) => {

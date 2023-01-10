@@ -17,7 +17,6 @@ function ManageDevice({device}) {
     const [qrcode, setQrcode] = useState();
     const [message, setMessage] = useState();
     const publicSubmit = (e) => {
-        console.log(data);
         Inertia.put('/panel/devices/' + device.uuid, {
             ...data
         }, {
@@ -53,7 +52,6 @@ function ManageDevice({device}) {
     useEffect(() => {
         socket.emit('StartConnection', device.number)
         socket.on('qrcode', ({token, data, message}) => {
-            console.log('qrcode', token, device.number, data, message)
             if (token === device.number) {
                 setQrcode(data);
                 setMessage(message);
@@ -62,10 +60,7 @@ function ManageDevice({device}) {
             }
         })
         socket.on('connection-open', ({token, user, ppUrl}) => {
-            console.log('connection-open')
-
             if (token === device.number) {
-                console.log(ppUrl)
                 setQrcode(ppUrl);
                 setMessage(message);
                 setData('status', 'connected');
@@ -77,7 +72,6 @@ function ManageDevice({device}) {
 
         socket.on('Unauthorized', ({token}) => {
             if (token === device.number) {
-                console.log('Unauthorized')
                 setMessage('Unauthorized');
                 setData('status', 'disconnected');
                 handleStatus('disconnected');

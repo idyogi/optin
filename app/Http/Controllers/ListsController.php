@@ -134,4 +134,9 @@ class ListsController extends Controller
 
         return redirect()->back()->with('success', 'All good!');
     }
+    public function delete(Request $request, Lists $list)
+    {
+        $list->delete();
+        return redirect()->route('panel.lists.index');
+    }
 }

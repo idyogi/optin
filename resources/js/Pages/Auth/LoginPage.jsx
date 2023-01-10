@@ -11,7 +11,6 @@ export default function LoginPage({config}) {
     }
     const handleSubmit = (e) => {
         e.preventDefault()
-        console.log(config.app.url );
         post(config.app.url + '/login');
     }
 

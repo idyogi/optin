@@ -24,7 +24,6 @@ export const FlipDate = ({ value }) => {
 
   useEffect(() => {
     const offset = new Date();
-    console.log('offset', offset)
     const timeDuration = Tick.helper.duration(parseInt(tickValue.toString()), "minutes");
 
     // add 24 hours to get final deadline

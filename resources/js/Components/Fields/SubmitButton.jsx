@@ -16,7 +16,6 @@ function SubmitButton({form, submitField, handleSubmitChanges, isPublic, active,
         if (key === 'label') {
             newSubmitButton.label = value;
         }
-        console.log(newSubmitButton);
         handleSubmitChanges(newSubmitButton);
     }
 

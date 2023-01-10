@@ -25,10 +25,6 @@ function IndexForm({form, leads, filteredColumns, filtered}) {
         setSelectedItems([...selectedItems]);
     };
 
-
-    let handleChangeDate = (date) => {
-        console.log(date);
-    }
     return (
         <PanelLayout title={'Leads'} subTitle={''}>
             <div className="flex overflow-hidden">
@@ -58,7 +54,6 @@ function IndexForm({form, leads, filteredColumns, filtered}) {
 export async function fetchData(options) {
     // Simulate some network latency
     await new Promise(r => setTimeout(r, 500))
-    console.log(pageIndex, pageSize)
     return {
         rows: data.slice(
             options.pageIndex * options.pageSize,

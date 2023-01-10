@@ -26,7 +26,6 @@ function InputPhone({fieldList, index, active, isPublic, updateField}) {
     const [selected, setSelected] = useState(countries[0])
 
     function handleSelect(index) {
-        console.log(index);
         setSelected(countries[index])
         const newFieldList = [...fieldList];
         newFieldList[index].country_code = countries[index].code;

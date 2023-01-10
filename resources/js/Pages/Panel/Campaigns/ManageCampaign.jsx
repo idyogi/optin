@@ -18,7 +18,6 @@ function ManageCampaign({campaign, lists, allLists}) {
 
     const handlePublish = (isSchedule = true) => {
         let url = getCurrentUrl();
-        console.log('getCurrentUrl'+url)
         url = url.replace('/create', '');
         url = url.replace('/edit', '');
         if (campaign) {

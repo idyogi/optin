@@ -85,7 +85,6 @@ function ResponseWhatsappRotator({
                 return pause;
             }));
         }
-        console.log(key, value, i);
         fieldList[index].numbers[i] = {...fieldList[index].numbers[i], [key]: value};
         updateField(index, fieldList[index]);
     }

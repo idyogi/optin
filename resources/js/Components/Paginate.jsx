@@ -3,7 +3,6 @@ import {Pagination, PaginationItem} from "reactstrap";
 import {Link} from "@inertiajs/inertia-react";
 
 function Paginate({pagination, from, to, total}) {
-    console.log(pagination)
     return (
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
             {from && (<div className="ml-2 text-sm text-slate-500 text-center sm:text-left">
