@@ -31,6 +31,21 @@ class Lists extends Model
         return $this->belongsToMany(\App\Models\Contact::class, 'list_contacts', 'list_id', 'contact_id');
     }
 
+    //remove duplicate contacts
+    public function removeDuplicateContacts()
+    {
+        //remove duplicate contacts if phone is same
+        $contacts = $this->contacts()->get();
+        $phones = [];
+        foreach ($contacts as $contact) {
+            if (in_array($contact->phone, $phones)) {
+                $this->contacts()->detach($contact->id);
+            } else {
+                $phones[] = $contact->phone;
+            }
+        }
+    }
+
     public function campaigns()
     {
         return $this->belongsToMany(\App\Models\Campaign::class, 'list_campaigns');

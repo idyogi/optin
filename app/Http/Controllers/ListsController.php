@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Exports\ContactListExport;
 use App\Http\Resources\ContactCollection;
 use App\Imports\ContactsImport;
+use App\Models\Contact;
 use App\Models\Lists;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -40,6 +41,8 @@ class ListsController extends Controller
 
     public function edit(Request $request, Lists $list)
     {
+        //remove duplicate contacts
+        $list->removeDuplicateContacts();
         $perPage = 100;
         if ($request->has('export')) {
             $perPage = 9999999;

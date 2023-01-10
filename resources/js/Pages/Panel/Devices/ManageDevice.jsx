@@ -139,7 +139,7 @@ function ManageDevice({device}) {
                                             pada: {moment(device.updated_at).format('DD-MM-YYYY HH:m')}</p></div>
 
                                     </div>)}
-                                    {qrcode && (<div><img src={qrcode} alt="qrcode" id="qrcode"/></div>)}
+                                    {qrcode && (<div><img width={250} src={qrcode} alt="qrcode" id="qrcode"/></div>)}
                                     {message && (<div>{message}</div>)}
                                 </div>
                             </div>

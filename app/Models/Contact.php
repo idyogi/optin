@@ -106,4 +106,14 @@ class Contact extends Model
             }
         }
     }
+    //remove duplicate phone number
+    public function removeDuplicatePhone($request)
+    {
+        $phone = $request->phone;
+        $user = auth()->user();
+        $contact = Contact::where('phone', $phone)->where('user_id', $user->id)->first();
+        if ($contact) {
+            $contact->delete();
+        }
+    }
 }

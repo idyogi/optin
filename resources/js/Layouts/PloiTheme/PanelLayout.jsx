@@ -18,23 +18,9 @@ function PanelLayout({children, footer, title = null, subTitle = null, trailing 
         setActiveMenu(url);
     }, []);
 
-    const pageTitle = () => (
-        <div className="row g-2 align-items-center">
-            <div className="col">
-                {subTitle && <div className="page-subtitle">{subTitle}</div>}
-                <h2 className="page-title">
-                    {title}
-                </h2>
-            </div>
-            <div className="col-12 col-md-auto ms-auto d-print-none">
-                {trailing}
-            </div>
-        </div>
-    )
-
     return (
         <div className="flex min-h-screen w-full flex-col bg-gray-100 font-sans antialiased dark:bg-gray-900">
-            <ToastContainer/>
+            <ToastContainer limit={1}/>
             <div className="flex min-h-screen w-full flex-nowrap">
                 {showSubMenu && (
                     <div
