@@ -41,12 +41,6 @@ function FeedRightContent() {
                                     </li>
                                 ))}
                             </ul>
-                            <div className="mt-4">
-                                <button
-                                    className="btn-sm w-full bg-white border-slate-200 hover:border-slate-300 text-indigo-500 shadow-none">View
-                                    All
-                                </button>
-                            </div>
                         </div>
 
                     </div>
