@@ -23,7 +23,7 @@ class ContactsImport implements OnEachRow,WithHeadingRow
         $phone = '';
         $email = '';
         foreach ($row as $key => $value) {
-            if ($this->isPhone($value)) {
+            if ($this->isPhone($value) && $phone == '') {
                 $phone = $value;
             }
             if ($this->isEmail($value)) {
