@@ -33,4 +33,10 @@ class DashboardController extends Controller
         $lead = array_values($lead);
         return response()->json($lead);
     }
+
+    public function fetchLastLeads()
+    {
+        $leads = form::getLastLeads();
+        return response()->json($leads);
+    }
 }

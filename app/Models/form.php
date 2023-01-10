@@ -359,4 +359,24 @@ class form extends Model implements HasMedia
         return $unique;
     }
 
+    public static function getLastLeads()
+    {
+        //get last 10
+        $leads = submission::orderBy('id', 'desc')->limit(10)->get();
+        $leads = $leads->map(function ($lead) {
+            //get meta
+            $lead->meta = $lead->meta->mapWithKeys(function ($item) {
+                return [$item->meta_key => $item->value];
+            });
+            //return meta phone
+            return [
+                'name' => $lead->meta['input_text'] ?? $lead->meta['name'] ?? '',
+                'phone' => $lead->meta['phone'],
+                'time' => date('d M Y H:i:s', strtotime($lead->created_at)),
+                'is_new_contact' => !Contact::where('phone', $lead->meta['phone'])->first(),
+            ];
+        });
+        return $leads;
+    }
+
 }

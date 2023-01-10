@@ -52,5 +52,6 @@ Route::name('panel.')->prefix('panel')->middleware('auth')->group(function () {
     });
     Route::get('fetch', [DashboardController::class, 'fetch']);
     Route::get('fetch30d', [DashboardController::class, 'fetch30d']);
+    Route::get('fetchLastLeads', [DashboardController::class, 'fetchLastLeads']);
 
 });
