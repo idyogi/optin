@@ -203,7 +203,7 @@ class FormsController extends Controller
         }
         $submisson->meta()->createMany($submisson_metas);
 
-        $addToList = $this->frontendSave($validated['fields'], $form);
+//        $addToList = $this->frontendSave($validated['fields'], $form);
         DB::commit();
         if ($redirectTo) {
             return back()->with('success', ['submission_id' => $submisson->id, 'redirectTo' => $redirectTo]);

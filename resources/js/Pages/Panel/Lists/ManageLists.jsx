@@ -97,6 +97,8 @@ function ManageCampaign({list, contacts, forms}) {
                                             <footer
                                                 className="rounded-b-lg bg-gray-50 px-6 py-3 dark:border-gray-800 dark:bg-gray-800 dark:text-gray-200">
                                                 <div className="flex items-center justify-end space-x-2">
+                                                        <label><a href={location.protocol + "//" + location.host + '/template.xlsx'} className="text-primary-600 dark:text-primary-400 border-primary-200 border-b border-dotted text-sm font-medium">Download template</a> </label>
+
                                                     <button
                                                         type="submit"
                                                         className="inline-flex items-center justify-center text-sm font-medium transition-all ease-in-out duration-100 focus:outline-none focus:ring border rounded-md border-primary-500 bg-primary-500 text-white shadow hover:bg-primary-400 hover:border-primary-400 focus:border-primary-700 focus:bg-primary-600 px-3 py-2 text-sm">
