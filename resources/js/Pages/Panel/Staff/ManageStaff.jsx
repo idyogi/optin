@@ -6,6 +6,7 @@ import {toast} from 'react-toastify';
 import io from 'socket.io-client';
 import {Inertia} from "@inertiajs/inertia";
 import {MenuItem, OutlinedInput, Select} from "@mui/material";
+import {getCurrentUrl} from "../../../utils/helper";
 
 
 function ManageStaff({staff, roles}) {
@@ -21,9 +22,9 @@ function ManageStaff({staff, roles}) {
 
     const publicSubmit = (e) => {
         if(staff.id === undefined) {
-            Inertia.post('/panel/staff/', data);
+            Inertia.post(location.protocol + "//" + location.host + '/panel/staff', data);
         } else {
-            Inertia.put('/panel/staff/' + staff.id, {
+            Inertia.put(location.protocol + "//" + location.host + '/panel/staff/' + staff.id, {
                 ...data
             }, {
                 preserveScroll: true,
