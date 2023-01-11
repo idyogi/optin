@@ -58,7 +58,7 @@ class SendingServer extends Model
         }
 
         return array(
-            'status' => self::DEVICE_STATUS_DISCONNECTED,
+            'status' => 'failed',
         );
     }
 
