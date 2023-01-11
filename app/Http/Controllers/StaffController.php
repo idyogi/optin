@@ -66,7 +66,7 @@ class StaffController extends Controller
         $staff->password = bcrypt($request->password);
         $staff->save();
         $staff->assignRole($request->role);
-        return redirect('/panel/staff')->with('success', 'Staff berhasil ditambahkan');
+        return redirect(base_url().'/panel/staff')->with('success', 'Staff berhasil ditambahkan');
     }
     public function update(Request $request, User $user)
     {
@@ -83,12 +83,12 @@ class StaffController extends Controller
         }
         $user->save();
         $user->syncRoles($request->role);
-        return redirect('/panel/staff')->with('success', 'Staff berhasil diubah');
+        return redirect(base_url().'/panel/staff')->with('success', 'Staff berhasil diubah');
     }
 
     public function destroy(User $user)
     {
         $user->delete();
-        return redirect('/panel/staff')->with('success', 'Staff berhasil dihapus');
+        return redirect(base_url().'/panel/staff')->with('success', 'Staff berhasil dihapus');
     }
 }
