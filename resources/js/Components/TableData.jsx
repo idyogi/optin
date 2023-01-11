@@ -18,7 +18,7 @@ import Paginate from "./Paginate";
 import Datepicker from "./Datepicker";
 import moment from "moment";
 
-function TableData({children, title, headers = [], pagination = null, hasExport = false}) {
+function TableData({children, title, headers = [], pagination = null, hasExport = false, hasFilter = true}) {
     const [currentUrl, setCurrentUrl] = useState(getCurrentUrl());
     const [search, setSearch] = useState(false);
     const [searchText, setSearchText] = useState('');
@@ -72,7 +72,8 @@ function TableData({children, title, headers = [], pagination = null, hasExport 
                             >Export
                             </button>
                         </div>)}
-                        <Datepicker align="right" onChange={handleSelectDate}/>
+                        {hasFilter && (<Datepicker align="right" onChange={handleSelectDate}/>)}
+
                         <form onSubmit={handleSearch}>
                             <InputGroup>
                                 <Input type={'text'} placeholder={'Search then enter'} value={searchText}

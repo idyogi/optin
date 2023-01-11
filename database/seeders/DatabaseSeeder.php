@@ -65,6 +65,7 @@ class DatabaseSeeder extends Seeder
 
             //run lists seeder
             $this->call([
+                PermissonSeeder::class,
                 ListsSeeder::class,
                 CampaignSeeder::class,
                 SubmissionSeeder::class,

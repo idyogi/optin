@@ -44,6 +44,10 @@ class HandleInertiaRequests extends Middleware
                 return app()->getLocale();
             },
             'auth' => auth()->check() ? ['user' => auth()->user()->toArray()] : null,
+            //permissions
+            'permissions' => function () {
+                return auth()->check() ? auth()->user()->getAllPermissions()->pluck('name') : null;
+            },
             'config' => function () {
                 return [
                     'app' => [

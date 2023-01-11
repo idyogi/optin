@@ -3,8 +3,10 @@ import {ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import RightMenu from "../../Components/RightMenu";
 import FlashMessage from "../../Components/FlashMessage";
+import {usePage} from "@inertiajs/inertia-react";
 
 function PanelLayout({children, footer, title = null, subTitle = null, trailing = null, showSubMenu = false}) {
+    const { permissions } = usePage().props;
     const [showMenu, setShowMenu] = React.useState(false);
 
     function handleMenu() {
@@ -60,6 +62,13 @@ function PanelLayout({children, footer, title = null, subTitle = null, trailing 
                                    className={`${activeMenu === '/panel/campaigns' ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 focus:bg-gray-900'}` + ' h-10 flex items-center w-full px-2 rounded-lg font-medium text-sm transition-all ease-in-out duration-100 focus:outline-none'}>
                                     <i className="fas fa-users mr-2 fa-fw"></i>Broadcast</a>
                             </li>
+                            {permissions.includes('panel.staff') && (
+                                <li className="relative px-2 py-2 text-sm font-medium rounded-md">
+                                    <a href="/panel/staff"
+                                       className={`${activeMenu === '/panel/staff' ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 focus:bg-gray-900'}` + ' h-10 flex items-center w-full px-2 rounded-lg font-medium text-sm transition-all ease-in-out duration-100 focus:outline-none'}>
+                                        <i className="fas fa-users mr-2 fa-fw"></i>Staff</a>
+                                </li>
+                            )}
                             <li className="relative px-2 py-2 text-sm font-medium rounded-md">
                                 <a href="/panel/changelog"
                                    className={`${activeMenu === '/panel/changelog' ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 focus:bg-gray-900'}` + ' h-10 flex items-center w-full px-2 rounded-lg font-medium text-sm transition-all ease-in-out duration-100 focus:outline-none'}>

@@ -6,6 +6,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FormsController;
 use App\Http\Controllers\ListsController;
 use App\Http\Controllers\SendingServersController;
+use App\Http\Controllers\StaffController;
 use App\Http\Controllers\SubmissionsController;
 use Illuminate\Support\Facades\Route;
 
@@ -24,7 +25,7 @@ Route::controller(FormsController::class)->group(function () {
 Route::controller(SubmissionsController::class)->group(function () {
     Route::post('/submission/{id}/whatsapp-rotator', [SubmissionsController::class, 'whatsappRotator'])->name('submissions.whatsapp-rotator');
 });
-Route::name('panel.')->prefix('panel')->middleware('auth')->group(function () {
+Route::name('panel.')->prefix('panel')->middleware(['auth'])->group(function () {
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::resource('campaigns', CampaignsController::class);
     Route::resource('devices', SendingServersController::class);
@@ -53,5 +54,14 @@ Route::name('panel.')->prefix('panel')->middleware('auth')->group(function () {
     Route::get('fetch', [DashboardController::class, 'fetch']);
     Route::get('fetch30d', [DashboardController::class, 'fetch30d']);
     Route::get('fetchLastLeads', [DashboardController::class, 'fetchLastLeads']);
+    Route::middleware('permission')->name('staff')->group(function () {
+        Route::get('staff', [StaffController::class, 'index']);
+        Route::get('staff/create', [StaffController::class, 'create']);
+        Route::post('staff', [StaffController::class, 'store']);
+        Route::get('staff/{user}/edit', [StaffController::class, 'edit']);
+        Route::put('staff/{user}', [StaffController::class, 'update']);
+        Route::delete('staff/{user}', [StaffController::class, 'destroy']);
+    });
+
 
 });
