@@ -18,13 +18,11 @@ function FeedRightContent() {
         return () => clearInterval(interval)
     },);
     return (
-        <div className="w-full hidden xl:block xl:w-72">
-            <div
-                className="lg:sticky lg:top-16 lg:h-[calc(100vh-64px)] lg:overflow-x-hidden lg:overflow-y-auto no-scrollbar">
-                <div className="md:py-8">
+        <div className="flex flex-col col-span-full sm:col-span-6 xl:col-span-4 bg-white shadow-lg rounded-sm border border-slate-200">
+            <div>
 
                     {/* Blocks */}
-                    <div className="space-y-4">
+                    <div>
 
                         {/* Block 3 */}
                         <div className="bg-slate-50 p-4 rounded border border-slate-200">
@@ -45,8 +43,8 @@ function FeedRightContent() {
 
                     </div>
                 </div>
-            </div>
-        </div>
+                </div>
+
     );
 }
 

@@ -22,14 +22,14 @@ function Dashboard({lead}) {
 
                                 <DashboardCard05 lead={lead}/>
                                 <DashboardCardToday lead={lead}/>
-
+                                <FeedRightContent/>
                             </div>
 
                         </div>
                     </main>
 
                 </div>
-                <FeedRightContent/>
+
             </div>
         </PanelLayout>
     );
